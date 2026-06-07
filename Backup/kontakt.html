@@ -461,9 +461,9 @@
       <div class="rezept-raster">
 
         <div class="rezept-karte">
-          <h3>Folgerezepte</h3>
+          <h3>Rezepte</h3>
           <p class="rezept-karte-text">
-            Bekannte Dauermedikamente können Sie bequem per E-Mail anfordern.
+            Rezepte können Sie bequem per E-Mail anfordern.
             Bitte nennen Sie dabei <strong>Name und Geburtsdatum des Kindes</strong>
             sowie <strong>Medikamentennamen und Dosierung</strong>.
             Das Rezept liegt in der Regel innerhalb von 2&nbsp;Werktagen zur Abholung bereit.
@@ -476,7 +476,7 @@
         <div class="rezept-karte">
           <h3>Überweisungen</h3>
           <p class="rezept-karte-text">
-            Überweisungen zu Fachärzten oder in Kliniken können Sie ebenfalls per E-Mail anfragen.
+            Überweisungen zu Fachärzten oder Kliniken können Sie ebenfalls per E-Mail anfragen.
             Bitte schildern Sie kurz <strong>Fachbereich</strong>
             und <strong>Grund der Überweisung</strong>.
             Bei dringendem Bedarf bitten wir um telefonischen Kontakt.
@@ -726,7 +726,7 @@
       /* Rezepte & Überweisungen */
       const rezeptLink = document.getElementById('rezeptEmailLink');
       const uebLink    = document.getElementById('uebEmailLink');
-      if (rezeptLink) rezeptLink.href = `mailto:${terminMail}?subject=Folgerezept-Anforderung`;
+      if (rezeptLink) rezeptLink.href = `mailto:${terminMail}?subject=Rezeptanforderung`;
       if (uebLink)    uebLink.href    = `mailto:${terminMail}?subject=Überweisungsanfrage`;
     }
 

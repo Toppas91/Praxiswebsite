@@ -4,15 +4,15 @@
   },
   "schliesstage": [
     {
-      "von": "2026-05-10",
-      "bis": "2026-06-06",
-      "grund": "Krankheit",
+      "von": "2026-06-03",
+      "bis": "2026-06-09",
+      "grund": "Urlaub",
       "vorlauf_tage": 14
     },
     {
-      "von": "2026-12-23",
-      "bis": "2027-01-05",
-      "grund": "Weihnachtsferien",
+      "von": "2026-07-20",
+      "bis": "2026-08-11",
+      "grund": "Urlaub",
       "vorlauf_tage": 10
     }
   ],
@@ -23,43 +23,43 @@
         "tag": "Montag",
         "gesund": {
           "von": "08:00",
-          "bis": "12:00",
+          "bis": "10:30",
           "nachmittag_von": "14:00",
-          "nachmittag_bis": "17:00"
+          "nachmittag_bis": "15:30"
         },
         "krank": {
-          "von": "08:00",
-          "bis": "09:30",
-          "nachmittag_von": null,
-          "nachmittag_bis": null
+          "von": "11:30",
+          "bis": "12:30",
+          "nachmittag_von": "16:30",
+          "nachmittag_bis": "17:30"
         }
       },
       {
         "tag": "Dienstag",
         "gesund": {
-          "von": "08:00",
-          "bis": "12:00",
-          "nachmittag_von": null,
-          "nachmittag_bis": null
+         "von": "08:00",
+          "bis": "10:30",
+          "nachmittag_von": "14:00",
+          "nachmittag_bis": "15:30"
         },
         "krank": {
-          "von": "08:00",
-          "bis": "09:30",
-          "nachmittag_von": null,
-          "nachmittag_bis": null
+          "von": "11:30",
+          "bis": "12:30",
+          "nachmittag_von": "16:30",
+          "nachmittag_bis": "17:30"
         }
       },
       {
         "tag": "Mittwoch",
         "gesund": {
           "von": "08:00",
-          "bis": "13:00",
+          "bis": "10:30",
           "nachmittag_von": null,
           "nachmittag_bis": null
         },
         "krank": {
-          "von": "08:00",
-          "bis": "09:30",
+          "von": "11:30",
+          "bis": "12:30",
           "nachmittag_von": null,
           "nachmittag_bis": null
         }
@@ -67,29 +67,29 @@
       {
         "tag": "Donnerstag",
         "gesund": {
-          "von": "08:00",
-          "bis": "12:00",
-          "nachmittag_von": "14:00",
-          "nachmittag_bis": "18:00"
-        },
-        "krank": {
-          "von": "08:00",
-          "bis": "09:30",
+         "von": "08:00",
+          "bis": "10:30",
           "nachmittag_von": "14:00",
           "nachmittag_bis": "15:30"
+        },
+        "krank": {
+          "von": "11:30",
+          "bis": "12:30",
+          "nachmittag_von": "16:30",
+          "nachmittag_bis": "17:30"
         }
       },
       {
         "tag": "Freitag",
         "gesund": {
           "von": "08:00",
-          "bis": "12:00",
+          "bis": "10:30",
           "nachmittag_von": null,
           "nachmittag_bis": null
         },
         "krank": {
-          "von": "08:00",
-          "bis": "09:30",
+          "von": "11:30",
+          "bis": "12:30",
           "nachmittag_von": null,
           "nachmittag_bis": null
         }
@@ -237,7 +237,7 @@
     "willkommen_titel": "Herzlich Willkommen in der Kinderarztpraxis Dr. Berwanger!",
     "willkommen_fliesstext": "Wir begleiten Kinder und Jugendliche mit Herz, Erfahrung und Einfühlungsvermögen. Dabei stehen das Wohl Ihres Kindes und eine vertrauensvolle Betreuung im Mittelpunkt.",
     "willkommen_gruss": "Wir freuen uns auf Ihren Besuch.",
-    "logo": "bilder/logo1.PNG"
+    "logo": "bilder/logo1.png"
   },
   "kontakt": {
     "adresse": {
@@ -266,7 +266,7 @@
       },
       {
         "id": "schlez",
-        "aktiv": true,
+        "aktiv": false,
         "name": "Dr. med. Marc Schlez",
         "fachrichtung": "Kinderarzt · Kinderkardiologe",
         "adresse": "Europastraße 4, 67433 Neustadt/Weinstraße",
