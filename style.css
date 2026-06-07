@@ -321,12 +321,12 @@ main.startseite {
   main { padding: 4rem 1.75rem 8rem; }
   .inhalt-zentriert       { padding: 4rem 1.75rem 0; }
   .inhalt-zentriert:last-child { padding-bottom: 8rem; }
-.startseiten-bild-wrapper {
-  width:        100vw;
-  margin-left:  -1.75rem;
-  margin-right: -1.75rem;
-  margin-bottom: 1.5rem;
-}
+  .startseiten-bild-wrapper {
+    width:         100%;
+   padding:       0 0.5rem;
+    margin-bottom: 1.5rem;
+    box-sizing:    border-box;
+  }
 }
 
 /* ── 7. Startseite – Begrüßungsbereich ──────────────────────── */
