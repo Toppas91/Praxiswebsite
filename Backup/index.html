@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <meta name="description" content="Kinderarztpraxis Dr. Bernd Berwanger – Ihr Kinder- und Jugendarzt in Neustadt. Sprechzeiten, Leistungen und Kontakt." />
+  <title>Dr. Bernd Berwanger – Kinderarztpraxis</title>
+
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Zentrales Design-System -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── Terminvereinbarung: E-Mail & Telefon auf h3-Größe ──────
+       Analog zu kontakt.html – überschreibt die großen Werte aus style.css.
+       Unterstriche entfallen bei der E-Mail.
+    ──────────────────────────────────────────────────────────── */
+    .termin-tel-link {
+      font-size:      clamp(1rem, 2.5vw, 1.3rem);
+      letter-spacing: -0.01em;
+      line-height:    1.35;
+    }
+
+    .termin-email-link {
+      font-size:   clamp(1rem, 2.5vw, 1.3rem);
+      border-bottom: none;
+    }
+
+    .termin-email-link:hover { opacity: 0.65; }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════
+       KOPFZEILE / NAVIGATION
+  ════════════════════════════════════════ -->
+  <header class="nav-wrapper" role="banner">
+    <div class="nav-inner">
+
+      <a href="index.html" class="logo-bereich" aria-label="Startseite – Praxis Dr. Berwanger">
+        <img id="praxis-logo" src="" alt="Logo der Praxis Dr. Berwanger" />
+        <div>
+          <div class="logo-text-haupt">Dr. Bernd<br />Berwanger</div>
+        </div>
+      </a>
+
+      <nav aria-label="Hauptnavigation">
+        <ul class="nav-links">
+          <li><a href="leistungen.html">Leistungen</a></li>
+          <li><a href="team.html">Team &amp; Praxis</a></li>
+          <li><a href="kontakt.html">Sprechzeiten &amp; Kontakt</a></li>
+        </ul>
+      </nav>
+
+      <button
+        class="burger-btn"
+        id="burgerBtn"
+        aria-expanded="false"
+        aria-controls="mobileMenu"
+        aria-label="Menü öffnen"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+    <nav id="mobileMenu" class="mobile-menu" aria-label="Mobile Navigation" hidden>
+      <a href="leistungen.html">Leistungen</a>
+      <a href="team.html">Team &amp; Praxis</a>
+      <a href="kontakt.html">Sprechzeiten &amp; Kontakt</a>
+    </nav>
+  </header>
+
+
+  <!-- ════════════════════════════════════════
+       ANKÜNDIGUNGS-BANNER (dynamisch aus JSON)
+  ════════════════════════════════════════ -->
+  <div id="newsBanner" role="alert" aria-live="polite" style="display:none;"></div>
+
+
+  <!-- ════════════════════════════════════════
+       HAUPTINHALT
+  ════════════════════════════════════════ -->
+  <main id="hauptinhalt" class="startseite">
+
+    <div class="inhalt-zentriert einblenden verzoegert-1">
+      <section
+        class="begruessungsbereich"
+        id="begruessungsBereich"
+        aria-labelledby="praxisArztName"
+      >
+        <div class="lade-placeholder" style="width:55%; height:3.6rem; margin-bottom:1rem;"></div>
+        <div class="lade-placeholder" style="width:43%; height:1.35rem; margin-bottom:5rem;"></div>
+        <div class="lade-placeholder" style="width:72%; margin-bottom:0.7rem;"></div>
+        <div class="lade-placeholder" style="width:90%; margin-bottom:0.45rem;"></div>
+        <div class="lade-placeholder" style="width:38%;"></div>
+      </section>
+    </div>
+
+    <div class="startseiten-bild-wrapper einblenden verzoegert-1">
+      <img
+        src="bilder/bild_startseite1.png"
+        alt="Einblick in die Praxis Dr. Berwanger"
+        class="startseiten-bild"
+      />
+    </div>
+
+    <!-- ════════════════════════════════════════
+         TERMINVEREINBARUNG
+    ════════════════════════════════════════ -->
+    <div class="inhalt-zentriert">
+      <section
+        class="terminvereinbarung-bereich einblenden verzoegert-2"
+        id="terminvereinbarungBereich"
+        aria-labelledby="terminTitel"
+      >
+        <h2 id="terminTitel">Terminvereinbarung</h2>
+
+        <div class="termin-grid">
+
+          <!-- ── Nicht akut ─────────────────────────── -->
+          <div class="termin-karte">
+            <span class="termin-kategorie">Reguläre Termine</span>
+            <p>
+              Terminvereinbarung per
+              <a href="mailto:Termine@dr-berwanger.de" id="terminEmailInline" class="termin-inline-link">E-Mail</a>
+              oder über unsere
+              <a href="kontakt.html" class="termin-inline-link">Praxis-App</a>.
+            </p>
+            <a href="mailto:Termine@dr-berwanger.de" id="terminEmailDisplay" class="termin-email-link">
+              Termine@dr-berwanger.de
+            </a>
+          </div>
+
+          <!-- ── Akutes Anliegen ────────────────────── -->
+          <div class="termin-karte termin-karte--akut">
+            <span class="termin-kategorie">Akute Erkrankungen</span>
+            <p>Zur besseren Planbarkeit bitten wir um eine telefonische Voranmeldung.</p>
+
+            <a href="tel:0632186049" class="termin-tel-link" aria-label="Praxis anrufen: 06321 86049">
+              06321&thinsp;86049
+            </a>
+
+            <div class="termin-warn-box" role="note">
+              Bitte erscheinen Sie bei <strong>ansteckenden Erkrankungen</strong>
+              wie Fieber, Erkältung, Magen-Darm&nbsp;etc. ausschließlich
+              in der <strong>KRANK-Sprechstunde</strong>.
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+    <div class="inhalt-zentriert">
+      <section
+        class="sprechzeiten-bereich einblenden verzoegert-2"
+        id="sprechzeitenBereich"
+        aria-labelledby="sprechzeitenTitel"
+      >
+        <h2 id="sprechzeitenTitel">Sprechzeiten</h2>
+        <div id="sprechzeitenTabelle" role="region" aria-label="Sprechzeiten-Übersicht">
+          <table class="sprechzeiten-tabelle" aria-hidden="true">
+            <tbody>
+              <tr><td colspan="3"><div class="lade-placeholder" style="height:2.75rem;"></div></td></tr>
+              <tr><td colspan="3"><div class="lade-placeholder" style="height:2.75rem; margin-top:0.6rem;"></div></td></tr>
+              <tr><td colspan="3"><div class="lade-placeholder" style="height:2.75rem; margin-top:0.6rem;"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+
+  <!-- ════════════════════════════════════════
+       FUSSZEILE
+  ════════════════════════════════════════ -->
+  <footer role="contentinfo">
+
+    <svg
+      class="footer-welle"
+      viewBox="0 0 1440 90"
+      preserveAspectRatio="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path d="M0,60 C480,95 960,20 1440,60 L1440,0 L0,0 Z" />
+    </svg>
+
+    <div class="footer-inner">
+
+      <!-- Notruf & Notdienst -->
+      <div class="footer-block">
+        <h4>Notruf &amp; Notdienst</h4>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Rettungsdienst</div>
+          <a href="tel:112" class="notruf-tel">112</a>
+        </div>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Ärztlicher Bereitschaftsdienst</div>
+          <a href="tel:116117" class="notruf-tel">116 117</a>
+        </div>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Giftnotruf</div>
+          <a href="tel:0613119240" class="notruf-tel">06131 19240</a>
+        </div>
+      </div>
+
+      <!-- Praxis-Kontakt (dynamisch) -->
+      <div class="footer-block" id="footerKontakt">
+        <h4>Praxis</h4>
+        <p class="lade-placeholder" style="width:85%;"></p>
+        <p class="lade-placeholder" style="width:60%; margin-top:0.5rem;"></p>
+        <p class="lade-placeholder" style="width:70%; margin-top:0.5rem;"></p>
+      </div>
+
+      <!-- Rechtliches -->
+      <div class="footer-block">
+        <h4>Rechtliches</h4>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutzerklärung</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; <span id="jahreszahl"></span> Praxis Dr. Bernd Berwanger &nbsp;·&nbsp; Alle Angaben ohne Gewähr.</p>
+    </div>
+
+  </footer>
+
+
+  <!-- ════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════ -->
+  <script>
+    "use strict";
+
+    /* ════════════════════════════════════════════════════════════
+       DATUMS-HILFSFUNKTIONEN
+       ────────────────────────────────────────────────────────────
+       parseDatum  : "YYYY-MM-DD" → lokales Date-Objekt (UTC-sicher)
+       formatDatum : Date → "TT.MM.JJJJ"
+    ════════════════════════════════════════════════════════════ */
+    function parseDatum(str) {
+      const [y, m, d] = str.split('-').map(Number);
+      return new Date(y, m - 1, d);
+    }
+
+    function formatDatum(datum) {
+      const t = String(datum.getDate()).padStart(2, '0');
+      const m = String(datum.getMonth() + 1).padStart(2, '0');
+      return `${t}.${m}.${datum.getFullYear()}`;
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       SCHLIESSZEIT-LOGIK
+       ────────────────────────────────────────────────────────────
+       Gibt die erste Schließzeit zurück, für die heute innerhalb
+       des Vorlaufzeitraums oder während der Schließung liegt.
+       Sonst null → kein Banner.
+
+       Rückgabe-Objekt enthält zusätzlich:
+         vonDatum    : Date-Objekt des Starttags
+         bisDatum    : Date-Objekt des letzten Schließtags
+         phase       : 'vorlauf' | 'aktiv'
+    ════════════════════════════════════════════════════════════ */
+    function findeAktiveSchliesszeit(schliesstage) {
+      if (!Array.isArray(schliesstage)) return null;
+      const heute = new Date();
+      heute.setHours(0, 0, 0, 0);
+
+      return [...schliesstage]
+        .map(s => {
+          const vonDatum    = parseDatum(s.von);
+          const bisDatum    = parseDatum(s.bis);
+          const vorlaufTage = s.vorlauf_tage ?? 14;
+          const vorlaufStart = new Date(vonDatum);
+          vorlaufStart.setDate(vorlaufStart.getDate() - vorlaufTage);
+          return { ...s, vonDatum, bisDatum, vorlaufStart };
+        })
+        .filter(s => heute >= s.vorlaufStart && heute <= s.bisDatum)
+        .sort((a, b) => a.vonDatum - b.vonDatum)
+        .map(s => ({ ...s, phase: heute < s.vonDatum ? 'vorlauf' : 'aktiv' }))[0]
+        ?? null;
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       BANNERTEXT
+       ────────────────────────────────────────────────────────────
+       Vorlaufphase : "vom TT.MM.JJJJ bis TT.MM.JJJJ wegen …"
+       Aktivphase   : "wegen … noch bis TT.MM.JJJJ geschlossen"
+       Beide Phasen: Wiedereröffnungsdatum (bis + 1 Tag) am Ende.
+    ════════════════════════════════════════════════════════════ */
+    function bannerTextErstellen(s) {
+      const bisStr    = formatDatum(s.bisDatum);
+      const wiederAuf = new Date(s.bisDatum);
+      wiederAuf.setDate(wiederAuf.getDate() + 1);
+      const wiederAufStr = formatDatum(wiederAuf);
+
+      if (s.phase === 'vorlauf') {
+        const vonStr = formatDatum(s.vonDatum);
+        return `Unsere Praxis ist vom ${vonStr} bis ${bisStr} ` +
+               `wegen ${s.grund} geschlossen. ` +
+               `Wir freuen uns, Sie ab dem ${wiederAufStr} wieder begrüßen zu dürfen.`;
+      }
+      return `Unsere Praxis ist wegen ${s.grund} noch bis ${bisStr} geschlossen. ` +
+             `Wir freuen uns, Sie ab dem ${wiederAufStr} wieder begrüßen zu dürfen.`;
+    }
+
+    /* ── Hilfsfunktionen Sprechzeiten ───────────────────────── */
+    function zeitraum(von, bis) {
+      if (!von || !bis) return null;
+      return `${von}&thinsp;–&thinsp;${bis} Uhr`;
+    }
+
+    function zeitblockHtml(zeiten) {
+      if (!zeiten || !zeiten.von) return '<span style="opacity:0.28;">–</span>';
+      const morgenText     = zeitraum(zeiten.von, zeiten.bis);
+      const nachmittagText = (zeiten.nachmittag_von && zeiten.nachmittag_bis)
+        ? zeitraum(zeiten.nachmittag_von, zeiten.nachmittag_bis)
+        : null;
+      let html = '<span class="zeitblock">';
+      html += `<span class="morgen">${morgenText}</span>`;
+      if (nachmittagText) {
+        html += `<span class="nachmittag">${nachmittagText}</span>`;
+      }
+      html += '</span>';
+      return html;
+    }
+
+    /* ── Befüll-Funktion: Sprechzeiten ──────────────────────── */
+    function befuelleSprechzeiten(oeffnungszeiten) {
+      if (!oeffnungszeiten || !oeffnungszeiten.tage) return;
+      const container = document.getElementById('sprechzeitenTabelle');
+      let html =
+        '<table class="sprechzeiten-tabelle" role="table" aria-label="Wöchentliche Sprechzeiten">' +
+          '<thead>' +
+            '<tr>' +
+              '<th scope="col">Wochentag</th>' +
+              '<th scope="col">Gesundsprechstunde</th>' +
+              '<th scope="col">Kranksprechstunde</th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>';
+      oeffnungszeiten.tage.forEach(eintrag => {
+        html +=
+          '<tr>' +
+            `<td>${eintrag.tag}</td>` +
+            `<td data-label="Gesundsprechstunde">${zeitblockHtml(eintrag.gesund)}</td>` +
+            `<td data-label="Kranksprechstunde">${zeitblockHtml(eintrag.krank)}</td>` +
+          '</tr>';
+      });
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    }
+
+    /* ── Burger-Menü ────────────────────────────────────────── */
+    const burgerBtn  = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    burgerBtn.addEventListener('click', () => {
+      const istOffen = burgerBtn.classList.toggle('offen');
+      burgerBtn.setAttribute('aria-expanded', istOffen);
+      burgerBtn.setAttribute('aria-label', istOffen ? 'Menü schließen' : 'Menü öffnen');
+      mobileMenu.classList.toggle('offen', istOffen);
+      mobileMenu.hidden = !istOffen;
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        burgerBtn.classList.remove('offen');
+        burgerBtn.setAttribute('aria-expanded', 'false');
+        burgerBtn.setAttribute('aria-label', 'Menü öffnen');
+        mobileMenu.classList.remove('offen');
+        mobileMenu.hidden = true;
+      });
+    });
+
+    /* ── Aktive Seite markieren ─────────────────────────────── */
+    const aktuelleSeite = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(link => {
+      if (link.getAttribute('href') === aktuelleSeite) link.classList.add('aktiv');
+    });
+
+    /* ── Jahr im Footer ─────────────────────────────────────── */
+    document.getElementById('jahreszahl').textContent = new Date().getFullYear();
+
+    /* ── Praxisdaten laden ──────────────────────────────────── */
+    fetch('praxis-daten.json')
+      .then(res => {
+        if (!res.ok) throw new Error('praxis-daten.json nicht erreichbar');
+        return res.json();
+      })
+      .then(daten => {
+        befuelleLogo(daten.praxis);
+        befuelleBanner(daten.banner, daten.schliesstage);
+        befuelleBegruessungsbereich(daten.praxis);
+        befuelleSprechzeiten(daten.oeffnungszeiten);
+        befuelleTerminEmail(daten.kontakt);
+        befuelleFooterKontakt(daten.kontakt, daten.praxis);
+      })
+      .catch(err => {
+        console.error('Fehler beim Laden der Praxisdaten:', err);
+        document.querySelector('main').insertAdjacentHTML('afterbegin',
+          '<p role="alert" style="font-size:0.875rem;opacity:0.6;margin-bottom:2rem;">' +
+          'Die Praxisdaten konnten momentan nicht geladen werden.</p>'
+        );
+      });
+
+    /* ── Befüll-Funktionen ──────────────────────────────────── */
+
+    function befuelleLogo(praxis) {
+      if (!praxis || !praxis.logo) return;
+      const logoEl = document.getElementById('praxis-logo');
+      logoEl.src   = praxis.logo;
+      logoEl.onerror = () => { logoEl.style.display = 'none'; };
+    }
+
+    /* ── Banner ─────────────────────────────────────────────────
+       Prüft automatisch anhand der schliesstage, ob heute im
+       Vorlauf- oder Schließzeitraum liegt.
+       - Vorlauf  : "vom TT.MM.JJJJ bis TT.MM.JJJJ wegen …"
+       - Aktiv    : "wegen … noch bis TT.MM.JJJJ geschlossen"
+       Der "Vertretung ansehen"-Button erscheint, wenn
+       banner.vertretung_seite gesetzt ist.
+    ──────────────────────────────────────────────────────────── */
+    function befuelleBanner(banner, schliesstage) {
+      const aktiv = findeAktiveSchliesszeit(schliesstage);
+      if (!aktiv) return;
+
+      const div  = document.getElementById('newsBanner');
+      const text = bannerTextErstellen(aktiv);
+
+      const btnHtml = banner?.vertretung_seite
+        ? `<a href="${banner.vertretung_seite}" class="banner-btn">Vertretung ansehen</a>`
+        : '';
+
+      div.innerHTML =
+        '<div class="banner">' +
+          '<div class="banner-inner">' +
+            `<p class="banner-text">${text}</p>` +
+            btnHtml +
+          '</div>' +
+        '</div>';
+
+      div.style.display = '';
+    }
+
+    function befuelleBegruessungsbereich(praxis) {
+      if (!praxis) return;
+      const el = document.getElementById('begruessungsBereich');
+      const gruss = praxis.willkommen_gruss
+        ? `<br>${praxis.willkommen_gruss}`
+        : '';
+      el.innerHTML =
+        `<h1 id="praxisArztName">${praxis.arzt_name}</h1>` +
+        `<p class="arzt-fachrichtung">${praxis.arzt_titel}</p>` +
+        `<p class="willkommen-titel">${praxis.willkommen_titel}</p>` +
+        `<p class="willkommen-text">${praxis.willkommen_fliesstext}${gruss}</p>`;
+    }
+
+    function befuelleTerminEmail(kontakt) {
+      if (!kontakt?.termin_email) return;
+      const mail = kontakt.termin_email;
+      const href = `mailto:${mail}`;
+      const inlineEl  = document.getElementById('terminEmailInline');
+      const displayEl = document.getElementById('terminEmailDisplay');
+      if (inlineEl)  inlineEl.href = href;
+      if (displayEl) { displayEl.href = href; displayEl.textContent = mail; }
+    }
+
+    function befuelleFooterKontakt(kontakt, praxis) {
+      if (!kontakt) return;
+      const el   = document.getElementById('footerKontakt');
+      const adr  = kontakt.adresse;
+      const name = praxis?.arzt_name ?? 'Praxis Dr. Berwanger';
+      el.innerHTML =
+        '<h4>Praxis</h4>' +
+        `<p>${name}<br>${adr.strasse}<br>${adr.plz} ${adr.ort}</p>` +
+        `<a href="tel:${kontakt.telefon.replace(/\s/g, '')}">${kontakt.telefon}</a>` +
+        `<a href="mailto:${kontakt.email}" style="margin-top:0.15rem;">${kontakt.email}</a>`;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />  <meta name="description" content="Team und Praxis – Dr. Bernd Berwanger: Unsere Ärzte und das Praxisteam." />
+  <title>Team &amp; Praxis – Dr. Bernd Berwanger</title>
+
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Zentrales Design-System -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+  /* ════════════════════════════════════════════════════════
+     Team-Seite – Ergänzende Styles
+     Nur seitenspezifische Regeln; style.css bleibt unverändert.
+  ════════════════════════════════════════════════════════ */
+
+  .team-intro {
+    margin-bottom: var(--abstand-sektion);
+    max-width:     900px;
+  }
+
+  .team-intro p {
+    font-size:   1.05rem;
+    opacity:     0.72;
+    line-height: 1.8;
+  }
+
+  .team-sektion {
+    margin-bottom: var(--abstand-sektion);
+  }
+
+  .team-sektion:last-child {
+    margin-bottom: 0;
+  }
+
+  .team-sektion > h2 {
+    margin-bottom: 0.35rem;
+  }
+
+  .sektion-sub {
+    font-size:     0.95rem;
+    opacity:       0.55;
+    line-height:   1.65;
+    margin-bottom: 2.5rem !important;
+  }
+
+  /* Raum-Bild: Querformat (3 : 2) */
+  .raum-karte-bild {
+    aspect-ratio:  3 / 2;
+    background:    var(--farbe-sehr-gedaempft);
+    border-radius: 8px;
+    overflow:      hidden;
+    margin-bottom: 1rem;
+    cursor:        pointer;
+    transition:    opacity 0.2s ease;
+  }
+
+  .raum-karte-bild:hover {
+    opacity: 0.88;
+  }
+
+  .raum-karte-bild img {
+    width:      100%;
+    height:     100%;
+    object-fit: cover;
+  }
+
+  /* Räume-Grid: 3 Spalten (überschreibt vierspaltig nicht nötig, da .team-grid verwendet) */
+  #raeumeGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 900px) {
+    #raeumeGrid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    #raeumeGrid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Lightbox ── */
+  .lightbox {
+    display:         none;
+    position:        fixed;
+    inset:           0;
+    background:      rgba(0, 0, 0, 0.88);
+    z-index:         1000;
+    align-items:     center;
+    justify-content: center;
+    cursor:          pointer;
+  }
+
+  .lightbox.aktiv {
+    display:   flex;
+    animation: einblenden 0.22s ease both;
+  }
+
+  .lightbox img {
+    max-width:     90vw;
+    max-height:    90vh;
+    object-fit:    contain;
+    border-radius: 6px;
+    cursor:        default;
+  }
+
+  .lightbox-schliessen {
+    position:    fixed;
+    top:         1.25rem;
+    right:       1.5rem;
+    color:       rgba(255, 255, 255, 0.75);
+    font-size:   2rem;
+    font-weight: 300;
+    line-height: 1;
+    cursor:      pointer;
+    user-select: none;
+    transition:  color 0.18s;
+  }
+
+  .lightbox-schliessen:hover {
+    color: #fff;
+  }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════
+       KOPFZEILE / NAVIGATION
+  ════════════════════════════════════════ -->
+  <header class="nav-wrapper" role="banner">
+    <div class="nav-inner">
+
+      <a href="index.html" class="logo-bereich" aria-label="Startseite – Praxis Dr. Berwanger">
+        <img id="praxis-logo" src="" alt="Logo der Praxis Dr. Berwanger" />
+        <div>
+          <div class="logo-text-haupt">Dr. Bernd<br />Berwanger</div>
+        </div>
+      </a>
+
+      <nav aria-label="Hauptnavigation">
+        <ul class="nav-links">
+          <li><a href="leistungen.html">Leistungen</a></li>
+          <li><a href="team.html">Team &amp; Praxis</a></li>
+          <li><a href="kontakt.html">Sprechzeiten &amp; Kontakt</a></li>
+        </ul>
+      </nav>
+
+      <button
+        class="burger-btn"
+        id="burgerBtn"
+        aria-expanded="false"
+        aria-controls="mobileMenu"
+        aria-label="Menü öffnen"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+    <nav id="mobileMenu" class="mobile-menu" aria-label="Mobile Navigation" hidden>
+      <a href="leistungen.html">Leistungen</a>
+      <a href="team.html">Team &amp; Praxis</a>
+      <a href="kontakt.html">Sprechzeiten &amp; Kontakt</a>
+    </nav>
+  </header>
+
+
+  <!-- ════════════════════════════════════════
+       HAUPTINHALT
+  ════════════════════════════════════════ -->
+  <main id="hauptinhalt">
+
+    <!-- Seiten-Intro -->
+    <section class="team-intro einblenden verzoegert-1">
+      <h1>Team &amp; Praxis</h1>
+      <p>Lernen Sie die Menschen kennen, die sich täglich mit Herzblut um die Gesundheit Ihrer Kinder kümmern.</p>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         UNSERE ÄRZTE – 3 Spalten
+         Bilder: Bilder/Arzt1.PNG · Arzt2.PNG · Arzt3.PNG
+    ════════════════════════════════════════ -->
+    <section
+      class="team-sektion einblenden verzoegert-2"
+      id="sektionAerzte"
+      aria-labelledby="titelAerzte"
+    >
+      <h2 id="titelAerzte">Unsere Ärzte</h2>
+      <p class="sektion-sub">Erfahren, einfühlsam und immer für Ihre Familie da.</p>
+
+      <div class="team-grid" id="aerzteGrid">
+        <!-- Skeleton: 3 Ärzte-Karten -->
+        <div aria-hidden="true">
+          <div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div>
+          <div class="lade-placeholder" style="width:70%; margin-top:0.75rem;"></div>
+          <div class="lade-placeholder" style="width:55%; margin-top:0.4rem; height:0.85em;"></div>
+        </div>
+        <div aria-hidden="true">
+          <div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div>
+          <div class="lade-placeholder" style="width:65%; margin-top:0.75rem;"></div>
+          <div class="lade-placeholder" style="width:60%; margin-top:0.4rem; height:0.85em;"></div>
+        </div>
+        <div aria-hidden="true">
+          <div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div>
+          <div class="lade-placeholder" style="width:60%; margin-top:0.75rem;"></div>
+          <div class="lade-placeholder" style="width:50%; margin-top:0.4rem; height:0.85em;"></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         PRAXISTEAM – 4 Spalten (2 × 4 = 8 MFA)
+         Bilder: Bilder/MFA1.PNG … Bilder/MFA8.PNG
+    ════════════════════════════════════════ -->
+    <section
+      class="team-sektion einblenden verzoegert-3"
+      id="sektionPraxisteam"
+      aria-labelledby="titelPraxisteam"
+    >
+      <h2 id="titelPraxisteam">Unser Praxisteam</h2>
+      <p class="sektion-sub">Freundlich, kompetent und immer mit einem offenen Ohr für Sie da.</p>
+
+      <div class="team-grid vierspaltig" id="praxisteamGrid">
+        <!-- Skeleton: 8 MFA-Karten (2 Reihen à 4) -->
+        <div aria-hidden="true"><div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:70%; margin-top:0.6rem;"></div><div class="lade-placeholder" style="width:55%; margin-top:0.35rem; height:0.8em;"></div></div>
+        <div aria-hidden="true"><div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:65%; margin-top:0.6rem;"></div><div class="lade-placeholder" style="width:60%; margin-top:0.35rem; height:0.8em;"></div></div>
+        <div aria-hidden="true"><div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:72%; margin-top:0.6rem;"></div><div class="lade-placeholder" style="width:50%; margin-top:0.35rem; height:0.8em;"></div></div>
+        <div aria-hidden="true"><div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:60%; margin-top:0.6rem;"></div><div class="lade-placeholder" style="width:58%; margin-top:0.35rem; height:0.8em;"></div></div>
+        <div aria-hidden="true"><div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:68%; margin-top:0.6rem;"></div><div class="lade-placeholder" style="width:52%; margin-top:0.35rem; height:0.8em;"></div></div>
+        <div aria-hidden="true"><div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:62%; margin-top:0.6rem;"></div><div class="lade-placeholder" style="width:57%; margin-top:0.35rem; height:0.8em;"></div></div>
+        <div aria-hidden="true"><div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:75%; margin-top:0.6rem;"></div><div class="lade-placeholder" style="width:48%; margin-top:0.35rem; height:0.8em;"></div></div>
+        <div aria-hidden="true"><div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:66%; margin-top:0.6rem;"></div><div class="lade-placeholder" style="width:54%; margin-top:0.35rem; height:0.8em;"></div></div>
+      </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         PRAXISRÄUME – 3 Spalten + Lightbox
+         Namen und Bilder im JS-Array RAEUME
+         weiter unten direkt anpassen.
+    ════════════════════════════════════════ -->
+    <section
+      class="team-sektion einblenden verzoegert-4"
+      id="sektionRaeume"
+      aria-labelledby="titelRaeume"
+    >
+      <h2 id="titelRaeume">Unsere Praxisräume</h2>
+      <p class="sektion-sub">Eine helle, freundliche Atmosphäre, in der sich Kinder wohl fühlen. Klicken Sie auf ein Bild für eine größere Ansicht.</p>
+
+      <div class="team-grid" id="raeumeGrid">
+        <!-- Skeleton: 3 Raum-Karten -->
+        <div aria-hidden="true"><div class="raum-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:65%;"></div></div>
+        <div aria-hidden="true"><div class="raum-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:70%;"></div></div>
+        <div aria-hidden="true"><div class="raum-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:60%;"></div></div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ════════════════════════════════════════
+       FUSSZEILE
+  ════════════════════════════════════════ -->
+  <footer role="contentinfo">
+
+    <svg
+      class="footer-welle"
+      viewBox="0 0 1440 90"
+      preserveAspectRatio="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path d="M0,60 C480,95 960,20 1440,60 L1440,0 L0,0 Z" />
+    </svg>
+
+    <div class="footer-inner">
+
+      <div class="footer-block">
+        <h4>Notruf &amp; Notdienst</h4>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Rettungsdienst</div>
+          <a href="tel:112" class="notruf-tel">112</a>
+        </div>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Ärztlicher Bereitschaftsdienst</div>
+          <a href="tel:116117" class="notruf-tel">116 117</a>
+        </div>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Giftnotruf</div>
+          <a href="tel:0613119240" class="notruf-tel">06131 19240</a>
+        </div>
+      </div>
+
+      <div class="footer-block" id="footerKontakt">
+        <h4>Praxis</h4>
+        <p class="lade-placeholder" style="width:85%;"></p>
+        <p class="lade-placeholder" style="width:60%; margin-top:0.5rem;"></p>
+        <p class="lade-placeholder" style="width:70%; margin-top:0.5rem;"></p>
+      </div>
+
+      <div class="footer-block">
+        <h4>Rechtliches</h4>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutzerklärung</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; <span id="jahreszahl"></span> Praxis Dr. Bernd Berwanger &nbsp;·&nbsp; Alle Angaben ohne Gewähr.</p>
+    </div>
+
+  </footer>
+
+
+  <!-- ════════════════════════════════════════
+       LIGHTBOX
+  ════════════════════════════════════════ -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Bildvorschau">
+    <span class="lightbox-schliessen" aria-label="Schließen">&times;</span>
+    <img id="lightboxBild" src="" alt="" />
+  </div>
+
+
+  <!-- ════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════ -->
+  <script>
+    "use strict";
+
+    /* ── Burger-Menü ─────────────────────────────────────────── */
+    const burgerBtn  = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    burgerBtn.addEventListener('click', () => {
+      const istOffen = burgerBtn.classList.toggle('offen');
+      burgerBtn.setAttribute('aria-expanded', istOffen);
+      burgerBtn.setAttribute('aria-label', istOffen ? 'Menü schließen' : 'Menü öffnen');
+      mobileMenu.classList.toggle('offen', istOffen);
+      mobileMenu.hidden = !istOffen;
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        burgerBtn.classList.remove('offen');
+        burgerBtn.setAttribute('aria-expanded', 'false');
+        burgerBtn.setAttribute('aria-label', 'Menü öffnen');
+        mobileMenu.classList.remove('offen');
+        mobileMenu.hidden = true;
+      });
+    });
+
+    /* ── Aktive Seite markieren ──────────────────────────────── */
+    const aktuelleSeite = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(link => {
+      if (link.getAttribute('href') === aktuelleSeite) link.classList.add('aktiv');
+    });
+
+    /* ── Jahr im Footer ──────────────────────────────────────── */
+    document.getElementById('jahreszahl').textContent = new Date().getFullYear();
+
+
+    /* ── Praxisräume ─────────────────────────────────────────────
+       Bildpfade und Bezeichnungen kommen aus praxis-daten.json
+       (praxisraeume-Array). Neue Karte: JSON-Eintrag hinzufügen.
+    ─────────────────────────────────────────────────────────── */
+    function raumKarteHtml(raum) {
+      return `
+        <article>
+          <div class="raum-karte-bild">
+            ${raum.bild ? `<img src="${raum.bild}" alt="${raum.bezeichnung}" loading="lazy" onerror="this.style.display='none';" />` : ''}
+          </div>
+          <p class="team-karte-name">${raum.bezeichnung}</p>
+        </article>`;
+    }
+
+    function befuelleRaeume(raeume) {
+      const grid = document.getElementById('raeumeGrid');
+      if (!grid || !raeume?.length) return;
+      grid.innerHTML = raeume.map(r => raumKarteHtml(r)).join('');
+      lightboxInitialisieren();
+    }
+
+
+    /* ── Lightbox ────────────────────────────────────────────────
+       Klick auf ein Raumfoto öffnet es bildschirmfüllend.
+       Schließen: Klick auf den Hintergrund, × oder Escape-Taste.
+    ─────────────────────────────────────────────────────────── */
+    function lightboxInitialisieren() {
+      const overlay    = document.getElementById('lightbox');
+      const lightboxBild = document.getElementById('lightboxBild');
+      const schliessenBtn = overlay.querySelector('.lightbox-schliessen');
+
+      /* Klick auf ein Raumfoto */
+      document.getElementById('raeumeGrid').addEventListener('click', e => {
+        const img = e.target.closest('.raum-karte-bild')?.querySelector('img');
+        if (!img) return;
+        lightboxBild.src = img.src;
+        lightboxBild.alt = img.alt;
+        overlay.classList.add('aktiv');
+        document.body.style.overflow = 'hidden';
+      });
+
+      /* Schließen über × */
+      schliessenBtn.addEventListener('click', schliessen);
+
+      /* Schließen über Klick auf Hintergrund (nicht aufs Bild) */
+      overlay.addEventListener('click', e => {
+        if (e.target === overlay) schliessen();
+      });
+
+      /* Schließen über Escape */
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') schliessen();
+      });
+
+      function schliessen() {
+        overlay.classList.remove('aktiv');
+        document.body.style.overflow = '';
+      }
+    }
+
+
+    /* ── Bild-HTML ───────────────────────────────────────────── */
+    function bildHtml(src, alt) {
+      if (!src) return '';
+      return `<img src="${src}" alt="${alt}" loading="lazy" onerror="this.style.display='none';" />`;
+    }
+
+
+    /* ── Karten-Generatoren ──────────────────────────────────── */
+
+    function arztKarteHtml(arzt) {
+      const src  = arzt.foto || '';
+      const name = `${arzt.titel} ${arzt.vorname} ${arzt.nachname}`;
+      return `
+        <article aria-labelledby="arzt-${arzt.id}">
+          <div class="team-karte-bild">
+            ${bildHtml(src, `Foto von ${name}`)}
+          </div>
+          <p class="team-karte-name" id="arzt-${arzt.id}">${name}</p>
+          <p class="team-karte-rolle">${arzt.fachrichtung}</p>
+        </article>`;
+    }
+
+    function mfaKarteHtml(mitglied) {
+      const src  = mitglied.foto || '';
+      const name = `${mitglied.vorname} ${mitglied.nachname}`;
+      return `
+        <article aria-labelledby="mfa-${mitglied.id}">
+          <div class="team-karte-bild">
+            ${bildHtml(src, `Foto von ${name}`)}
+          </div>
+          <p class="team-karte-name" id="mfa-${mitglied.id}">${name}</p>
+          <p class="team-karte-rolle">${mitglied.rolle}</p>
+        </article>`;
+    }
+
+
+    /* ── Praxisdaten laden ───────────────────────────────────── */
+    fetch('praxis-daten.json')
+      .then(res => {
+        if (!res.ok) throw new Error('praxis-daten.json nicht erreichbar');
+        return res.json();
+      })
+      .then(daten => {
+        befuelleLogo(daten.praxis);
+        befuelleAerzte(daten.team?.aerzte ?? []);
+        befuellePraxisteam(daten.team?.praxisteam ?? []);
+        befuelleRaeume(daten.praxisraeume ?? []);
+        befuelleFooterKontakt(daten.kontakt, daten.praxis);
+      })
+      .catch(err => {
+        console.error('Fehler beim Laden der Praxisdaten:', err);
+        document.querySelector('main').insertAdjacentHTML('afterbegin',
+          '<p role="alert" style="font-size:0.875rem;opacity:0.6;margin-bottom:2rem;">' +
+          'Die Praxisdaten konnten momentan nicht geladen werden.</p>'
+        );
+      });
+
+
+    /* ── Befüll-Funktionen ───────────────────────────────────── */
+
+    function befuelleLogo(praxis) {
+      if (!praxis?.logo) return;
+      const logoEl   = document.getElementById('praxis-logo');
+      logoEl.src     = praxis.logo;
+      logoEl.onerror = () => { logoEl.style.display = 'none'; };
+    }
+
+    function befuelleAerzte(aerzte) {
+      const grid = document.getElementById('aerzteGrid');
+      if (!grid || !aerzte.length) return;
+      grid.innerHTML = aerzte.map(a => arztKarteHtml(a)).join('');
+    }
+
+    function befuellePraxisteam(team) {
+      const grid = document.getElementById('praxisteamGrid');
+      if (!grid || !team.length) return;
+      grid.innerHTML = team.map(m => mfaKarteHtml(m)).join('');
+    }
+
+    function befuelleFooterKontakt(kontakt, praxis) {
+      if (!kontakt) return;
+      const el   = document.getElementById('footerKontakt');
+      const adr  = kontakt.adresse;
+      const name = praxis?.arzt_name ?? 'Praxis Dr. Berwanger';
+      el.innerHTML =
+        '<h4>Praxis</h4>' +
+        `<p>${name}<br>${adr.strasse}<br>${adr.plz} ${adr.ort}</p>` +
+        `<a href="tel:${kontakt.telefon.replace(/\s/g, '')}">${kontakt.telefon}</a>` +
+        `<a href="mailto:${kontakt.email}" style="margin-top:0.15rem;">${kontakt.email}</a>`;
+    }
+  </script>
+
+</body>
+</html>

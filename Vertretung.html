@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <meta name="description" content="Vertretung während der Schließzeiten – Kinderarztpraxis Dr. Bernd Berwanger." />
+  <title>Vertretung – Dr. Bernd Berwanger</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .termin-badge {
+      display:        inline-block;
+      font-size:      0.62rem;
+      font-weight:    700;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color:          var(--farbe-gedaempft);
+      margin-bottom:  0.75rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════
+       KOPFZEILE / NAVIGATION
+  ════════════════════════════════════════ -->
+  <header class="nav-wrapper" role="banner">
+    <div class="nav-inner">
+
+      <a href="index.html" class="logo-bereich" aria-label="Startseite – Praxis Dr. Berwanger">
+        <img id="praxis-logo" src="" alt="Logo der Praxis Dr. Berwanger" />
+        <div>
+          <div class="logo-text-haupt">Dr. Bernd<br />Berwanger</div>
+        </div>
+      </a>
+
+      <nav aria-label="Hauptnavigation">
+        <ul class="nav-links">
+          <li><a href="leistungen.html">Leistungen</a></li>
+          <li><a href="team.html">Team &amp; Praxis</a></li>
+          <li><a href="kontakt.html">Sprechzeiten &amp; Kontakt</a></li>
+        </ul>
+      </nav>
+
+      <button
+        class="burger-btn"
+        id="burgerBtn"
+        aria-expanded="false"
+        aria-controls="mobileMenu"
+        aria-label="Menü öffnen"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+    <nav id="mobileMenu" class="mobile-menu" aria-label="Mobile Navigation" hidden>
+      <a href="leistungen.html">Leistungen</a>
+      <a href="team.html">Team &amp; Praxis</a>
+      <a href="kontakt.html">Sprechzeiten &amp; Kontakt</a>
+    </nav>
+  </header>
+
+
+  <!-- ════════════════════════════════════════
+       HAUPTINHALT
+  ════════════════════════════════════════ -->
+  <main id="hauptinhalt">
+
+    <section
+      class="einblenden verzoegert-1"
+      aria-labelledby="vertretungTitel"
+    >
+      <h1 id="vertretungTitel">Vertretung während der Schließzeiten</h1>
+
+      <div id="vertretungIntro" class="vertr-intro">
+        <!-- Skeleton -->
+        <div class="lade-placeholder" style="width:75%; margin-bottom:0.5rem;"></div>
+        <div class="lade-placeholder" style="width:55%;"></div>
+      </div>
+    </section>
+
+    <div
+      id="vertretungAerzte"
+      class="einblenden verzoegert-2"
+      aria-live="polite"
+    >
+      <!-- Skeleton -->
+      <div class="vertr-karte">
+        <div class="lade-placeholder" style="width:55%; height:1.5rem; margin-bottom:0.4rem;"></div>
+        <div class="lade-placeholder" style="width:40%; margin-bottom:1.75rem;"></div>
+        <div class="lade-placeholder" style="width:50%; margin-bottom:0.5rem;"></div>
+        <div class="lade-placeholder" style="width:35%; margin-bottom:0.5rem;"></div>
+        <div class="lade-placeholder" style="width:45%;"></div>
+      </div>
+    </div>
+
+  </main>
+
+
+  <!-- ════════════════════════════════════════
+       FUSSZEILE
+  ════════════════════════════════════════ -->
+  <footer role="contentinfo">
+
+    <svg
+      class="footer-welle"
+      viewBox="0 0 1440 90"
+      preserveAspectRatio="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path d="M0,60 C480,95 960,20 1440,60 L1440,0 L0,0 Z" />
+    </svg>
+
+    <div class="footer-inner">
+
+      <div class="footer-block">
+        <h4>Notruf &amp; Notdienst</h4>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Rettungsdienst</div>
+          <a href="tel:112" class="notruf-tel">112</a>
+        </div>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Ärztlicher Bereitschaftsdienst</div>
+          <a href="tel:116117" class="notruf-tel">116 117</a>
+        </div>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Giftnotruf</div>
+          <a href="tel:0613119240" class="notruf-tel">06131 19240</a>
+        </div>
+      </div>
+
+      <div class="footer-block" id="footerKontakt">
+        <h4>Praxis</h4>
+        <p class="lade-placeholder" style="width:85%;"></p>
+        <p class="lade-placeholder" style="width:60%; margin-top:0.5rem;"></p>
+        <p class="lade-placeholder" style="width:70%; margin-top:0.5rem;"></p>
+      </div>
+
+      <div class="footer-block">
+        <h4>Rechtliches</h4>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutzerklärung</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; <span id="jahreszahl"></span> Praxis Dr. Bernd Berwanger &nbsp;·&nbsp; Alle Angaben ohne Gewähr.</p>
+    </div>
+
+  </footer>
+
+
+  <!-- ════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════ -->
+  <script>
+    "use strict";
+
+    /* ════════════════════════════════════════════════════════════
+       DATUMS-HILFSFUNKTIONEN
+       ────────────────────────────────────────────────────────────
+       parseDatum  : "YYYY-MM-DD" → lokales Date-Objekt (UTC-sicher)
+       formatDatum : Date → "TT.MM.JJJJ"
+    ════════════════════════════════════════════════════════════ */
+    function parseDatum(str) {
+      const [y, m, d] = str.split('-').map(Number);
+      return new Date(y, m - 1, d);
+    }
+
+    function formatDatum(datum) {
+      const t = String(datum.getDate()).padStart(2, '0');
+      const m = String(datum.getMonth() + 1).padStart(2, '0');
+      return `${t}.${m}.${datum.getFullYear()}`;
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       SCHLIESSZEIT-LOGIK
+       ────────────────────────────────────────────────────────────
+       findeAktiveSchliesszeit : Schließzeit im Vorlauf- oder
+         Aktivzeitraum (identisch zur Logik in index.html).
+
+       findeNaechsteSchliesszeit : Nächste zukünftige Schließzeit,
+         unabhängig vom Vorlauf. Wird als Fallback für
+         Direktaufrufe von Vertretung.html verwendet.
+    ════════════════════════════════════════════════════════════ */
+    function findeAktiveSchliesszeit(schliesstage) {
+      if (!Array.isArray(schliesstage)) return null;
+      const heute = new Date();
+      heute.setHours(0, 0, 0, 0);
+
+      return [...schliesstage]
+        .map(s => {
+          const vonDatum    = parseDatum(s.von);
+          const bisDatum    = parseDatum(s.bis);
+          const vorlaufTage = s.vorlauf_tage ?? 14;
+          const vorlaufStart = new Date(vonDatum);
+          vorlaufStart.setDate(vorlaufStart.getDate() - vorlaufTage);
+          return { ...s, vonDatum, bisDatum, vorlaufStart };
+        })
+        .filter(s => heute >= s.vorlaufStart && heute <= s.bisDatum)
+        .sort((a, b) => a.vonDatum - b.vonDatum)
+        .map(s => ({ ...s, phase: heute < s.vonDatum ? 'vorlauf' : 'aktiv' }))[0]
+        ?? null;
+    }
+
+    function findeNaechsteSchliesszeit(schliesstage) {
+      if (!Array.isArray(schliesstage)) return null;
+      const heute = new Date();
+      heute.setHours(0, 0, 0, 0);
+
+      return [...schliesstage]
+        .map(s => ({ ...s, vonDatum: parseDatum(s.von), bisDatum: parseDatum(s.bis) }))
+        .filter(s => s.bisDatum >= heute)
+        .sort((a, b) => a.vonDatum - b.vonDatum)[0]
+        ?? null;
+    }
+
+    /* ── Burger-Menü ────────────────────────────────────────── */
+    const burgerBtn  = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    burgerBtn.addEventListener('click', () => {
+      const istOffen = burgerBtn.classList.toggle('offen');
+      burgerBtn.setAttribute('aria-expanded', istOffen);
+      burgerBtn.setAttribute('aria-label', istOffen ? 'Menü schließen' : 'Menü öffnen');
+      mobileMenu.classList.toggle('offen', istOffen);
+      mobileMenu.hidden = !istOffen;
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        burgerBtn.classList.remove('offen');
+        burgerBtn.setAttribute('aria-expanded', 'false');
+        burgerBtn.setAttribute('aria-label', 'Menü öffnen');
+        mobileMenu.classList.remove('offen');
+        mobileMenu.hidden = true;
+      });
+    });
+
+    /* ── Aktive Seite markieren ─────────────────────────────── */
+    const aktuelleSeite = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(link => {
+      if (link.getAttribute('href') === aktuelleSeite) link.classList.add('aktiv');
+    });
+
+    /* ── Jahr im Footer ─────────────────────────────────────── */
+    document.getElementById('jahreszahl').textContent = new Date().getFullYear();
+
+    /* ── Praxisdaten laden ──────────────────────────────────── */
+    fetch('praxis-daten.json')
+      .then(res => {
+        if (!res.ok) throw new Error('praxis-daten.json nicht erreichbar');
+        return res.json();
+      })
+      .then(daten => {
+        befuelleLogo(daten.praxis);
+        befuelleFooterKontakt(daten.kontakt, daten.praxis);
+        befuelleVertretung(daten.vertretung, daten.schliesstage);
+      })
+      .catch(err => {
+        console.error('Fehler beim Laden der Praxisdaten:', err);
+        document.getElementById('vertretungIntro').innerHTML =
+          '<p style="opacity:0.6;">Die Daten konnten momentan nicht geladen werden.</p>';
+      });
+
+    /* ── Logo ───────────────────────────────────────────────── */
+    function befuelleLogo(praxis) {
+      if (!praxis || !praxis.logo) return;
+      const logoEl = document.getElementById('praxis-logo');
+      logoEl.src   = praxis.logo;
+      logoEl.onerror = () => { logoEl.style.display = 'none'; };
+    }
+
+    /* ── Footer ─────────────────────────────────────────────── */
+    function befuelleFooterKontakt(kontakt, praxis) {
+      if (!kontakt) return;
+      const el   = document.getElementById('footerKontakt');
+      const adr  = kontakt.adresse;
+      const name = praxis?.arzt_name ?? 'Praxis Dr. Berwanger';
+      el.innerHTML =
+        '<h4>Praxis</h4>' +
+        `<p>${name}<br>${adr.strasse}<br>${adr.plz} ${adr.ort}</p>` +
+        `<a href="tel:${kontakt.telefon.replace(/\s/g, '')}">${kontakt.telefon}</a>` +
+        `<a href="mailto:${kontakt.email}" style="margin-top:0.15rem;">${kontakt.email}</a>`;
+    }
+
+    /* ── Vertretung ─────────────────────────────────────────────
+       Leitet den anzuzeigenden Schließzeitraum automatisch aus
+       schliesstage ab:
+         1. Vorrang: aktive/vorlaufende Schließzeit (= warum der
+            Banner-Button gerade sichtbar ist)
+         2. Fallback: nächste zukünftige Schließzeit (für
+            Direktaufrufe der URL ohne aktiven Banner)
+         3. Kein Eintrag: neutraler Text ohne Zeitraum
+    ──────────────────────────────────────────────────────────── */
+    function befuelleVertretung(vertretung, schliesstage) {
+      if (!vertretung) return;
+
+      /* Zeitraum bestimmen */
+      const schliesszeit =
+        findeAktiveSchliesszeit(schliesstage) ??
+        findeNaechsteSchliesszeit(schliesstage);
+
+      const introEl = document.getElementById('vertretungIntro');
+
+      if (schliesszeit) {
+        const vonStr = formatDatum(schliesszeit.vonDatum);
+        const bisStr = formatDatum(schliesszeit.bisDatum);
+        introEl.innerHTML =
+          '<p>Liebe Patienteneltern,</p>' +
+          `<p>unsere Praxis ist im Zeitraum ` +
+          `<strong>${vonStr} bis ${bisStr}</strong> ` +
+          `wegen ${schliesszeit.grund} geschlossen. ` +
+          'Unsere Vertretung übernimmt:</p>';
+      } else {
+        introEl.innerHTML =
+          '<p>Liebe Patienteneltern,</p>' +
+          '<p>während unserer Abwesenheit übernimmt folgende Vertretung:</p>';
+      }
+
+      /* Alle aktiven Ärzte finden */
+      const aktiveAerzte = (vertretung.aerzte || []).filter(a => a.aktiv === true);
+      const karteEl = document.getElementById('vertretungAerzte');
+
+      if (!aktiveAerzte.length) {
+        karteEl.innerHTML =
+          '<p style="opacity:0.6;">Aktuell ist kein Vertretungsarzt hinterlegt. ' +
+          'Bitte kontaktieren Sie den ärztlichen Bereitschaftsdienst unter ' +
+          '<a href="tel:116117" style="font-weight:600;">116 117</a>.</p>';
+        return;
+      }
+
+      /* Alle aktiven Ärzte als Karten ausgeben */
+      karteEl.innerHTML = aktiveAerzte.map(arzt => {
+        const telHtml = arzt.telefon
+          ? `<div class="vertr-kontakt-zeile">
+               <span class="vertr-label">Telefon</span>
+               <a href="tel:${arzt.telefon.replace(/[\s\/\-]/g, '')}" class="vertr-tel-link">${arzt.telefon}</a>
+             </div>`
+          : '';
+
+        const emailHtml = arzt.email
+          ? `<div class="vertr-kontakt-zeile">
+               <span class="vertr-label">E-Mail</span>
+               <a href="mailto:${arzt.email}">${arzt.email}</a>
+             </div>`
+          : '';
+
+        const webHtml = arzt.website
+          ? `<div class="vertr-kontakt-zeile">
+               <span class="vertr-label">Website</span>
+               <a href="${arzt.website}" target="_blank" rel="noopener noreferrer">${arzt.website.replace('https://', '')}</a>
+             </div>`
+          : '';
+
+        return `<div class="vertr-karte">
+          <span class="termin-badge">Vertretung</span>
+          <p class="vertr-name">${arzt.name}</p>
+          <p class="vertr-fachrichtung">${arzt.fachrichtung}</p>
+          <p class="vertr-adresse">${arzt.adresse}</p>
+          <div class="vertr-kontakt">${telHtml}${emailHtml}${webHtml}</div>
+        </div>`;
+      }).join('');
+    }
+  </script>
+
+</body>
+</html>

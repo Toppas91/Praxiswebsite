@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />  <meta name="description" content="Impressum – Dr. Bernd Berwanger, Facharzt für Kinder- und Jugendmedizin, Neustadt an der Weinstraße." />
+  <title>Impressum – Dr. Bernd Berwanger</title>
+
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Zentrales Design-System -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── Impressum: seitenspezifische Ergänzungen ──────────────── */
+
+    /* Definitionsliste für Kontaktdaten */
+    .legal-dl {
+      display:               grid;
+      grid-template-columns: max-content 1fr;
+      gap:                   0.4rem 2rem;
+      margin:                0;
+      font-size:             0.9rem;
+    }
+
+    .legal-dl dt {
+      font-weight: 600;
+      opacity:     0.75;
+      white-space: nowrap;
+    }
+
+    .legal-dl dd {
+      margin:  0;
+      opacity: 0.78;
+    }
+
+    .legal-dl a {
+      color:      var(--farbe-text);
+      opacity:    0.78;
+      transition: opacity 0.2s;
+    }
+
+    .legal-dl a:hover { opacity: 1; }
+
+    @media (max-width: 480px) {
+      .legal-dl {
+        grid-template-columns: 1fr;
+      }
+      .legal-dl dt { margin-top: 0.75rem; }
+      .legal-dl dt:first-child { margin-top: 0; }
+    }
+
+    /* Externe Links in Fließtext */
+    .legal-sektion a {
+      color:           var(--farbe-text);
+      border-bottom:   1px solid rgba(42, 42, 42, 0.25);
+      padding-bottom:  0.05rem;
+      transition:      border-color 0.2s, opacity 0.2s;
+    }
+
+    .legal-sektion a:hover {
+      opacity:      0.7;
+      border-color: var(--farbe-text);
+    }
+
+    /* Seitenspezifische Aufzählung */
+    .legal-liste {
+      margin:     0;
+      padding:    0;
+      list-style: none;
+    }
+
+    .legal-liste li {
+      position:    relative;
+      padding:     0.4rem 0 0.4rem 1.25rem;
+      font-size:   0.9rem;
+      opacity:     0.78;
+      line-height: 1.7;
+    }
+
+    .legal-liste li::before {
+      content:  '–';
+      position: absolute;
+      left:     0;
+      opacity:  0.4;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════
+       KOPFZEILE / NAVIGATION
+  ════════════════════════════════════════ -->
+  <header class="nav-wrapper" role="banner">
+    <div class="nav-inner">
+
+      <a href="index.html" class="logo-bereich" aria-label="Startseite – Praxis Dr. Berwanger">
+        <img id="praxis-logo" src="" alt="Logo der Praxis Dr. Berwanger" />
+        <div>
+          <div class="logo-text-haupt">Dr. Bernd<br />Berwanger</div>
+        </div>
+      </a>
+
+      <nav aria-label="Hauptnavigation">
+        <ul class="nav-links">
+          <li><a href="leistungen.html">Leistungen</a></li>
+          <li><a href="team.html">Team &amp; Praxis</a></li>
+          <li><a href="kontakt.html">Sprechzeiten &amp; Kontakt</a></li>
+        </ul>
+      </nav>
+
+      <button
+        class="burger-btn"
+        id="burgerBtn"
+        aria-expanded="false"
+        aria-controls="mobileMenu"
+        aria-label="Menü öffnen"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+    <nav id="mobileMenu" class="mobile-menu" aria-label="Mobile Navigation" hidden>
+      <a href="leistungen.html">Leistungen</a>
+      <a href="team.html">Team &amp; Praxis</a>
+      <a href="kontakt.html">Sprechzeiten &amp; Kontakt</a>
+    </nav>
+  </header>
+
+
+  <!-- ════════════════════════════════════════
+       HAUPTINHALT
+  ════════════════════════════════════════ -->
+  <main id="hauptinhalt">
+
+    <div class="legal-sektion einblenden verzoegert-1" style="margin-bottom:2rem;">
+      <h1>Impressum</h1>
+      <p>Angaben gemäß § 5 Telemediengesetz (TMG)</p>
+    </div>
+
+
+    <!-- ── 1. Anbieter ─────────────────────────────────────────── -->
+    <section class="legal-sektion einblenden verzoegert-2" aria-labelledby="titelAnbieter">
+      <h2 id="titelAnbieter">Anbieter</h2>
+      <dl class="legal-dl">
+        <dt>Name</dt>
+        <dd id="impName"><span class="lade-placeholder" style="width:14rem;"></span></dd>
+
+        <dt>Adresse</dt>
+        <dd id="impAdresse"><span class="lade-placeholder" style="width:16rem;"></span></dd>
+
+        <dt>Telefon</dt>
+        <dd id="impTelefon"><span class="lade-placeholder" style="width:9rem;"></span></dd>
+
+        <dt>Fax</dt>
+        <dd id="impFax"><span class="lade-placeholder" style="width:9rem;"></span></dd>
+
+        <dt>E-Mail</dt>
+        <dd id="impEmail"><span class="lade-placeholder" style="width:18rem;"></span></dd>
+
+        <dt>Website</dt>
+        <dd><a href="https://www.dr-berwanger.de" target="_blank" rel="noopener noreferrer">www.dr-berwanger.de</a></dd>
+      </dl>
+    </section>
+
+
+    <!-- ── 2. Berufsrechtliche Angaben ────────────────────────── -->
+    <section class="legal-sektion einblenden verzoegert-2" aria-labelledby="titelBerufsrecht">
+      <h2 id="titelBerufsrecht">Berufsrechtliche Angaben</h2>
+
+      <p>
+        Dr. Bernd Berwanger ist Mitglied folgender berufsständischer Körperschaften:
+      </p>
+
+      <ul class="legal-liste">
+        <li>
+          <strong>Landesärztekammer Rheinland-Pfalz</strong><br>
+          <a href="https://www.laek-rlp.de" target="_blank" rel="noopener noreferrer">www.laek-rlp.de</a>
+          &nbsp;·&nbsp;
+          <a href="mailto:kammer@laek-rlp.de">kammer@laek-rlp.de</a>
+        </li>
+        <li>
+          <strong>Bezirksärztekammer Pfalz</strong><br>
+          <a href="https://www.aerztekammer-pfalz.de" target="_blank" rel="noopener noreferrer">www.aerztekammer-pfalz.de</a>
+          &nbsp;·&nbsp;
+          <a href="mailto:info@aerztekammer-pfalz.de">info@aerztekammer-pfalz.de</a>
+        </li>
+        <li>
+          <strong>Kassenärztliche Vereinigung Rheinland-Pfalz</strong><br>
+          <a href="https://www.kv-rlp.de" target="_blank" rel="noopener noreferrer">www.kv-rlp.de</a>
+          &nbsp;·&nbsp;
+          <a href="mailto:info@kv-rlp.de">info@kv-rlp.de</a>
+        </li>
+      </ul>
+
+      <p style="margin-top:1.5rem;">
+        Die gesetzliche Berufsbezeichnung lautet <strong>„Facharzt für Kinder- und Jugendmedizin"</strong>.
+        Sie wurde in der Bundesrepublik Deutschland verliehen.
+      </p>
+
+      <p>
+        Es gelten die berufsrechtlichen Regelungen der
+        <strong>Bundesärzteordnung</strong> (BGBl I, 02.10.1961, i.&nbsp;d.&nbsp;jeweils gültigen Fassung)
+        sowie des <strong>Heilberufsgesetzes Rheinland-Pfalz</strong>
+        (GVBl S.&nbsp;649, 20.10.1978, i.&nbsp;d.&nbsp;jeweils gültigen Fassung).
+        Beide Regelungen können in der Bezirksärztekammer Pfalz eingesehen werden.
+      </p>
+
+      <p>
+        Berufsordnung:&nbsp;
+        <a href="https://www.laek-rlp.de/recht/berufsordnung/berufsordnung.php" target="_blank" rel="noopener noreferrer">
+          www.laek-rlp.de/recht/berufsordnung
+        </a>
+      </p>
+    </section>
+
+
+    <!-- ── 3. Haftung ─────────────────────────────────────────── -->
+    <section class="legal-sektion einblenden verzoegert-3" aria-labelledby="titelHaftung">
+      <h2 id="titelHaftung">Haftung</h2>
+
+      <p>
+        Die auf dieser Website enthaltenen Informationen wurden auf ihre Richtigkeit geprüft.
+        Der Anbieter kann jedoch keine Verantwortung dafür übernehmen, dass die Informationen
+        fehlerfrei sind und dem von den Nutzern gewünschten Zweck entsprechen. Der Zugang zur
+        Website und der Gebrauch der dort angebotenen Dokumente erfolgt auf eigenes Risiko des
+        Nutzers.
+      </p>
+
+      <p>
+        Diese Website enthält Links zu Websites anderer Anbieter. Für Inhalte, Änderungen oder
+        Updates anderer Websites kann der Anbieter keine Gewährleistung übernehmen.
+        Bei Bekanntwerden von Rechtsverletzungen werden derartige Links umgehend entfernt.
+      </p>
+
+      <p>
+        Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen
+        dem deutschen Urheberrecht. Downloads und Kopien dieser Seite sind nur für den privaten,
+        nicht kommerziellen Gebrauch gestattet.
+      </p>
+    </section>
+
+
+    <!-- ── 4. Technische Umsetzung ────────────────────────────── -->
+    <section class="legal-sektion einblenden verzoegert-3" aria-labelledby="titelTechnik">
+      <h2 id="titelTechnik">Technische Umsetzung</h2>
+
+      <p>
+        Diese Website wurde mit Unterstützung von
+        <strong>Claude</strong> (KI-Assistent von
+        <a href="https://www.anthropic.com" target="_blank" rel="noopener noreferrer">Anthropic</a>)
+        konzipiert und technisch umgesetzt.
+      </p>
+
+      <p>
+        Einzelne Bilder auf dieser Website wurden mithilfe von
+        <strong>Google Gemini</strong>
+        (<a href="https://gemini.google.com" target="_blank" rel="noopener noreferrer">gemini.google.com</a>)
+        KI-generiert erstellt.
+      </p>
+    </section>
+
+  </main>
+
+
+  <!-- ════════════════════════════════════════
+       FUSSZEILE
+  ════════════════════════════════════════ -->
+  <footer role="contentinfo">
+
+    <svg
+      class="footer-welle"
+      viewBox="0 0 1440 90"
+      preserveAspectRatio="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path d="M0,60 C480,95 960,20 1440,60 L1440,0 L0,0 Z" />
+    </svg>
+
+    <div class="footer-inner">
+
+      <div class="footer-block">
+        <h4>Notruf &amp; Notdienst</h4>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Rettungsdienst</div>
+          <a href="tel:112" class="notruf-tel">112</a>
+        </div>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Ärztlicher Bereitschaftsdienst</div>
+          <a href="tel:116117" class="notruf-tel">116 117</a>
+        </div>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Giftnotruf</div>
+          <a href="tel:0613119240" class="notruf-tel">06131 19240</a>
+        </div>
+      </div>
+
+      <div class="footer-block" id="footerKontakt">
+        <h4>Praxis</h4>
+        <p class="lade-placeholder" style="width:85%;"></p>
+        <p class="lade-placeholder" style="width:60%; margin-top:0.5rem;"></p>
+        <p class="lade-placeholder" style="width:70%; margin-top:0.5rem;"></p>
+      </div>
+
+      <div class="footer-block">
+        <h4>Rechtliches</h4>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutzerklärung</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; <span id="jahreszahl"></span> Praxis Dr. Bernd Berwanger &nbsp;·&nbsp; Alle Angaben ohne Gewähr.</p>
+    </div>
+
+  </footer>
+
+
+  <!-- ════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════ -->
+  <script>
+    "use strict";
+
+    /* ── Burger-Menü ─────────────────────────────────────────── */
+    const burgerBtn  = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    burgerBtn.addEventListener('click', () => {
+      const istOffen = burgerBtn.classList.toggle('offen');
+      burgerBtn.setAttribute('aria-expanded', istOffen);
+      burgerBtn.setAttribute('aria-label', istOffen ? 'Menü schließen' : 'Menü öffnen');
+      mobileMenu.classList.toggle('offen', istOffen);
+      mobileMenu.hidden = !istOffen;
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        burgerBtn.classList.remove('offen');
+        burgerBtn.setAttribute('aria-expanded', 'false');
+        burgerBtn.setAttribute('aria-label', 'Menü öffnen');
+        mobileMenu.classList.remove('offen');
+        mobileMenu.hidden = true;
+      });
+    });
+
+    /* ── Aktive Seite markieren ──────────────────────────────── */
+    const aktuelleSeite = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(link => {
+      if (link.getAttribute('href') === aktuelleSeite) link.classList.add('aktiv');
+    });
+
+    /* ── Jahr im Footer ──────────────────────────────────────── */
+    document.getElementById('jahreszahl').textContent = new Date().getFullYear();
+
+    /* ── Praxisdaten laden ───────────────────────────────────── */
+    fetch('praxis-daten.json')
+      .then(res => {
+        if (!res.ok) throw new Error('praxis-daten.json nicht erreichbar');
+        return res.json();
+      })
+      .then(daten => {
+        befuelleLogo(daten.praxis);
+        befuelleImpressum(daten.kontakt, daten.praxis);
+        befuelleFooterKontakt(daten.kontakt, daten.praxis);
+      })
+      .catch(err => console.error('Fehler beim Laden der Praxisdaten:', err));
+
+    /* ── Befüll-Funktionen ───────────────────────────────────── */
+
+    function befuelleLogo(praxis) {
+      if (!praxis || !praxis.logo) return;
+      const logoEl   = document.getElementById('praxis-logo');
+      logoEl.src     = praxis.logo;
+      logoEl.onerror = () => { logoEl.style.display = 'none'; };
+    }
+
+    function befuelleImpressum(k, praxis) {
+      if (!k) return;
+      const a        = k.adresse;
+      const arztName = praxis?.arzt_name ?? 'Praxis Dr. Berwanger';
+
+      document.getElementById('impName').textContent  = arztName;
+      document.getElementById('impAdresse').innerHTML =
+        `${a.strasse}<br>${a.plz}\u00A0${a.ort}`;
+
+      const telBereinigt = k.telefon.replace(/\s/g, '');
+      document.getElementById('impTelefon').innerHTML =
+        `<a href="tel:${telBereinigt}">${k.telefon}</a>`;
+
+      document.getElementById('impFax').textContent = k.fax || '–';
+
+      document.getElementById('impEmail').innerHTML =
+        `<a href="mailto:${k.email}">${k.email}</a>`;
+    }
+
+    function befuelleFooterKontakt(kontakt, praxis) {
+      if (!kontakt) return;
+      const el   = document.getElementById('footerKontakt');
+      const adr  = kontakt.adresse;
+      const name = praxis?.arzt_name ?? 'Praxis Dr. Berwanger';
+      el.innerHTML =
+        '<h4>Praxis</h4>' +
+        `<p>${name}<br>${adr.strasse}<br>${adr.plz}\u00A0${adr.ort}</p>` +
+        `<a href="tel:${kontakt.telefon.replace(/\s/g, '')}">${kontakt.telefon}</a>` +
+        `<a href="mailto:${kontakt.email}" style="margin-top:0.15rem;">${kontakt.email}</a>`;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />  <meta name="description" content="Leistungen der Kinderarztpraxis Dr. Bernd Berwanger – Impfungen, Vorsorgeuntersuchungen, Diagnostik und allgemeine Leistungen." />
+  <title>Leistungen – Dr. Bernd Berwanger</title>
+
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Zentrales Design-System -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+  /* ════════════════════════════════════════════════════════
+     Leistungsseite – Ergänzende Styles
+     Nur seitenspezifische Regeln; style.css bleibt unverändert.
+  ════════════════════════════════════════════════════════ */
+
+  /* Seiten-Intro */
+  .leistungen-intro {
+    margin-bottom: 4.5rem;
+    max-width:     1000px;
+  }
+
+  .leistungen-intro p {
+    font-size:   1.05rem;
+    opacity:     0.72;
+    line-height: 1.8;
+  }
+
+  /* Kategorie-Block  (Abstand zwischen den vier Bereichen) */
+  .kategorie-block {
+    margin-bottom: 4rem;
+  }
+
+  .kategorie-block:last-child {
+    margin-bottom: 0;
+  }
+
+  .kategorie-block > h2 {
+    margin-bottom: 0.35rem;
+  }
+
+  /* Kurzbeschreibung unter dem Kategorie-Titel */
+  .kategorie-sub {
+    font-size:     0.95rem;
+    opacity:       0.55;
+    line-height:   1.65;
+    margin-bottom: 1.5rem !important;
+  }
+
+
+  /* ════════════════════════════════════════════════════════
+     PILLEN-AKKORDEON
+     ────────────────────────────────────────────────────────
+     Jede Leistung ist eine eigenständige Pille.
+     Farbe: --farbe-banner-bg (#FAE4D0) – dieselbe wie die
+            „Nicht akut"-Karte auf der Startseite.
+
+     NEUE PILLE HINZUFÜGEN:
+       In praxis-daten.json das jeweilige Array erweitern:
+
+       "impfungen": [
+         { "id": "impf-004", "titel": "Neuer Titel", "beschreibung": "Text" },
+         …
+       ]
+
+       Das reicht – die Seite rendert alle Einträge automatisch.
+  ════════════════════════════════════════════════════════ */
+
+  .pille-liste {
+    display:        flex;
+    flex-direction: column;
+    gap:            0.55rem;
+    list-style:     none;
+    padding:        0;
+    margin:         0;
+  }
+
+  /* Einzelne Pille: geschlossen = volles Pill-Rounding */
+  .pille-item {
+  background:    var(--farbe-banner-bg);
+  border-radius: 100px;
+  overflow:      hidden;
+  transition:    border-radius 0.28s ease;
+}
+
+  /* Geöffnet: weichere Ecken, damit der Inhalt organisch wirkt */
+  .pille-item.offen {
+    border-radius: 20px;
+  }
+
+  /* ── Klickbarer Kopf (Button) ── */
+  .pille-kopf {
+    width:           100%;
+    display:         flex;
+    align-items:     center;
+    justify-content: space-between;
+    gap:             1rem;
+    padding:         0.9rem 1.4rem 0.9rem 1.75rem;
+    background:      none;
+    border:          none;
+    cursor:          pointer;
+    text-align:      left;
+    font-family:     var(--font);
+    font-size:       0.975rem;
+    font-weight:     600;
+    color:           var(--farbe-text);
+    line-height:     1.4;
+    transition:      opacity 0.18s;
+  }
+
+  .pille-kopf:hover { opacity: 0.72; }
+
+  /* ── Plus/Minus-Symbol (Kreis rechts) ── */
+  .pille-symbol {
+    flex-shrink:     0;
+    width:           26px;
+    height:          26px;
+    border-radius:   50%;
+    background:      rgba(42, 42, 42, 0.10);
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    font-size:       1.05rem;
+    font-weight:     300;
+    line-height:     1;
+    color:           var(--farbe-text);
+    transition:      transform 0.28s ease, background 0.2s;
+    user-select:     none;
+  }
+
+  /* Symbol dreht sich beim Öffnen zu einem × */
+  .pille-item.offen .pille-symbol {
+    transform:  rotate(45deg);
+    background: rgba(42, 42, 42, 0.16);
+  }
+
+  /* ── Ausklappbarer Inhalt (Höhe per JS gesteuert) ── */
+  .pille-inhalt {
+    overflow:   hidden;
+    max-height: 0;
+    transition: max-height 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .pille-inhalt-innen {
+    padding:     0 1.75rem 1.1rem;
+    font-size:   0.9rem;
+    line-height: 1.75;
+    opacity:     0.72;
+    max-width:   640px;
+  }
+
+  /* Skeleton-Pillen beim Laden */
+  .pille-skeleton {
+    height:        3rem;
+    border-radius: 100px;
+    background:    rgba(42, 42, 42, 0.07);
+    animation:     puls 1.6s ease-in-out infinite;
+  }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════
+       KOPFZEILE / NAVIGATION
+  ════════════════════════════════════════ -->
+  <header class="nav-wrapper" role="banner">
+    <div class="nav-inner">
+
+      <a href="index.html" class="logo-bereich" aria-label="Startseite – Praxis Dr. Berwanger">
+        <img id="praxis-logo" src="" alt="Logo der Praxis Dr. Berwanger" />
+        <div>
+          <div class="logo-text-haupt">Dr. Bernd<br />Berwanger</div>
+        </div>
+      </a>
+
+      <nav aria-label="Hauptnavigation">
+        <ul class="nav-links">
+          <li><a href="leistungen.html">Leistungen</a></li>
+          <li><a href="team.html">Team &amp; Praxis</a></li>
+          <li><a href="kontakt.html">Sprechzeiten &amp; Kontakt</a></li>
+        </ul>
+      </nav>
+
+      <button
+        class="burger-btn"
+        id="burgerBtn"
+        aria-expanded="false"
+        aria-controls="mobileMenu"
+        aria-label="Menü öffnen"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+    <nav id="mobileMenu" class="mobile-menu" aria-label="Mobile Navigation" hidden>
+      <a href="leistungen.html">Leistungen</a>
+      <a href="team.html">Team &amp; Praxis</a>
+      <a href="kontakt.html">Sprechzeiten &amp; Kontakt</a>
+    </nav>
+  </header>
+
+
+  <!-- ════════════════════════════════════════
+       HAUPTINHALT
+  ════════════════════════════════════════ -->
+  <main id="hauptinhalt">
+
+    <!-- Seiten-Intro -->
+    <section
+      class="leistungen-intro einblenden verzoegert-1"
+      id="seitenIntro"
+      aria-labelledby="leistungenTitel"
+    >
+      <h1 id="leistungenTitel">Unsere Leistungen</h1>
+      <p>
+        In unserer Praxis bieten wir ein umfassendes Leistungsspektrum rund um die
+        Gesundheit Ihres Kindes – von der ersten Vorsorgeuntersuchung über alle
+        Schutzimpfungen bis hin zu moderner Diagnostik und Jugendmedizin.
+      </p>
+    </section>
+
+
+    <!-- ════════════════════════════════════════════════════════
+         LEISTUNGSBLÖCKE
+         ────────────────────────────────────────────────────────
+         Jeder Block wird per JavaScript aus praxis-daten.json
+         befüllt. Die Pillen entstehen automatisch aus den JSON-
+         Einträgen in daten.leistungen.[kategorie].
+
+         Neue Leistung hinzufügen → praxis-daten.json bearbeiten.
+         Neuen Kategorie-Block hinzufügen → siehe JS unten:
+           befuelleLeistungsblock(...) aufrufen + neues <section>
+           mit passender id anlegen.
+    ════════════════════════════════════════════════════════ -->
+
+    <!-- Block: Impfungen (Skeleton) -->
+    <section
+      class="kategorie-block einblenden verzoegert-2"
+      id="blockImpfungen"
+      aria-labelledby="titelImpfungen"
+    >
+      <div class="lade-placeholder" style="width:42%; height:1.6rem; margin-bottom:0.5rem;"></div>
+      <div class="lade-placeholder" style="width:65%; height:0.9rem; margin-bottom:1.5rem;"></div>
+      <div class="pille-skeleton" style="margin-bottom:0.55rem;"></div>
+      <div class="pille-skeleton" style="margin-bottom:0.55rem;"></div>
+      <div class="pille-skeleton"></div>
+    </section>
+
+    <!-- Block: Vorsorgeuntersuchungen (Skeleton) -->
+    <section
+      class="kategorie-block einblenden verzoegert-3"
+      id="blockVorsorge"
+      aria-labelledby="titelVorsorge"
+    >
+      <div class="lade-placeholder" style="width:54%; height:1.6rem; margin-bottom:0.5rem;"></div>
+      <div class="lade-placeholder" style="width:70%; height:0.9rem; margin-bottom:1.5rem;"></div>
+      <div class="pille-skeleton" style="margin-bottom:0.55rem;"></div>
+      <div class="pille-skeleton" style="margin-bottom:0.55rem;"></div>
+      <div class="pille-skeleton" style="margin-bottom:0.55rem;"></div>
+      <div class="pille-skeleton" style="margin-bottom:0.55rem;"></div>
+      <div class="pille-skeleton"></div>
+    </section>
+
+    <!-- Block: Diagnostik & Labor (Skeleton) -->
+    <section
+      class="kategorie-block einblenden verzoegert-4"
+      id="blockDiagnostik"
+      aria-labelledby="titelDiagnostik"
+    >
+      <div class="lade-placeholder" style="width:46%; height:1.6rem; margin-bottom:0.5rem;"></div>
+      <div class="lade-placeholder" style="width:72%; height:0.9rem; margin-bottom:1.5rem;"></div>
+      <div class="pille-skeleton" style="margin-bottom:0.55rem;"></div>
+      <div class="pille-skeleton" style="margin-bottom:0.55rem;"></div>
+      <div class="pille-skeleton" style="margin-bottom:0.55rem;"></div>
+      <div class="pille-skeleton" style="margin-bottom:0.55rem;"></div>
+      <div class="pille-skeleton" style="margin-bottom:0.55rem;"></div>
+      <div class="pille-skeleton" style="margin-bottom:0.55rem;"></div>
+      <div class="pille-skeleton" style="margin-bottom:0.55rem;"></div>
+      <div class="pille-skeleton"></div>
+    </section>
+
+    <!-- Block: Allgemeine Leistungen (Skeleton) -->
+    <section
+      class="kategorie-block einblenden verzoegert-5"
+      id="blockAllgemein"
+      aria-labelledby="titelAllgemein"
+    >
+      <div class="lade-placeholder" style="width:48%; height:1.6rem; margin-bottom:0.5rem;"></div>
+      <div class="lade-placeholder" style="width:74%; height:0.9rem; margin-bottom:1.5rem;"></div>
+      <div class="pille-skeleton" style="margin-bottom:0.55rem;"></div>
+      <div class="pille-skeleton"></div>
+    </section>
+
+  </main>
+
+
+  <!-- ════════════════════════════════════════
+       FUSSZEILE
+  ════════════════════════════════════════ -->
+  <footer role="contentinfo">
+
+    <svg
+      class="footer-welle"
+      viewBox="0 0 1440 90"
+      preserveAspectRatio="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path d="M0,60 C480,95 960,20 1440,60 L1440,0 L0,0 Z" />
+    </svg>
+
+    <div class="footer-inner">
+
+      <!-- Notruf & Notdienst -->
+      <div class="footer-block">
+        <h4>Notruf &amp; Notdienst</h4>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Rettungsdienst</div>
+          <a href="tel:112" class="notruf-tel">112</a>
+        </div>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Ärztlicher Bereitschaftsdienst</div>
+          <a href="tel:116117" class="notruf-tel">116 117</a>
+        </div>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Giftnotruf</div>
+          <a href="tel:0613119240" class="notruf-tel">06131 19240</a>
+        </div>
+      </div>
+
+      <!-- Praxis-Kontakt (dynamisch aus JSON) -->
+      <div class="footer-block" id="footerKontakt">
+        <h4>Praxis</h4>
+        <p class="lade-placeholder" style="width:85%;"></p>
+        <p class="lade-placeholder" style="width:60%; margin-top:0.5rem;"></p>
+      </div>
+
+      <!-- Rechtliches -->
+      <div class="footer-block">
+        <h4>Rechtliches</h4>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutzerklärung</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; <span id="jahreszahl"></span> Praxis Dr. Bernd Berwanger &nbsp;·&nbsp; Alle Angaben ohne Gewähr.</p>
+    </div>
+
+  </footer>
+
+
+  <!-- ════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════ -->
+  <script>
+    "use strict";
+
+    /* ── Burger-Menü ──────────────────────────────────────────── */
+    const burgerBtn  = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    burgerBtn.addEventListener('click', () => {
+      const istOffen = burgerBtn.classList.toggle('offen');
+      burgerBtn.setAttribute('aria-expanded', istOffen);
+      burgerBtn.setAttribute('aria-label', istOffen ? 'Menü schließen' : 'Menü öffnen');
+      mobileMenu.classList.toggle('offen', istOffen);
+      mobileMenu.hidden = !istOffen;
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        burgerBtn.classList.remove('offen');
+        burgerBtn.setAttribute('aria-expanded', 'false');
+        burgerBtn.setAttribute('aria-label', 'Menü öffnen');
+        mobileMenu.classList.remove('offen');
+        mobileMenu.hidden = true;
+      });
+    });
+
+    /* ── Aktive Seite markieren ───────────────────────────────── */
+    const aktuelleSeite = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(link => {
+      if (link.getAttribute('href') === aktuelleSeite) link.classList.add('aktiv');
+    });
+
+    /* ── Jahr im Footer ───────────────────────────────────────── */
+    document.getElementById('jahreszahl').textContent = new Date().getFullYear();
+
+
+    /* ── Pillen-Akkordeon ─────────────────────────────────────────
+       Wird nach dem dynamischen Rendern der Blöcke aufgerufen.
+       Funktioniert für alle .pille-kopf-Elemente auf der Seite.
+    ─────────────────────────────────────────────────────────────── */
+    function akkordeonInitialisieren() {
+  document.querySelectorAll('.pille-kopf').forEach(kopf => {
+    kopf.addEventListener('click', () => {
+      const istOffen = kopf.getAttribute('aria-expanded') === 'true';
+      const inhalt   = document.getElementById(kopf.getAttribute('aria-controls'));
+      const item     = kopf.closest('.pille-item');
+
+      /* Alle anderen Pillen schließen */
+      document.querySelectorAll('.pille-kopf[aria-expanded="true"]').forEach(anderer => {
+        if (anderer === kopf) return;
+        anderer.setAttribute('aria-expanded', 'false');
+        document.getElementById(anderer.getAttribute('aria-controls')).style.maxHeight = '0';
+        anderer.closest('.pille-item').classList.remove('offen');
+      });
+
+      /* Angeklickte Pille umschalten */
+      if (istOffen) {
+        kopf.setAttribute('aria-expanded', 'false');
+        inhalt.style.maxHeight = '0';
+        item.classList.remove('offen');
+      } else {
+        kopf.setAttribute('aria-expanded', 'true');
+        inhalt.style.maxHeight = inhalt.scrollHeight + 'px';
+        item.classList.add('offen');
+      }
+    });
+  });
+}
+
+
+    /* ── HTML-Baustein: Kategorie-Block mit Pillen-Akkordeon ──────
+       Erzeugt h2 + Kurzbeschreibung + Liste aus Pillen.
+
+       Parameter:
+         titelId    – ID für das <h2> (aria-labelledby des <section>)
+         titel      – Kategorie-Überschrift
+         untertitel – Kurzbeschreibung
+         eintraege  – Array von { titel, beschreibung } aus JSON
+         blockId    – ID des übergeordneten <section>
+
+       ┌─────────────────────────────────────────────────────────┐
+       │  NEUE PILLE HINZUFÜGEN                                  │
+       │  → praxis-daten.json → Abschnitt "leistungen"          │
+       │  → Passendes Array erweitern:                           │
+       │    { "id": "neu-001", "titel": "…", "beschreibung": "…" }│
+       │  Die Pille erscheint automatisch beim nächsten Laden.   │
+       └─────────────────────────────────────────────────────────┘
+    ─────────────────────────────────────────────────────────────── */
+    function kategorieHtml(titelId, titel, untertitel, eintraege, blockId) {
+
+      const pillenHtml = eintraege.map((e, i) => {
+        const inhaltId = `${blockId}-inhalt-${i}`;
+        const kopfId   = `${blockId}-kopf-${i}`;
+        return `
+          <li class="pille-item">
+            <button
+              class="pille-kopf"
+              id="${kopfId}"
+              aria-expanded="false"
+              aria-controls="${inhaltId}"
+            >
+              <span>${e.titel}</span>
+              <span class="pille-symbol" aria-hidden="true">+</span>
+            </button>
+            <div
+              class="pille-inhalt"
+              id="${inhaltId}"
+              role="region"
+              aria-labelledby="${kopfId}"
+            >
+              <div class="pille-inhalt-innen">${e.beschreibung}</div>
+            </div>
+          </li>`;
+      }).join('');
+
+      return `
+        <h2 id="${titelId}">${titel}</h2>
+        <p class="kategorie-sub">${untertitel}</p>
+        <ul class="pille-liste" role="list">
+          ${pillenHtml}
+        </ul>`;
+    }
+
+
+    /* ── Einzelnen Leistungsblock befüllen ────────────────────────
+       blockId    – id des <section>-Elements im HTML
+       titelId    – id für das <h2>
+       titel      – Anzeige-Titel der Kategorie
+       untertitel – Kurzbeschreibung
+       eintraege  – Daten-Array aus praxis-daten.json
+    ─────────────────────────────────────────────────────────────── */
+    function befuelleLeistungsblock(blockId, titelId, titel, untertitel, eintraege) {
+      const block = document.getElementById(blockId);
+      if (!block || !Array.isArray(eintraege)) return;
+      block.innerHTML = kategorieHtml(titelId, titel, untertitel, eintraege, blockId);
+    }
+
+
+    /* ── Praxisdaten laden ────────────────────────────────────── */
+    fetch('praxis-daten.json')
+      .then(res => {
+        if (!res.ok) throw new Error('praxis-daten.json nicht erreichbar');
+        return res.json();
+      })
+      .then(daten => {
+
+        befuelleLogo(daten.praxis);
+
+        /* ── Leistungsblöcke ──────────────────────────────────────
+           Reihenfolge = Anzeigereihenfolge auf der Seite.
+           Neue Kategorie: 1) <section id="blockNeu"> im HTML
+           anlegen, 2) befuelleLeistungsblock(...) hier aufrufen.
+        ─────────────────────────────────────────────────────────── */
+        befuelleLeistungsblock(
+          'blockImpfungen',
+          'titelImpfungen',
+          'Impfungen',
+          'Wir bieten alle empfohlenen Schutzimpfungen sowie individuelle Reiseimpfberatung.',
+          daten.leistungen.impfungen
+        );
+
+        befuelleLeistungsblock(
+          'blockVorsorge',
+          'titelVorsorge',
+          'Vorsorge & Untersuchungen',
+          'Von der U2 bis zur J2 und von der Kindergartenuntersuchung bis zur Jugendarbeitsschutzuntersuchung – wir begleiten Ihr Kind durch jede Entwicklungsphase.',
+          daten.leistungen.vorsorgeuntersuchungen
+        );
+
+        befuelleLeistungsblock(
+          'blockDiagnostik',
+          'titelDiagnostik',
+          'Diagnostik & Labor',
+          'Moderne Gerätemedizin und Labordiagnostik direkt in der Praxis – für eine fundierte Beurteilung und schnelle Ergebnisse.',
+          daten.leistungen.diagnostik
+        );
+
+        befuelleLeistungsblock(
+          'blockAllgemein',
+          'titelAllgemein',
+          'Allgemeine Leistungen',
+          'Ambulante Versorgung und operative Begleitung – kompetent und wohnortnah.',
+          daten.leistungen.allgemeine_leistungen
+        );
+
+        befuelleFooterKontakt(daten.kontakt, daten.praxis);
+
+        /* Akkordeon-Eventlistener nachträglich aktivieren */
+        akkordeonInitialisieren();
+      })
+      .catch(err => {
+        console.error('Fehler beim Laden der Praxisdaten:', err);
+        document.querySelector('main').insertAdjacentHTML('afterbegin',
+          '<p role="alert" style="font-size:0.875rem;opacity:0.6;margin-bottom:2rem;">' +
+          'Die Praxisdaten konnten momentan nicht geladen werden.</p>'
+        );
+      });
+
+
+    /* ── Logo ─────────────────────────────────────────────────── */
+    function befuelleLogo(praxis) {
+      if (!praxis || !praxis.logo) return;
+      const logoEl   = document.getElementById('praxis-logo');
+      logoEl.src     = praxis.logo;
+      logoEl.onerror = () => { logoEl.style.display = 'none'; };
+    }
+
+
+    /* ── Footer-Kontaktblock ──────────────────────────────────── */
+    function befuelleFooterKontakt(kontakt, praxis) {
+      if (!kontakt) return;
+      const el   = document.getElementById('footerKontakt');
+      const adr  = kontakt.adresse;
+      const name = praxis?.arzt_name ?? 'Praxis Dr. Berwanger';
+      el.innerHTML =
+        '<h4>Praxis</h4>' +
+        `<p>${name}<br>${adr.strasse}<br>${adr.plz} ${adr.ort}</p>` +
+        `<a href="tel:${kontakt.telefon.replace(/\s/g, '')}">${kontakt.telefon}</a>` +
+        `<a href="mailto:${kontakt.email}" style="margin-top:0.15rem;">${kontakt.email}</a>`;
+    }
+  </script>
+
+</body>
+</html>

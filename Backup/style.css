@@ -1,0 +1,959 @@
+/* ════════════════════════════════════════════════════════════════
+   style.css — Kinderarztpraxis Dr. Bernd Berwanger
+   Zentrales Design-System · v2.1
+   Alle Seiten binden diese Datei ein.
+════════════════════════════════════════════════════════════════ */
+
+
+/* ── 1. Design-Variablen ─────────────────────────────────────── */
+:root {
+  --font:                  'Poppins', sans-serif;
+
+  --farbe-hintergrund:     #FAF8F5;
+  --farbe-text:            #2A2A2A;
+  --farbe-gedaempft:       rgba(42, 42, 42, 0.45);
+  --farbe-sehr-gedaempft:  rgba(42, 42, 42, 0.07);
+
+  --farbe-banner-bg:  #FAE4D0;   /* helles Pastell-Orange  */
+  --farbe-footer-bg:  #F5C9A8;   /* warmes Pastell-Orange  */
+
+  --max-breite:            1100px;
+  --max-breite-schmal:      860px;
+  --abstand-sektion:         6rem;
+}
+
+
+/* ── 2. Reset & Basis ────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin:     0;
+  padding:    0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background:   var(--farbe-hintergrund);
+  color:        var(--farbe-text);
+  font-family:  var(--font);
+  font-size:    17px;
+  font-weight:  400;
+  line-height:  1.75;
+  min-height:   100dvh;
+}
+
+img,
+svg {
+  display: block;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  color:           var(--farbe-text);
+  text-decoration: none;
+}
+
+
+/* ── 3. Typografie ───────────────────────────────────────────── */
+h1 {
+  font-size:      clamp(1.92rem, 4.8vw, 3.2rem); /* -20% verkleinert */
+  font-weight:    700;
+  line-height:    1.07;
+  letter-spacing: -0.035em;
+  margin-bottom:  1.5rem;
+}
+
+h2 {
+  font-size:      clamp(1.6rem, 4vw, 2.5rem);
+  font-weight:    600;
+  line-height:    1.15;
+  letter-spacing: -0.025em;
+  margin-bottom:  1rem;
+}
+
+h3 {
+  font-size:      clamp(1rem, 2.5vw, 1.3rem);
+  font-weight:    600;
+  line-height:    1.35;
+  letter-spacing: -0.01em;
+  margin-bottom:  0.5rem;
+}
+
+h4 {
+  font-size:      0.65rem;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color:          var(--farbe-gedaempft);
+  margin-bottom:  1.25rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* ── 4. Navigation ───────────────────────────────────────────── */
+.nav-wrapper {
+  position:   sticky;
+  top:        0;
+  z-index:    200;
+  background: var(--farbe-hintergrund);
+}
+
+.nav-inner {
+  max-width:       var(--max-breite);
+  margin:          0 auto;
+  padding:         3.75rem 2.5rem;
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             2rem;
+}
+
+/* Logo-Bereich */
+.logo-bereich {
+  display:     flex;
+  align-items: center;
+  gap:         1rem;
+  flex-shrink: 0;
+}
+
+#praxis-logo {
+  height:       85px;
+  width:        auto;
+  object-fit:   contain;
+  flex-shrink:  0;
+}
+
+/* Leere src verbergen – kein broken-image icon */
+#praxis-logo:not([src]),
+#praxis-logo[src=""] {
+  display: none;
+}
+
+.logo-text-haupt {
+  font-size:      1.5rem; 
+  font-weight:    600;
+  line-height:    1.25;
+  white-space:    nowrap;
+}
+
+.logo-text-unter {
+  font-size:      1.2rem; 
+  font-weight:    400;
+  color:          var(--farbe-gedaempft);
+  line-height:    1.2;
+  white-space:    nowrap;
+}
+
+/* Desktop-Navigationslinks */
+.nav-links {
+  display: flex;
+  gap:     2.75rem;
+}
+
+.nav-links a {
+  font-size:      1.45rem; /* +20% vergrößert */
+  font-weight:    500;
+  opacity:        0.42;
+  transition:     opacity 0.22s ease;
+  white-space:    nowrap;
+}
+
+.nav-links a:hover,
+.nav-links a.aktiv {
+  opacity: 1;
+}
+
+/* Burger-Button */
+.burger-btn {
+  display:         none;
+  flex-direction:  column;
+  justify-content: center;
+  gap:             5px;
+  width:           40px;
+  height:          40px;
+  background:      none;
+  border:          none;
+  cursor:          pointer;
+  padding:         8px;
+  flex-shrink:     0;
+}
+
+.burger-btn span {
+  display:       block;
+  height:        1.5px;
+  background:    var(--farbe-text);
+  border-radius: 2px;
+  transition:    transform 0.25s ease, opacity 0.25s ease;
+}
+
+.burger-btn.offen span:nth-child(1) { transform: translateY(6.5px)  rotate(45deg);  }
+.burger-btn.offen span:nth-child(2) { opacity: 0; }
+.burger-btn.offen span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mobiles Menü */
+.mobile-menu {
+  display:    none;
+  background: var(--farbe-hintergrund);
+  padding:    0.25rem 2rem 1.75rem;
+}
+
+.mobile-menu.offen {
+  display: block;
+}
+
+.mobile-menu a {
+  display:     block;
+  padding:     0.85rem 0;
+  font-size:   1.2rem;   /* +20% vergrößert */
+  font-weight: 500;
+  opacity:     0.45;
+  transition:  opacity 0.2s;
+}
+
+.mobile-menu a:hover { opacity: 1; }
+
+@media (max-width: 767px) {
+  .nav-links  { display: none; }
+  .burger-btn { display: flex; }
+  .nav-inner  { padding: 1.5rem 1.75rem; }
+  .mobile-menu { padding: 0 1.75rem 1.75rem; }
+}
+
+
+/* ── 5. Ankündigungs-Banner ──────────────────────────────────── */
+
+/* Äußerer Wrapper: zentriert den Card-Block auf Inhaltsbreite */
+#newsBanner {
+  max-width: var(--max-breite);
+  margin:    2rem auto 0;
+  padding:   0 2.5rem;
+}
+
+/* Die Card selbst: salbeigrüner Hintergrund, weiche Ecken */
+.banner {
+  background:    var(--farbe-footer-bg);
+  padding:       2.5rem;
+  border-radius: 16px;
+}
+
+/* Flex-Spalte: Text oben, Button darunter, linksbündig */
+.banner-inner {
+  display:        flex;
+  flex-direction: column;
+  align-items:    flex-start;
+  gap:            1.75rem;
+}
+
+/* Ankündigungstext */
+.banner-text {
+  font-size:   1.15rem;
+  font-weight: 500;
+  line-height: 1.6;
+  margin:      0;
+}
+
+/* Pillen-Button: dunkel-anthrazit, helle Schrift, voll abgerundet */
+.banner-btn {
+  display:       inline-block;
+  font-size:     1.05rem;
+  font-weight:   600;
+  color:         var(--farbe-hintergrund);
+  background:    var(--farbe-text);
+  padding:       0.85rem 1.75rem;
+  border-radius: 100px;
+  transition:    opacity 0.2s ease, transform 0.2s ease;
+  white-space:   nowrap;
+}
+
+.banner-btn:hover {
+  opacity:   0.88;
+  transform: translateY(-2px);
+}
+
+/* Smartphone: engerer Innenabstand, Button streckt sich auf volle Breite */
+@media (max-width: 767px) {
+  #newsBanner { padding: 0 1.75rem; margin-top: 1.5rem; }
+  .banner     { padding: 1.75rem; border-radius: 12px; }
+  .banner-btn { display: block; width: 100%; text-align: center; }
+}
+
+/* ── 6. Hauptinhalt ──────────────────────────────────────────── */
+main {
+  max-width: var(--max-breite);
+  margin:    0 auto;
+  padding:   6.5rem 2.5rem 11rem;
+}
+
+/* Startseite: kein eigenes Padding/max-width, Sections haben eigene Wrapper */
+main.startseite {
+  max-width: 100%;
+  padding:   0;
+}
+
+/* Zentrierter Inhalts-Wrapper (ersetzt das Padding von main.startseite) */
+.inhalt-zentriert {
+  max-width: var(--max-breite);
+  margin:    0 auto;
+  padding:   4rem 2.5rem 0;
+}
+.inhalt-zentriert:last-child {
+  padding-top:    2rem;   /* ← NEU: war implizit 6.5rem wie alle inhalt-zentriert */
+  padding-bottom: 2rem;
+}
+
+@media (max-width: 767px) {
+  main { padding: 4rem 1.75rem 8rem; }
+  .inhalt-zentriert       { padding: 4rem 1.75rem 0; }
+  .inhalt-zentriert:last-child { padding-bottom: 8rem; }
+  .startseiten-bild-wrapper { width: 100%; } /* war 90% – auf Mobile volle Breite */
+}
+
+/* ── 7. Startseite – Begrüßungsbereich ──────────────────────── */
+.begruessungsbereich {
+  margin-bottom: 2rem;
+}
+
+.begruessungsbereich h1 {
+  font-size:     clamp(1.6rem, 4vw, 2.6rem); /* Macht den Namen auf der Startseite ca. 15-20% kleiner */
+ font-weight:   600;
+  margin-bottom: 0.8rem;
+}
+
+/* Fachrichtung: kleiner als H1, gedämpft, großer Weißraum nach unten */
+.begruessungsbereich .arzt-fachrichtung {
+  font-size:     clamp(1.05rem, 2.2vw, 1.3rem);
+  font-weight:   400;
+  color:         var(--farbe-gedaempft);
+  margin-bottom: 5rem;   /* bewusst großzügiger vertikaler Abstand */
+  line-height:   1.4;
+}
+
+/* Willkommens-Titel: semi-bold, leicht größer als Fließtext */
+.begruessungsbereich .willkommen-titel {
+  font-size:     clamp(1rem, 1.8vw, 1.2rem);
+  font-weight:   500;
+  margin-bottom: 0.6rem;
+  line-height:   1.5;
+}
+
+.begruessungsbereich .willkommen-text {
+  max-width:   100%; /* Erlaubt dem Text, den gesamten verfügbaren Platz zu nutzen */
+  font-size:   1.05rem;
+  opacity:     0.74;
+  line-height: 1.8;
+  margin:      0;
+}
+
+
+/* ── 8. Startseite – Sprechzeiten ────────────────────────────── */
+.sprechzeiten-bereich {
+  padding-top: 0.5rem;
+}
+
+/* Sprechzeiten-Tabelle */
+.sprechzeiten-tabelle {
+  width:           100%;
+  border-collapse: collapse;
+}
+
+.sprechzeiten-tabelle thead th {
+  text-align:     left;
+  font-size:      1.05rem;
+  font-weight:    600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color:          var(--farbe-gedaempft);
+  padding:        0 3.5rem 1.75rem 0;
+  white-space:    nowrap;
+}
+
+.sprechzeiten-tabelle thead th:first-child { padding-left: 0; }
+
+.sprechzeiten-tabelle tbody td {
+  padding:        1.4rem 3.5rem 1.4rem 0;
+  font-size:      1.1rem;
+  vertical-align: middle;
+  line-height:    1.55;
+}
+
+.sprechzeiten-tabelle tbody td:first-child {
+  padding-left: 0;
+  font-weight:  600;
+  width:        22%;
+  white-space:  nowrap;
+}
+
+.zeitblock {
+  font-variant-numeric: tabular-nums;
+}
+
+.zeitblock .morgen {
+  display: block;
+}
+
+.zeitblock .nachmittag {
+  display:    block;
+  margin-top: 0.3rem;
+}
+
+/* Mobile-Tabelle – greift beim selben Breakpoint wie der Burger-Button */
+@media (max-width: 767px) {
+  .sprechzeiten-tabelle thead {
+    display: none;
+  }
+
+  .sprechzeiten-tabelle tbody tr {
+    display:       block;
+    margin-bottom: 2.75rem;
+  }
+
+  .sprechzeiten-tabelle tbody td {
+    display:         flex;
+    justify-content: space-between;
+    align-items:     flex-start;
+    padding:         0.55rem 0;
+    font-size:       1rem;
+    width:           100%;
+  }
+
+  .sprechzeiten-tabelle tbody td:first-child {
+    display:        block;
+    font-size:      1.05rem;
+    font-weight:    700;
+    width:          100%;
+    padding-bottom: 0.8rem;
+  }
+
+  .sprechzeiten-tabelle tbody td:not(:first-child)::before {
+    content:       attr(data-label);
+    font-size:     0.9rem;
+    color:         var(--farbe-gedaempft);
+    font-weight:   600;
+    flex-shrink:   0;
+    white-space:   nowrap;  /* Label bleibt einzeilig, keine feste min-width mehr nötig */
+    padding-right: 0.6rem;  /* Abstand zum Zeitblock */
+  }
+
+  /* Zeitblock bekommt den verbleibenden Platz und bleibt rechtsbündig */
+  .sprechzeiten-tabelle tbody td:not(:first-child) .zeitblock,
+  .sprechzeiten-tabelle tbody td:not(:first-child) > span {
+    flex:       1;
+    min-width:  0;
+    text-align: right;
+  }
+}
+
+
+/* ── 9. Team-Grid ───────────────────────────────────────────── */
+.team-grid {
+  display:               grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:                   3rem 2.5rem;
+  margin-bottom:         5rem;
+}
+
+.team-grid.vierspaltig {
+  grid-template-columns: repeat(4, 1fr);
+  gap:                   2.5rem 2rem;
+}
+
+.team-karte-bild {
+  aspect-ratio:  3 / 4;
+  background:    var(--farbe-sehr-gedaempft);
+  border-radius: 8px;
+  overflow:      hidden;
+  margin-bottom: 1rem;
+}
+
+.team-karte-bild img {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+}
+
+.team-karte-name {
+  font-size:     0.95rem;
+  font-weight:   600;
+  margin-bottom: 0.2rem;
+}
+
+.team-karte-rolle {
+  font-size: 0.8rem;
+  opacity:   0.55;
+}
+
+@media (max-width: 900px) {
+  .team-grid              { grid-template-columns: repeat(2, 1fr); }
+  .team-grid.vierspaltig  { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .team-grid,
+  .team-grid.vierspaltig  { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 1.25rem; }
+}
+
+
+/* ── 10. Kontakt-Seite ───────────────────────────────────────── */
+.kontakt-block {
+  margin-bottom: 5rem;
+}
+
+.kontakt-block h2 {
+  margin-bottom: 0.5rem;
+}
+
+.kontakt-block .untertitel {
+  font-size:     0.875rem;
+  color:         var(--farbe-gedaempft);
+  margin-bottom: 2rem;
+}
+
+.kontakt-tel-gross {
+  font-size:      clamp(2rem, 5vw, 3rem);
+  font-weight:    700;
+  letter-spacing: -0.03em;
+  line-height:    1;
+  margin-bottom:  1.5rem;
+}
+
+.store-buttons {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       0.75rem;
+  margin-top: 1.5rem;
+}
+
+.store-btn {
+  display:      inline-flex;
+  align-items:  center;
+  gap:          0.6rem;
+  padding:      0.6rem 1.25rem;
+  font-family:  var(--font);
+  font-size:    0.8rem;
+  font-weight:  600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition:   opacity 0.2s;
+}
+
+.store-btn:hover { opacity: 0.8; }
+
+.store-btn.apple {
+  background: var(--farbe-text);
+  color:      var(--farbe-hintergrund);
+}
+
+.store-btn.google {
+  background: transparent;
+  color:      var(--farbe-text);
+  outline:    1.5px solid rgba(42, 42, 42, 0.25);
+}
+
+
+/* ── 11. Rechtliche Seiten (Impressum / Datenschutz) ─────────── */
+.legal-sektion {
+  margin-bottom: 3.5rem;
+}
+
+.legal-sektion h2 {
+  font-size:      clamp(1.1rem, 2.5vw, 1.5rem);
+  margin-bottom:  1.25rem;
+}
+
+.legal-sektion p,
+.legal-sektion li {
+  font-size: 0.9rem;
+  opacity:   0.78;
+}
+
+.hinweis-box {
+  font-size: 0.875rem;
+  opacity:   0.6;
+  font-style: italic;
+  margin-top: 1.5rem;
+}
+
+.rechte-liste li {
+  padding:       0.5rem 0;
+  padding-left:  1.25rem;
+  position:      relative;
+}
+
+.rechte-liste li::before {
+  content:    '–';
+  position:   absolute;
+  left:       0;
+  opacity:    0.4;
+}
+
+.recht-art {
+  display:       inline-block;
+  font-size:     0.72rem;
+  font-weight:   600;
+  background:    rgba(42, 42, 42, 0.07);
+  padding:       0.15rem 0.55rem;
+  border-radius: 3px;
+  margin-bottom: 0.25rem;
+}
+
+
+/* ── 12. Footer ──────────────────────────────────────────────── */
+footer {
+  background: var(--farbe-footer-bg);
+  padding:    0 2.5rem 3.5rem;
+}
+
+/* Wellen-SVG */
+.footer-welle {
+  width:        calc(100% + 5rem);   /* 2 × 2.5rem Padding ausgleichen */
+  margin-left:  -2.5rem;
+  height:       90px;
+  display:      block;
+}
+
+.footer-welle path {
+  fill: var(--farbe-hintergrund);
+}
+
+/* Footer-Inhalt */
+.footer-inner {
+  max-width:             var(--max-breite);
+  margin:                0 auto;
+  display:               grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap:                   3rem;
+  padding-top:           0.5rem;
+}
+
+.footer-block p,
+.footer-block a {
+  font-size:       0.875rem;
+  display:         block;
+  margin-bottom:   0.4rem;
+  text-decoration: none;
+  opacity:         0.72;
+  line-height:     1.65;
+}
+
+.footer-block a:hover { opacity: 1; }
+
+/* Notruf-Einträge */
+.notruf-eintrag {
+  margin-bottom: 1.1rem;
+}
+
+.notruf-name {
+  font-size:     0.78rem;
+  font-weight:   500;
+  opacity:       0.58;
+  margin-bottom: 0.1rem;
+}
+
+.notruf-tel {
+  font-size:       1.2rem;
+  font-weight:     700;
+  text-decoration: none;
+  opacity:         1;
+}
+
+/* Footer-Bottom */
+.footer-bottom {
+  max-width:   var(--max-breite);
+  margin:      2.5rem auto 0;
+  padding-top: 1.5rem;
+  font-size:   0.75rem;
+  color:       var(--farbe-gedaempft);
+  text-align:  center;
+}
+
+@media (min-width: 640px) and (max-width: 899px) {
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 639px) {
+  .footer-inner   { grid-template-columns: 1fr; gap: 2.5rem; }
+  footer          { padding: 0 1.75rem 2.5rem; }
+  .footer-welle   { height: 60px; }
+}
+
+
+/* ── 13. Animationen ─────────────────────────────────────────── */
+@keyframes einblenden {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.einblenden   { animation: einblenden 0.55s ease both; }
+.verzoegert-1 { animation-delay: 0.07s; }
+.verzoegert-2 { animation-delay: 0.16s; }
+.verzoegert-3 { animation-delay: 0.25s; }
+.verzoegert-4 { animation-delay: 0.34s; }
+
+
+/* ── 14. Skeleton-Loader ─────────────────────────────────────── */
+@keyframes puls {
+  0%, 100% { opacity: 1;    }
+  50%       { opacity: 0.28; }
+}
+
+.lade-placeholder {
+  background:    rgba(42, 42, 42, 0.09);
+  border-radius: 4px;
+  height:        1.1em;
+  display:       block;
+  animation:     puls 1.6s ease-in-out infinite;
+}
+
+/* ── Startseiten-Bild ───────────────────────────────────────── */
+.startseiten-bild-wrapper {
+  width:      90%;
+  margin:     0 auto 1.5rem;
+  text-align: center;
+}
+
+.startseiten-bild {
+  width:    100%;
+  height:   auto;
+  display:  block;
+}
+
+/* ── 15. Terminvereinbarung (Startseite) ─────────────────── */
+.terminvereinbarung-bereich {
+  padding-top: 0.5rem;
+}
+
+.terminvereinbarung-bereich > h2 {
+  margin-bottom: 1.75rem;
+}
+
+/* Zwei-Spalten-Raster; stretch = gleiche Kartenhöhe */
+.termin-grid {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   1.5rem;
+  align-items:           stretch;
+}
+
+/* Basis-Karte – flex damit Inhalt oben bleibt und Höhe angeglichen wird */
+.termin-karte {
+  display:        flex;
+  flex-direction: column;
+  background:     var(--farbe-banner-bg);  /* #FAE4D0 – helles Pastell-Orange */
+  border-radius:  16px;
+  padding:        2.5rem;
+}
+
+/* Akut-Karte: warmes Pastell-Orange */
+.termin-karte--akut {
+  background: var(--farbe-footer-bg);       /* #F5C9A8 – warmes Pastell-Orange */
+
+}
+
+/* Prominentes Kategorie-Label – dominantes visuelles Element der Karte */
+.termin-kategorie {
+  display:        block;
+  font-size:      clamp(1.75rem, 3.2vw, 2.2rem);
+  font-weight:    700;
+  letter-spacing: -0.025em;
+  line-height:    1.1;
+  margin-bottom:  0.85rem;
+}
+
+.termin-karte > p {
+  font-size:     0.975rem;
+  opacity:       0.74;
+  margin-bottom: 1.25rem;
+}
+
+/* Inline-Links im Fließtext (E-Mail / Praxis-App) */
+.termin-inline-link {
+  color:           var(--farbe-text);
+  font-weight:     600;
+  border-bottom:   1.5px solid rgba(42, 42, 42, 0.35);
+  padding-bottom:  0.05rem;
+  transition:      border-color 0.2s, opacity 0.2s;
+}
+
+.termin-inline-link:hover {
+  border-color: var(--farbe-text);
+  opacity:      0.75;
+}
+
+/* E-Mail-Adresse als hervorgehobener Block-Link */
+.termin-email-link {
+  display:        inline-block;
+  font-size:      1rem;
+  font-weight:    600;
+  color:          var(--farbe-text);
+  border-bottom:  1.5px solid rgba(42, 42, 42, 0.3);
+  padding-bottom: 0.1rem;
+  transition:     border-color 0.2s, opacity 0.2s;
+}
+
+.termin-email-link:hover {
+  border-color: var(--farbe-text);
+  opacity:      0.75;
+}
+
+/* Große Telefonnummer */
+.termin-tel-link {
+  display:        block;
+  font-size:      clamp(1.75rem, 3.8vw, 2.4rem);
+  font-weight:    700;
+  letter-spacing: -0.03em;
+  line-height:    1;
+  color:          var(--farbe-text);
+  margin-bottom:  1.25rem;
+  transition:     opacity 0.2s;
+}
+
+.termin-tel-link:hover {
+  opacity: 0.7;
+}
+
+/* Kleiner Ergänzungstext (ohne Voranmeldung möglich) */
+.termin-hinweis-text {
+  font-size:     0.9rem;
+  opacity:       0.65;
+  margin-bottom: 1.25rem;
+  line-height:   1.65;
+}
+
+/* KRANK-Sprechstunden-Hinweis */
+.termin-warn-box {
+  background:    rgba(42, 42, 42, 0.07);
+  border-left:   3px solid rgba(42, 42, 42, 0.35);
+  border-radius: 0 8px 8px 0;
+  padding:       1rem 1.1rem;
+  font-size:     0.9rem;
+  line-height:   1.65;
+  margin-top:    auto;   /* schiebt die Box bei unterschiedlichem Inhalt ans Ende */
+}
+
+/* Mobile: Karten untereinander */
+@media (max-width: 767px) {
+  .termin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .termin-karte {
+    padding:       1.75rem;
+    border-radius: 12px;
+  }
+}
+
+/* ── 16. Vertretungsseite ─────────────────────────────────── */
+.vertr-intro {
+  max-width:     800px;
+  margin-bottom: 3rem;
+}
+
+#vertretungAerzte {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       1.5rem;
+}
+
+.vertr-intro p {
+  font-size:   1.05rem;
+  line-height: 1.8;
+  margin-bottom: 0.5rem;
+}
+
+/* Arzt-Karte */
+.vertr-karte {
+  flex:          1 1 340px;       /* ← neu statt max-width: 480px */
+  background:    var(--farbe-footer-bg);
+  border-radius: 16px;
+  padding:       2.5rem;
+}
+
+.vertr-name {
+  font-size:     clamp(1.2rem, 2.5vw, 1.5rem);
+  font-weight:   700;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.2rem;
+}
+
+.vertr-fachrichtung {
+  font-size:     0.875rem;
+  opacity:       0.58;
+  margin-bottom: 0.35rem;
+}
+
+.vertr-adresse {
+  font-size:     0.9rem;
+  opacity:       0.72;
+  margin-bottom: 1.5rem;
+}
+
+/* Kontaktzeilen */
+.vertr-kontakt {
+  display:        flex;
+  flex-direction: column;
+  gap:            0.75rem;
+}
+
+.vertr-kontakt-zeile {
+  display:     flex;
+  align-items: baseline;
+  gap:         1rem;
+}
+
+.vertr-label {
+  font-size:      0.65rem;
+  font-weight:    700;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color:          var(--farbe-gedaempft);
+  min-width:      4rem;
+  flex-shrink:    0;
+}
+
+/* Große Telefonnummer */
+.vertr-tel-link {
+  font-size:      clamp(1.4rem, 3vw, 1.8rem);
+  font-weight:    700;
+  letter-spacing: -0.025em;
+  color:          var(--farbe-text);
+  transition:     opacity 0.2s;
+}
+
+.vertr-tel-link:hover { opacity: 0.7; }
+
+/* E-Mail und Website als dezente Inline-Links */
+.vertr-kontakt-zeile a:not(.vertr-tel-link) {
+  font-size:       0.95rem;
+  color:           var(--farbe-text);
+  border-bottom:   1.5px solid rgba(42, 42, 42, 0.25);
+  padding-bottom:  0.05rem;
+  transition:      border-color 0.2s, opacity 0.2s;
+}
+
+.vertr-kontakt-zeile a:not(.vertr-tel-link):hover {
+  border-color: var(--farbe-text);
+  opacity:      0.75;
+}
+
+@media (max-width: 767px) {
+  .vertr-karte {
+    padding:       1.75rem;
+    border-radius: 12px;
+    max-width:     100%;
+  }
+}

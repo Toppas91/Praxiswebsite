@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />  <meta name="description" content="Sprechzeiten, Terminvereinbarung und Kontakt – Kinderarztpraxis Dr. Bernd Berwanger, Neustadt an der Weinstraße." />
+  <title>Sprechzeiten &amp; Kontakt – Dr. Bernd Berwanger</title>
+
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Zentrales Design-System -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ────────────────────────────────────────────────────────────
+       Kontaktseite – seitenspezifische Ergänzungen
+       Alle globalen Stile kommen aus style.css.
+    ──────────────────────────────────────────────────────────── */
+
+    /* ── Terminvereinbarung: E-Mail & Telefon auf h3-Größe ──────
+       "Unsere Praxis-App" ist ein h3 → clamp(1rem, 2.5vw, 1.3rem).
+       Email (Nicht akut) und Telefon (Akut) sollen dieselbe Größe haben.
+       Unterstriche entfallen bei der E-Mail.
+    ──────────────────────────────────────────────────────────── */
+
+    /* Override style.css .termin-tel-link (war clamp 1.75–2.4rem) */
+    .termin-tel-link {
+      font-size:      clamp(1rem, 2.5vw, 1.3rem);
+      letter-spacing: -0.01em;
+      line-height:    1.35;
+      margin-bottom:  1.25rem;
+    }
+
+    /* Override style.css .termin-email-link */
+    .termin-email-link {
+      display:        inline-block;
+      font-size:      clamp(1rem, 2.5vw, 1.3rem);
+      font-weight:    600;
+      letter-spacing: -0.01em;
+      color:          var(--farbe-text);
+      white-space:    nowrap;
+      border-bottom:  none;   /* kein Unterstrich */
+      transition:     opacity 0.2s;
+    }
+
+    .termin-email-link:hover { opacity: 0.65; }
+
+    /* ── Akut-Unterblöcke: beide mit gleicher Transparenz ───────
+       .nachmittag-hinweis ist der "obere" Block (rgba 0.05).
+       .termin-warn-box aus style.css wird auf denselben Wert gebracht.
+    ──────────────────────────────────────────────────────────── */
+    .termin-warn-box {
+      background:    rgba(42, 42, 42, 0.05);
+      border-left:   2.5px solid rgba(42, 42, 42, 0.2);
+      border-radius: 0 8px 8px 0;
+      padding:       0.9rem 1.1rem;
+      font-size:     0.875rem;
+      line-height:   1.7;
+      margin-top:    0;       /* kein zusätzlicher Abstand, da nachmittag-hinweis darüber */
+    }
+
+    /* ── Praxis-App-Bereich (innerhalb der "Nicht akut"-Karte) ── */
+    .app-sektion {
+      margin-top:  2.25rem;
+      padding-top: 2.25rem;
+      border-top:  1.5px solid rgba(42, 42, 42, 0.12);
+    }
+
+    .app-sektion h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    .app-sektion-text {
+      font-size:     0.9rem;
+      opacity:       0.72;
+      line-height:   1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    /* QR-Code + Buttons nebeneinander */
+    .app-qr-layout {
+      display:     flex;
+      align-items: flex-start;
+      gap:         1.75rem;
+      flex-wrap:   wrap;
+    }
+
+    .app-qr-bild {
+      width:         130px;
+      height:        130px;
+      flex-shrink:   0;
+      border-radius: 8px;
+      display:       block;
+      background:    rgba(42, 42, 42, 0.06);
+      object-fit:    contain;
+    }
+
+    /* Buttons untereinander stapeln */
+    .app-store-buttons {
+      display:         flex;
+      flex-direction:  column;
+      gap:             0.6rem;
+      justify-content: center;
+    }
+
+    /* ── Nachmittags-Hinweis (offene Sprechstunde, keine Anmeldung) ── */
+    .nachmittag-hinweis {
+      font-size:     0.875rem;
+      line-height:   1.7;
+      opacity:       0.78;
+      margin-bottom: 1.25rem;
+      padding:       0.9rem 1.1rem;
+      background:    rgba(42, 42, 42, 0.05);
+      border-radius: 8px;
+      border-left:   2.5px solid rgba(42, 42, 42, 0.2);
+    }
+
+    /* ── Erreichbarkeits-Übersicht (Telefon / E-Mail / App) ──────
+       Über volle Tabellenbreite verteilt, etwas mehr Abstand zur Überschrift.
+    ──────────────────────────────────────────────────────────── */
+ 
+.erreichbarkeit {
+  display:       flex;
+  flex-wrap:     wrap;
+  gap:           1rem 0;
+  margin-top:    2.25rem;
+  margin-bottom: 3rem;
+}
+ .erreichbarkeit-eintrag {
+  display:        flex;
+  flex-direction: column;
+  gap:            0.2rem;
+  flex:           0 0 39%;
+}
+
+.erreichbarkeit-eintrag:first-child {
+  flex-basis: 22%;
+}
+
+/* Mobile: Items untereinander, volle Breite */
+@media (max-width: 767px) {
+  .erreichbarkeit-eintrag,
+  .erreichbarkeit-eintrag:first-child {
+    flex-basis: 100%;
+  }
+}
+
+    .erreichbarkeit-label {
+      font-size:      0.62rem;
+      font-weight:    700;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color:          var(--farbe-gedaempft);
+    }
+
+    .erreichbarkeit-wert {
+      font-size:   0.925rem;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity:     0.82;
+    }
+
+    .erreichbarkeit-wert a {
+      color:      var(--farbe-text);
+      transition: opacity 0.2s;
+    }
+
+    .erreichbarkeit-wert a:hover { opacity: 0.6; }
+
+    /* ── Rezepte & Überweisungen: Zwei-Spalten-Raster ───────────
+       Abstand unter h2 analog zu Sprechzeiten (margin-top auf raster).
+    ──────────────────────────────────────────────────────────── */
+    .rezept-raster {
+      display:               grid;
+      grid-template-columns: 1fr 1fr;
+      gap:                   1.5rem;
+      margin-top:            2.25rem;   /* analog erreichbarkeit margin-top */
+    }
+
+    @media (max-width: 640px) {
+      .rezept-raster { grid-template-columns: 1fr; }
+    }
+
+    .rezept-karte {
+      background:     var(--farbe-banner-bg);
+      border-radius:  12px;
+      padding:        2rem;
+      display:        flex;
+      flex-direction: column;
+    }
+
+    .rezept-karte h3 {
+      margin-bottom: 0.5rem;
+    }
+
+    .rezept-karte-text {
+      font-size:     0.9rem;
+      opacity:       0.72;
+      line-height:   1.75;
+      margin-bottom: 1.25rem;
+      flex:          1;       /* füllt verfügbaren Platz – drückt Link nach unten */
+    }
+
+    .rezept-email-link {
+      display:        inline-block;
+      font-size:      0.88rem;
+      font-weight:    600;
+      color:          var(--farbe-text);
+      border-bottom:  1.5px solid rgba(42, 42, 42, 0.3);
+      padding-bottom: 0.06rem;
+      white-space:    nowrap;
+      margin-top:     auto;   /* gleiche Höhe in beiden Karten */
+      transition:     border-color 0.2s, opacity 0.2s;
+    }
+
+    .rezept-email-link:hover {
+      border-color: var(--farbe-text);
+      opacity:      0.72;
+    }
+
+    /* ── Mobile Anpassungen ── */
+    @media (max-width: 767px) {
+      .erreichbarkeit   { justify-content: flex-start; gap: 1.25rem 2.5rem; }
+      .erreichbarkeit-wert { white-space: normal; }
+      .app-qr-layout    { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════
+       KOPFZEILE / NAVIGATION
+  ════════════════════════════════════════ -->
+  <header class="nav-wrapper" role="banner">
+    <div class="nav-inner">
+
+      <a href="index.html" class="logo-bereich" aria-label="Startseite – Praxis Dr. Berwanger">
+        <img id="praxis-logo" src="" alt="Logo der Praxis Dr. Berwanger" />
+        <div>
+          <div class="logo-text-haupt">Dr. Bernd<br />Berwanger</div>
+        </div>
+      </a>
+
+      <nav aria-label="Hauptnavigation">
+        <ul class="nav-links">
+          <li><a href="leistungen.html">Leistungen</a></li>
+          <li><a href="team.html">Team &amp; Praxis</a></li>
+          <li><a href="kontakt.html">Sprechzeiten &amp; Kontakt</a></li>
+        </ul>
+      </nav>
+
+      <button
+        class="burger-btn"
+        id="burgerBtn"
+        aria-expanded="false"
+        aria-controls="mobileMenu"
+        aria-label="Menü öffnen"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+    <nav id="mobileMenu" class="mobile-menu" aria-label="Mobile Navigation" hidden>
+      <a href="leistungen.html">Leistungen</a>
+      <a href="team.html">Team &amp; Praxis</a>
+      <a href="kontakt.html">Sprechzeiten &amp; Kontakt</a>
+    </nav>
+  </header>
+
+
+  <!-- ════════════════════════════════════════
+       HAUPTINHALT
+  ════════════════════════════════════════ -->
+  <main id="hauptinhalt">
+
+    <!-- Seiten-Intro ─────────────────────────────────────────── -->
+    <div class="kontakt-block einblenden verzoegert-1">
+      <h1>Sprechzeiten &amp;&nbsp;Kontakt</h1>
+      <p>Alle Wege, um Ihren nächsten Besuch zu planen oder uns schnell zu
+      erreichen – ob telefonisch, per E-Mail oder über die Praxis-App.</p>
+    </div>
+
+
+    <!-- ════════════════════════════════════════
+         1. TERMINVEREINBARUNG
+    ════════════════════════════════════════ -->
+    <section
+      class="kontakt-block terminvereinbarung-bereich einblenden verzoegert-2"
+      id="terminvereinbarungBereich"
+      aria-labelledby="terminTitel"
+    >
+      <h2 id="terminTitel">Terminvereinbarung</h2>
+
+      <div class="termin-grid">
+
+        <!-- ── Nicht akut ─────────────────────────────────────── -->
+        <div class="termin-karte">
+          <span class="termin-kategorie">Reguläre Termine</span>
+          <p>
+            Vorsorgen, Impfungen und alle geplanten Besuche vereinbaren Sie bequem per
+            <a href="mailto:Termine@dr-berwanger.de" id="terminEmailInline" class="termin-inline-link">E-Mail</a>.
+          </p>
+          <a href="mailto:Termine@dr-berwanger.de" id="terminEmailDisplay" class="termin-email-link">
+            Termine@dr-berwanger.de
+          </a>
+
+          <!-- Praxis-App-Bereich ──────────────────────────────── -->
+          <div class="app-sektion" id="praxisApp">
+            <h3>Unsere Praxis-App</h3>
+            <p class="app-sektion-text" id="appBeschreibung">
+              Über die Praxis-App können Sie sicher und direkt mit uns in Kontakt treten –
+              für Nachrichten und vertrauliche Mitteilungen, bequem vom Smartphone.
+            </p>
+
+            <div class="app-qr-layout">
+              <!--
+                App: "Meine Pädiatrische Praxis" (id921469943)
+                App Store:   https://apps.apple.com/de/app/meine-p%C3%A4diatrische-praxis/id921469943
+                Google Play: https://play.google.com/store/apps/details?id=com.monks.praxis_app.kin&hl=de
+              -->
+              <img
+                id="appQrBild"
+                class="app-qr-bild"
+                src=""
+                alt="QR-Code: Praxis-App im App Store herunterladen"
+              />
+
+              <div class="app-store-buttons">
+                <a
+                  id="appStoreBtn"
+                  href="https://apps.apple.com/de/app/meine-p%C3%A4diatrische-praxis/id921469943"
+                  class="store-btn apple"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Praxis-App im Apple App Store herunterladen"
+                >
+                  App&nbsp;Store
+                </a>
+                <a
+                  id="playStoreBtn"
+                  href="https://play.google.com/store/apps/details?id=com.monks.praxis_app.kin&hl=de"
+                  class="store-btn google"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Praxis-App bei Google Play herunterladen"
+                >
+                  Google&nbsp;Play
+                </a>
+              </div>
+            </div><!-- /.app-qr-layout -->
+          </div><!-- /.app-sektion -->
+        </div><!-- /.termin-karte (Nicht akut) -->
+
+
+        <!-- ── Akut ────────────────────────────────────────────── -->
+        <div class="termin-karte termin-karte--akut">
+          <span class="termin-kategorie">Akute Erkrankungen</span>
+          <p>Zur besseren Planbarkeit bitten wir um eine telefonische Voranmeldung.</p>
+
+          <a
+            href="tel:0632186049"
+            class="termin-tel-link"
+            id="akutTelefon"
+            aria-label="Praxis anrufen"
+          >
+            <span class="lade-placeholder" style="width:150px; display:inline-block;"></span>
+          </a>
+
+
+          <div class="nachmittag-hinweis" role="note">
+            Die <strong>Nachmittags-Akutsprechstunde</strong> ist eine offene Sprechstunde –
+            hier ist <strong>keine telefonische Anmeldung erforderlich</strong>.
+            Sie können ohne vorherigen Anruf direkt erscheinen.
+            Bitte planen Sie eine Wartezeit ein.
+          </div>
+
+          <div class="termin-warn-box" role="note">
+            Bitte erscheinen Sie bei <strong>ansteckenden Erkrankungen</strong>
+            wie Fieber, Erkältung, Magen-Darm&nbsp;etc. ausschließlich
+            in der <strong>KRANK-Sprechstunde</strong>.
+          </div>
+        </div><!-- /.termin-karte (Akut) -->
+
+      </div><!-- /.termin-grid -->
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         2. SPRECHZEITEN & ERREICHBARKEIT
+    ════════════════════════════════════════ -->
+    <section
+      class="kontakt-block sprechzeiten-bereich einblenden verzoegert-3"
+      id="sprechzeitenBereich"
+      aria-labelledby="sprechzeitenTitel"
+    >
+      <h2 id="sprechzeitenTitel">Sprechzeiten</h2>
+
+      <!-- Erreichbarkeit ───────────────────────────────────────── -->
+      <div class="erreichbarkeit" aria-label="Kontaktdaten">
+
+        <div class="erreichbarkeit-eintrag">
+          <span class="erreichbarkeit-label">Telefon</span>
+          <span class="erreichbarkeit-wert">
+            <a href="tel:0632186049" id="telLink">
+              <span class="lade-placeholder" style="width:90px; display:inline-block;"></span>
+            </a>
+          </span>
+        </div>
+
+        <div class="erreichbarkeit-eintrag">
+          <span class="erreichbarkeit-label">E-Mail</span>
+          <span class="erreichbarkeit-wert">
+            <a href="mailto:Termine@dr-berwanger.de" id="erreichbarkeitEmailLink">Termine@dr-berwanger.de</a>
+          </span>
+        </div>
+
+        <div class="erreichbarkeit-eintrag">
+          <span class="erreichbarkeit-label">Praxis-App</span>
+          <span class="erreichbarkeit-wert">Chat in der App</span>
+        </div>
+
+        
+
+      </div><!-- /.erreichbarkeit -->
+
+      <!-- Sprechzeiten-Tabelle (via JS befüllt) ───────────────── -->
+      <div id="sprechzeitenTabelle" role="region" aria-label="Sprechzeiten-Übersicht">
+        <table class="sprechzeiten-tabelle" aria-hidden="true">
+          <tbody>
+            <tr><td colspan="3"><div class="lade-placeholder" style="height:2.75rem;"></div></td></tr>
+            <tr><td colspan="3"><div class="lade-placeholder" style="height:2.75rem; margin-top:0.6rem;"></div></td></tr>
+            <tr><td colspan="3"><div class="lade-placeholder" style="height:2.75rem; margin-top:0.6rem;"></div></td></tr>
+            <tr><td colspan="3"><div class="lade-placeholder" style="height:2.75rem; margin-top:0.6rem;"></div></td></tr>
+            <tr><td colspan="3"><div class="lade-placeholder" style="height:2.75rem; margin-top:0.6rem;"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         3. REZEPTE & ÜBERWEISUNGEN
+    ════════════════════════════════════════ -->
+    <section
+      class="kontakt-block einblenden verzoegert-4"
+      id="rezepteBereich"
+      aria-labelledby="rezepteTitel"
+    >
+      <h2 id="rezepteTitel">Rezepte &amp;&nbsp;Überweisungen</h2>
+
+      <div class="rezept-raster">
+
+        <div class="rezept-karte">
+          <h3>Folgerezepte</h3>
+          <p class="rezept-karte-text">
+            Bekannte Dauermedikamente können Sie bequem per E-Mail anfordern.
+            Bitte nennen Sie dabei <strong>Name und Geburtsdatum des Kindes</strong>
+            sowie <strong>Medikamentennamen und Dosierung</strong>.
+            Das Rezept liegt in der Regel innerhalb von 2&nbsp;Werktagen zur Abholung bereit.
+          </p>
+          <a href="#" class="rezept-email-link" id="rezeptEmailLink">
+            Rezept per E-Mail anfordern
+          </a>
+        </div>
+
+        <div class="rezept-karte">
+          <h3>Überweisungen</h3>
+          <p class="rezept-karte-text">
+            Überweisungen zu Fachärzten oder in Kliniken können Sie ebenfalls per E-Mail anfragen.
+            Bitte schildern Sie kurz <strong>Fachbereich</strong>
+            und <strong>Grund der Überweisung</strong>.
+            Bei dringendem Bedarf bitten wir um telefonischen Kontakt.
+          </p>
+          <a href="#" class="rezept-email-link" id="uebEmailLink">
+            Überweisung per E-Mail anfragen
+          </a>
+        </div>
+
+      </div><!-- /.rezept-raster -->
+    </section>
+
+  </main>
+
+
+  <!-- ════════════════════════════════════════
+       FUSSZEILE
+  ════════════════════════════════════════ -->
+  <footer role="contentinfo">
+
+    <svg
+      class="footer-welle"
+      viewBox="0 0 1440 90"
+      preserveAspectRatio="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path d="M0,60 C480,95 960,20 1440,60 L1440,0 L0,0 Z" />
+    </svg>
+
+    <div class="footer-inner">
+
+      <div class="footer-block">
+        <h4>Notruf &amp; Notdienst</h4>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Rettungsdienst</div>
+          <a href="tel:112" class="notruf-tel">112</a>
+        </div>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Ärztlicher Bereitschaftsdienst</div>
+          <a href="tel:116117" class="notruf-tel">116 117</a>
+        </div>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Giftnotruf</div>
+          <a href="tel:0613119240" class="notruf-tel">06131 19240</a>
+        </div>
+      </div>
+
+      <div class="footer-block" id="footerKontakt">
+        <h4>Praxis</h4>
+        <p class="lade-placeholder" style="width:85%;"></p>
+        <p class="lade-placeholder" style="width:60%; margin-top:0.5rem;"></p>
+        <p class="lade-placeholder" style="width:70%; margin-top:0.5rem;"></p>
+      </div>
+
+      <div class="footer-block">
+        <h4>Rechtliches</h4>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutzerklärung</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; <span id="jahreszahl"></span> Praxis Dr. Bernd Berwanger &nbsp;·&nbsp; Alle Angaben ohne Gewähr.</p>
+    </div>
+
+  </footer>
+
+
+  <!-- ════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════ -->
+  <script>
+    "use strict";
+
+    /* ── Hilfsfunktionen (Sprechzeiten) ─────────────────────── */
+    function zeitraum(von, bis) {
+      if (!von || !bis) return null;
+      return `${von}&thinsp;–&thinsp;${bis} Uhr`;
+    }
+
+    function zeitblockHtml(zeiten) {
+      if (!zeiten || !zeiten.von) return '<span style="opacity:0.28;">–</span>';
+      const morgenText     = zeitraum(zeiten.von, zeiten.bis);
+      const nachmittagText = (zeiten.nachmittag_von && zeiten.nachmittag_bis)
+        ? zeitraum(zeiten.nachmittag_von, zeiten.nachmittag_bis)
+        : null;
+      let html = '<span class="zeitblock">';
+      html += `<span class="morgen">${morgenText}</span>`;
+      if (nachmittagText) {
+        html += `<span class="nachmittag">${nachmittagText}</span>`;
+      }
+      html += '</span>';
+      return html;
+    }
+
+    /* ── Burger-Menü ─────────────────────────────────────────── */
+    const burgerBtn  = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    burgerBtn.addEventListener('click', () => {
+      const istOffen = burgerBtn.classList.toggle('offen');
+      burgerBtn.setAttribute('aria-expanded', istOffen);
+      burgerBtn.setAttribute('aria-label', istOffen ? 'Menü schließen' : 'Menü öffnen');
+      mobileMenu.classList.toggle('offen', istOffen);
+      mobileMenu.hidden = !istOffen;
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        burgerBtn.classList.remove('offen');
+        burgerBtn.setAttribute('aria-expanded', 'false');
+        burgerBtn.setAttribute('aria-label', 'Menü öffnen');
+        mobileMenu.classList.remove('offen');
+        mobileMenu.hidden = true;
+      });
+    });
+
+    /* ── Aktive Seite markieren ──────────────────────────────── */
+    const aktuelleSeite = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(link => {
+      if (link.getAttribute('href') === aktuelleSeite) link.classList.add('aktiv');
+    });
+
+    /* ── Jahr im Footer ──────────────────────────────────────── */
+    document.getElementById('jahreszahl').textContent = new Date().getFullYear();
+
+    /* ── Praxisdaten laden ───────────────────────────────────── */
+    fetch('praxis-daten.json')
+      .then(res => {
+        if (!res.ok) throw new Error('praxis-daten.json nicht erreichbar');
+        return res.json();
+      })
+      .then(daten => {
+        befuelleLogo(daten.praxis);
+        befuelleTelefon(daten.kontakt);
+        befuelleSprechzeiten(daten.oeffnungszeiten);
+        befuelleAppBereich(daten.praxis_app);
+        befuelleEmailLinks(daten.kontakt);
+        befuelleFooterKontakt(daten.kontakt, daten.praxis);
+      })
+      .catch(err => {
+        console.error('Fehler beim Laden der Praxisdaten:', err);
+      });
+
+    /* ── Befüll-Funktionen ───────────────────────────────────── */
+
+    function befuelleLogo(praxis) {
+      if (!praxis || !praxis.logo) return;
+      const logoEl   = document.getElementById('praxis-logo');
+      logoEl.src     = praxis.logo;
+      logoEl.onerror = () => { logoEl.style.display = 'none'; };
+    }
+
+    function befuelleTelefon(kontakt) {
+      if (!kontakt) return;
+      const tel  = kontakt.telefon;
+      const href = `tel:${tel.replace(/\s/g, '')}`;
+
+      const akutEl  = document.getElementById('akutTelefon');
+      if (akutEl)  { akutEl.href = href;  akutEl.textContent = tel; }
+
+      const telLink = document.getElementById('telLink');
+      if (telLink) { telLink.href = href; telLink.textContent = tel; }
+    }
+
+    function befuelleSprechzeiten(oeffnungszeiten) {
+      if (!oeffnungszeiten || !oeffnungszeiten.tage) return;
+      const container = document.getElementById('sprechzeitenTabelle');
+      let html =
+        '<table class="sprechzeiten-tabelle" role="table" aria-label="Wöchentliche Sprechzeiten">' +
+          '<thead><tr>' +
+            '<th scope="col">Wochentag</th>' +
+            '<th scope="col">Gesundsprechstunde</th>' +
+            '<th scope="col">Kranksprechstunde</th>' +
+          '</tr></thead><tbody>';
+      oeffnungszeiten.tage.forEach(eintrag => {
+        html +=
+          '<tr>' +
+            `<td>${eintrag.tag}</td>` +
+            `<td data-label="Gesundsprechstunde">${zeitblockHtml(eintrag.gesund)}</td>` +
+            `<td data-label="Kranksprechstunde">${zeitblockHtml(eintrag.krank)}</td>` +
+          '</tr>';
+      });
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    }
+
+    function befuelleAppBereich(appDaten) {
+      if (!appDaten) return;
+
+      /* Beschreibung aus JSON übernehmen, falls vorhanden */
+      const descEl = document.getElementById('appBeschreibung');
+      if (descEl && appDaten.beschreibung) {
+        descEl.textContent = appDaten.beschreibung;
+      }
+
+      /* QR-Code-Bild:
+         App: "Meine Pädiatrische Praxis" (id921469943)
+         1. Versuche lokales Bild aus JSON (praxis_app.qr_code_bild).
+         2. Fallback: QR per API generieren → zeigt App-Store-Link. */
+      const qrEl = document.getElementById('appQrBild');
+      if (qrEl) {
+        const appStoreUrl = 'https://apps.apple.com/de/app/meine-p%C3%A4diatrische-praxis/id921469943';
+        const qrApiFallback =
+          'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' +
+          encodeURIComponent(appStoreUrl);
+
+        if (appDaten.qr_code_bild) {
+          qrEl.src = appDaten.qr_code_bild;
+          qrEl.onerror = () => {
+            qrEl.src = qrApiFallback;
+            qrEl.onerror = () => { qrEl.style.display = 'none'; };
+          };
+        } else {
+          qrEl.src = qrApiFallback;
+          qrEl.onerror = () => { qrEl.style.display = 'none'; };
+        }
+      }
+
+      /* Store-Button-Links: JSON-Wert übernehmen, wenn kein Platzhalter */
+      const appBtn  = document.getElementById('appStoreBtn');
+      const playBtn = document.getElementById('playStoreBtn');
+      if (appBtn  && appDaten.app_store_link  && !appDaten.app_store_link.includes('musterpaxis')) {
+        appBtn.href  = appDaten.app_store_link;
+      }
+      if (playBtn && appDaten.play_store_link && !appDaten.play_store_link.includes('musterpaxis')) {
+        playBtn.href = appDaten.play_store_link;
+      }
+    }
+
+    function befuelleEmailLinks(kontakt) {
+      if (!kontakt?.termin_email) return;
+      const terminMail = kontakt.termin_email;
+
+      /* Terminvereinbarungs-Karte: Inline-Link + Display-Link */
+      const inlineEl  = document.getElementById('terminEmailInline');
+      const displayEl = document.getElementById('terminEmailDisplay');
+      if (inlineEl)  inlineEl.href = `mailto:${terminMail}`;
+      if (displayEl) { displayEl.href = `mailto:${terminMail}`; displayEl.textContent = terminMail; }
+
+      /* Erreichbarkeits-Übersicht */
+      const erreichEl = document.getElementById('erreichbarkeitEmailLink');
+      if (erreichEl) { erreichEl.href = `mailto:${terminMail}`; erreichEl.textContent = terminMail; }
+
+      /* Rezepte & Überweisungen */
+      const rezeptLink = document.getElementById('rezeptEmailLink');
+      const uebLink    = document.getElementById('uebEmailLink');
+      if (rezeptLink) rezeptLink.href = `mailto:${terminMail}?subject=Folgerezept-Anforderung`;
+      if (uebLink)    uebLink.href    = `mailto:${terminMail}?subject=Überweisungsanfrage`;
+    }
+
+    function befuelleFooterKontakt(kontakt, praxis) {
+      if (!kontakt) return;
+      const el   = document.getElementById('footerKontakt');
+      const adr  = kontakt.adresse;
+      const name = praxis?.arzt_name ?? 'Praxis Dr. Berwanger';
+      el.innerHTML =
+        '<h4>Praxis</h4>' +
+        `<p>${name}<br>${adr.strasse}<br>${adr.plz} ${adr.ort}</p>` +
+        `<a href="tel:${kontakt.telefon.replace(/\s/g, '')}">${kontakt.telefon}</a>` +
+        `<a href="mailto:${kontakt.email}" style="margin-top:0.15rem;">${kontakt.email}</a>`;
+    }
+  </script>
+
+</body>
+</html>

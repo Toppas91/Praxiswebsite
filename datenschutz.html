@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <meta name="description" content="Datenschutzerklärung – Praxis Dr. Bernd Berwanger, Neustadt an der Weinstraße." />
+  <title>Datenschutzerklärung – Dr. Bernd Berwanger</title>
+
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Zentrales Design-System -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── Datenschutz: seitenspezifische Ergänzungen ───────────── */
+
+    /* Externe Links in Fließtext */
+    .legal-sektion a {
+      color:          var(--farbe-text);
+      border-bottom:  1px solid rgba(42, 42, 42, 0.25);
+      padding-bottom: 0.05rem;
+      transition:     border-color 0.2s, opacity 0.2s;
+    }
+
+    .legal-sektion a:hover {
+      opacity:      0.7;
+      border-color: var(--farbe-text);
+    }
+
+    /* Aufzählung Protokolldaten */
+    .legal-liste {
+      margin:     0;
+      padding:    0;
+      list-style: none;
+    }
+
+    .legal-liste li {
+      position:    relative;
+      padding:     0.4rem 0 0.4rem 1.25rem;
+      font-size:   0.9rem;
+      opacity:     0.78;
+      line-height: 1.7;
+    }
+
+    .legal-liste li::before {
+      content:  '–';
+      position: absolute;
+      left:     0;
+      opacity:  0.4;
+    }
+
+    /* Hervorgehobener Hinweis (z.&nbsp;B. für Patienteninformation) */
+    .legal-hinweis {
+      background:    rgba(42, 42, 42, 0.05);
+      border-left:   2.5px solid rgba(42, 42, 42, 0.2);
+      border-radius: 0 8px 8px 0;
+      padding:       1rem 1.1rem;
+      margin-top:    1rem;
+      font-size:     0.875rem;
+      opacity:       0.78;
+      line-height:   1.7;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════
+       KOPFZEILE / NAVIGATION
+  ════════════════════════════════════════ -->
+  <header class="nav-wrapper" role="banner">
+    <div class="nav-inner">
+
+      <a href="index.html" class="logo-bereich" aria-label="Startseite – Praxis Dr. Berwanger">
+        <img id="praxis-logo" src="" alt="Logo der Praxis Dr. Berwanger" />
+        <div>
+          <div class="logo-text-haupt">Dr. Bernd<br />Berwanger</div>
+        </div>
+      </a>
+
+      <nav aria-label="Hauptnavigation">
+        <ul class="nav-links">
+          <li><a href="leistungen.html">Leistungen</a></li>
+          <li><a href="team.html">Team &amp; Praxis</a></li>
+          <li><a href="kontakt.html">Sprechzeiten &amp; Kontakt</a></li>
+        </ul>
+      </nav>
+
+      <button
+        class="burger-btn"
+        id="burgerBtn"
+        aria-expanded="false"
+        aria-controls="mobileMenu"
+        aria-label="Menü öffnen"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
+    <nav id="mobileMenu" class="mobile-menu" aria-label="Mobile Navigation" hidden>
+      <a href="leistungen.html">Leistungen</a>
+      <a href="team.html">Team &amp; Praxis</a>
+      <a href="kontakt.html">Sprechzeiten &amp; Kontakt</a>
+    </nav>
+  </header>
+
+
+  <!-- ════════════════════════════════════════
+       HAUPTINHALT
+  ════════════════════════════════════════ -->
+  <main id="hauptinhalt">
+
+    <div class="legal-sektion einblenden verzoegert-1" style="margin-bottom:2rem;">
+      <h1>Datenschutzerklärung</h1>
+      <p>Datenschutzerklärung für die Praxis-Homepage</p>
+    </div>
+
+
+    <!-- ── 1. Verantwortliche Stelle ──────────────────────────── -->
+    <section class="legal-sektion einblenden verzoegert-2" aria-labelledby="titelVerantwortlich">
+      <h2 id="titelVerantwortlich">Verantwortliche Stelle</h2>
+
+      <p>
+        Anbieter und verantwortliche Stelle im Sinne des Datenschutzgesetzes:
+      </p>
+
+      <p>
+        Praxis Dr. Berwanger<br>
+        Dr. Bernd Berwanger<br>
+        Hetzelgalerie 4<br>
+        67433 Neustadt an der Weinstraße
+      </p>
+
+      <p>
+        Der Schutz Ihrer persönlichen Daten ist uns ein wichtiges Anliegen. Nachfolgend
+        informieren wir Sie über Art, Umfang und Zwecke der Erhebung und Verwendung
+        personenbezogener Daten bei Ihrem Besuch dieser Website. Darüber hinaus erläutern wir,
+        welche Rechte Sie hinsichtlich der Datenerhebung, Verarbeitung und Nutzung haben.
+      </p>
+
+      <p>
+        Den rechtlichen Rahmen bilden das Bundesdatenschutzgesetz (BDSG), das
+        Telemediengesetz (TMG) sowie die Datenschutz-Grundverordnung (DSGVO).
+        Diese Datenschutzerklärung gilt für das Internet-Angebot
+        <a href="https://www.dr-berwanger.de" target="_blank" rel="noopener noreferrer">www.dr-berwanger.de</a>.
+      </p>
+
+      <div class="legal-hinweis" role="note">
+        <strong>Datenschutzerklärung für unsere Patienten:</strong><br>
+        Die gesonderte Datenschutzerklärung für die Praxis (Patienteninformation) steht Ihnen
+        auf Anfrage zur Verfügung und liegt in der Praxis aus. Sie kann auch unter folgendem
+        Link heruntergeladen werden:&nbsp;
+        <a
+          href="https://www.dr-berwanger.de/bilder/praxisinformation_datenschutz_patienteninformation_berwanger.pdf/@@download/file/Praxisinformation_Datenschutz_Patienteninformation_Berwanger.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Datenschutzerklärung Praxis (PDF)
+        </a>
+      </div>
+    </section>
+
+
+    <!-- ── 2. Erhebung von Nutzungsdaten ──────────────────────── -->
+    <section class="legal-sektion einblenden verzoegert-2" aria-labelledby="titelNutzungsdaten">
+      <h2 id="titelNutzungsdaten">Erhebung von Nutzungsdaten</h2>
+
+      <p>
+        Beim Zugriff auf dieses Internetangebot erfassen wir folgende Daten in einer
+        Protokolldatei:
+      </p>
+
+      <ul class="legal-liste">
+        <li>IP-Adresse in anonymisierter (verkürzter) Form</li>
+        <li>Zeitpunkt des Zugriffs</li>
+        <li>Aufgerufene Seite bzw. Name der abgerufenen Datei (URL)</li>
+        <li>Status-Informationen (z.&nbsp;B. Fehlercodes)</li>
+        <li>Übertragene Datenmenge</li>
+        <li>Browser-Informationen (genutzter Web-Browser, Betriebssystem, Spracheinstellung)</li>
+      </ul>
+
+      <p>
+        Die Daten werden ausschließlich für statistische Zwecke genutzt.
+        Eine Weitergabe an Dritte erfolgt nicht. Dieses Internetangebot verwendet keine
+        Techniken, die darauf abzielen, das Zugriffsverhalten einzelner Nutzer auszuwerten.
+        Personenbezogene Nutzungsprofile werden nicht erstellt.
+      </p>
+    </section>
+
+
+    <!-- ── 3. Links zu anderen Webseiten ─────────────────────── -->
+    <section class="legal-sektion einblenden verzoegert-3" aria-labelledby="titelLinks">
+      <h2 id="titelLinks">Links zu anderen Webseiten</h2>
+
+      <p>
+        Dieses Internet-Angebot enthält Verweise zu Inhalten anderer Anbieter.
+        Diese sind durch die Angabe expliziter Links erkennbar und werden in einem
+        eigenen Browserfenster geöffnet. Die Nutzung dieser fremden Inhalte unterliegt
+        gegebenenfalls anderen Datenschutzvorgaben als den hier dargestellten.
+      </p>
+    </section>
+
+
+    <!-- ── 4. Cookies ─────────────────────────────────────────── -->
+    <section class="legal-sektion einblenden verzoegert-3" aria-labelledby="titelCookies">
+      <h2 id="titelCookies">Cookies</h2>
+
+      <p>
+        In bestimmten Fällen werden temporäre Cookies verwendet. Diese enthalten
+        keine personenbezogenen Daten und werden nach Ablauf der Sitzung mit dem
+        Schließen Ihres Web-Browsers automatisch gelöscht. Im Fall einer Verlinkung
+        können Cookies von Drittanbietern zum Einsatz kommen.
+      </p>
+
+      <p>
+        Die gängigen Browser erlauben es, die Verarbeitung von Cookies festzulegen –
+        Sie können das Speichern von Cookies deaktivieren oder die Art der Verarbeitung
+        durch Ihren Browser einstellen.
+      </p>
+    </section>
+
+
+    <!-- ── 5. Ihre Rechte ──────────────────────────────────────── -->
+    <section class="legal-sektion einblenden verzoegert-4" aria-labelledby="titelRechte">
+      <h2 id="titelRechte">Ihre Rechte</h2>
+
+      <p>
+        Sie haben das Recht, auf Antrag unentgeltlich Auskunft über die bei uns
+        gespeicherten personenbezogenen Daten zu erhalten sowie Berichtigung, Sperrung
+        oder Löschung zu verlangen.
+      </p>
+
+      <p>
+        Ausnahmen bestehen, wenn es sich um die vorgeschriebene Datenspeicherung zur
+        Geschäftsabwicklung handelt oder die Daten der gesetzlichen Aufbewahrungspflicht
+        unterliegen. Für diese Zwecke wenden Sie sich bitte über die im
+        <a href="impressum.html">Impressum</a> angegebenen Kontaktdaten an uns.
+      </p>
+    </section>
+
+  </main>
+
+
+  <!-- ════════════════════════════════════════
+       FUSSZEILE
+  ════════════════════════════════════════ -->
+  <footer role="contentinfo">
+
+    <svg
+      class="footer-welle"
+      viewBox="0 0 1440 90"
+      preserveAspectRatio="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path d="M0,60 C480,95 960,20 1440,60 L1440,0 L0,0 Z" />
+    </svg>
+
+    <div class="footer-inner">
+
+      <div class="footer-block">
+        <h4>Notruf &amp; Notdienst</h4>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Rettungsdienst</div>
+          <a href="tel:112" class="notruf-tel">112</a>
+        </div>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Ärztlicher Bereitschaftsdienst</div>
+          <a href="tel:116117" class="notruf-tel">116 117</a>
+        </div>
+        <div class="notruf-eintrag">
+          <div class="notruf-name">Giftnotruf</div>
+          <a href="tel:0613119240" class="notruf-tel">06131 19240</a>
+        </div>
+      </div>
+
+      <div class="footer-block" id="footerKontakt">
+        <h4>Praxis</h4>
+        <p class="lade-placeholder" style="width:85%;"></p>
+        <p class="lade-placeholder" style="width:60%; margin-top:0.5rem;"></p>
+        <p class="lade-placeholder" style="width:70%; margin-top:0.5rem;"></p>
+      </div>
+
+      <div class="footer-block">
+        <h4>Rechtliches</h4>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutzerklärung</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; <span id="jahreszahl"></span> Praxis Dr. Bernd Berwanger &nbsp;·&nbsp; Alle Angaben ohne Gewähr.</p>
+    </div>
+
+  </footer>
+
+
+  <!-- ════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════ -->
+  <script>
+    "use strict";
+
+    /* ── Burger-Menü ─────────────────────────────────────────── */
+    const burgerBtn  = document.getElementById('burgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    burgerBtn.addEventListener('click', () => {
+      const istOffen = burgerBtn.classList.toggle('offen');
+      burgerBtn.setAttribute('aria-expanded', istOffen);
+      burgerBtn.setAttribute('aria-label', istOffen ? 'Menü schließen' : 'Menü öffnen');
+      mobileMenu.classList.toggle('offen', istOffen);
+      mobileMenu.hidden = !istOffen;
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        burgerBtn.classList.remove('offen');
+        burgerBtn.setAttribute('aria-expanded', 'false');
+        burgerBtn.setAttribute('aria-label', 'Menü öffnen');
+        mobileMenu.classList.remove('offen');
+        mobileMenu.hidden = true;
+      });
+    });
+
+    /* ── Aktive Seite markieren ──────────────────────────────── */
+    const aktuelleSeite = window.location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(link => {
+      if (link.getAttribute('href') === aktuelleSeite) link.classList.add('aktiv');
+    });
+
+    /* ── Jahr im Footer ──────────────────────────────────────── */
+    document.getElementById('jahreszahl').textContent = new Date().getFullYear();
+
+    /* ── Praxisdaten laden ───────────────────────────────────── */
+    fetch('praxis-daten.json')
+      .then(res => {
+        if (!res.ok) throw new Error('praxis-daten.json nicht erreichbar');
+        return res.json();
+      })
+      .then(daten => {
+        befuelleLogo(daten.praxis);
+        befuelleFooterKontakt(daten.kontakt);
+      })
+      .catch(err => console.error('Fehler beim Laden der Praxisdaten:', err));
+
+    /* ── Befüll-Funktionen ───────────────────────────────────── */
+
+    function befuelleLogo(praxis) {
+      if (!praxis || !praxis.logo) return;
+      const logoEl   = document.getElementById('praxis-logo');
+      logoEl.src     = praxis.logo;
+      logoEl.onerror = () => { logoEl.style.display = 'none'; };
+    }
+
+    function befuelleFooterKontakt(kontakt) {
+      if (!kontakt) return;
+      const el  = document.getElementById('footerKontakt');
+      const adr = kontakt.adresse;
+      el.innerHTML =
+        '<h4>Praxis</h4>' +
+        `<p>Dr. Bernd Berwanger<br>${adr.strasse}<br>${adr.plz}\u00A0${adr.ort}</p>` +
+        `<a href="tel:${kontakt.telefon.replace(/\s/g, '')}">${kontakt.telefon}</a>` +
+        `<a href="mailto:${kontakt.email}" style="margin-top:0.15rem;">${kontakt.email}</a>`;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,398 @@
+{
+  "banner": {
+    "vertretung_seite": "Vertretung.html"
+  },
+  "schliesstage": [
+    {
+      "von": "2026-05-10",
+      "bis": "2026-06-06",
+      "grund": "Krankheit",
+      "vorlauf_tage": 14
+    },
+    {
+      "von": "2026-12-23",
+      "bis": "2027-01-05",
+      "grund": "Weihnachtsferien",
+      "vorlauf_tage": 10
+    }
+  ],
+  "oeffnungszeiten": {
+    "hinweis": "Termine bitte telefonisch vereinbaren.",
+    "tage": [
+      {
+        "tag": "Montag",
+        "gesund": {
+          "von": "08:00",
+          "bis": "10:30",
+          "nachmittag_von": "14:00",
+          "nachmittag_bis": "15:30"
+        },
+        "krank": {
+          "von": "11:30",
+          "bis": "12:30",
+          "nachmittag_von": "16:30",
+          "nachmittag_bis": "17:30"
+        }
+      },
+      {
+        "tag": "Dienstag",
+        "gesund": {
+         "von": "08:00",
+          "bis": "10:30",
+          "nachmittag_von": "14:00",
+          "nachmittag_bis": "15:30"
+        },
+        "krank": {
+          "von": "11:30",
+          "bis": "12:30",
+          "nachmittag_von": "16:30",
+          "nachmittag_bis": "17:30"
+        }
+      },
+      {
+        "tag": "Mittwoch",
+        "gesund": {
+          "von": "08:00",
+          "bis": "10:30",
+          "nachmittag_von": null,
+          "nachmittag_bis": null
+        },
+        "krank": {
+          "von": "11:30",
+          "bis": "12:30",
+          "nachmittag_von": null,
+          "nachmittag_bis": null
+        }
+      },
+      {
+        "tag": "Donnerstag",
+        "gesund": {
+         "von": "08:00",
+          "bis": "10:30",
+          "nachmittag_von": "14:00",
+          "nachmittag_bis": "15:30"
+        },
+        "krank": {
+          "von": "11:30",
+          "bis": "12:30",
+          "nachmittag_von": "16:30",
+          "nachmittag_bis": "17:30"
+        }
+      },
+      {
+        "tag": "Freitag",
+        "gesund": {
+          "von": "08:00",
+          "bis": "10:30",
+          "nachmittag_von": null,
+          "nachmittag_bis": null
+        },
+        "krank": {
+          "von": "11:30",
+          "bis": "12:30",
+          "nachmittag_von": null,
+          "nachmittag_bis": null
+        }
+      }
+    ]
+  },
+  "team": {
+    "aerzte": [
+      {
+        "id": "arzt-001",
+        "vorname": "Bernd",
+        "nachname": "Berwanger",
+        "titel": "Dr. med.",
+        "fachrichtung": "Facharzt für Kinder- und Jugendmedizin",
+        "schwerpunkte": [
+          "Neonatologie",
+          "Entwicklungspädiatrie",
+          "Impfberatung"
+        ],
+        "kurzbio": "Dr. Berwanger ist seit 2005 niedergelassen und leitet die Praxis. Er legt großen Wert auf eine persönliche Beziehung zu seinen kleinen Patienten.",
+        "foto": "bilder/arzt1.png"
+      },
+      {
+        "id": "arzt-002",
+        "vorname": "Elena",
+        "nachname": "Neuberger",
+        "titel": "Dr. med.",
+        "fachrichtung": "Fachärztin für Kinder- und Jugendmedizin",
+        "schwerpunkte": [
+          "Allergologie",
+          "Neurodermitis",
+          "Ernährungsberatung"
+        ],
+        "kurzbio": "Dr. Neuberger bringt langjährige Erfahrung aus der Universitätskinderklinik mit und ist seit 2025 Teil unseres Teams.",
+        "foto": "bilder/arzt2.png"
+      },
+      {
+        "id": "arzt-003",
+        "vorname": "Anika",
+        "nachname": "Weber",
+        "titel": "Dr. med.",
+        "fachrichtung": "Facharzt für Kinder- und Jugendmedizin",
+        "schwerpunkte": [
+          "Schwerpunkt A",
+          "Schwerpunkt B"
+        ],
+        "kurzbio": "Platzhalter-Biografie für den dritten Arzt. Bitte durch echte Angaben ersetzen.",
+        "foto": "bilder/arzt3.png"
+      }
+    ],
+    "praxisteam": [
+      {
+        "id": "mfa-001",
+        "vorname": "Maria",
+        "nachname": "Schmidt",
+        "ausbildung": "Medizinische Fachangestellte",
+        "rolle": "Praxismanagerin",
+        "foto": "bilder/mfa1.png"
+      },
+      {
+        "id": "mfa-002",
+        "vorname": "Jana",
+        "nachname": "Becker",
+        "ausbildung": "Medizinische Fachangestellte",
+        "rolle": "Anmeldung & Vorsorge",
+        "foto": "bilder/mfa2.png"
+      },
+      {
+        "id": "mfa-003",
+        "vorname": "Anne",
+        "nachname": "Müller",
+        "ausbildung": "Medizinische Fachangestellte",
+        "rolle": "Medizinische Fachangestellte",
+        "foto": "bilder/mfa3.png"
+      },
+      {
+        "id": "mfa-004",
+        "vorname": "Julia",
+        "nachname": "Schmidt",
+        "ausbildung": "Medizinische Fachangestellte",
+        "rolle": "Medizinische Fachangestellte",
+        "foto": "bilder/mfa4.png"
+      },
+      {
+        "id": "mfa-005",
+        "vorname": "Maria",
+        "nachname": "Peters",
+        "ausbildung": "Medizinische Fachangestellte",
+        "rolle": "Medizinische Fachangestellte",
+        "foto": "bilder/mfa5.png"
+      },
+      {
+        "id": "mfa-006",
+        "vorname": "Sarah",
+        "nachname": "Funke",
+        "ausbildung": "Medizinische Fachangestellte",
+        "rolle": "Medizinische Fachangestellte",
+        "foto": "bilder/mfa6.png"
+      },
+      {
+        "id": "mfa-007",
+        "vorname": "Fabienne",
+        "nachname": "Streicher",
+        "ausbildung": "Medizinische Fachangestellte",
+        "rolle": "Medizinische Fachangestellte",
+        "foto": "bilder/mfa7.png"
+      },
+      {
+        "id": "mfa-008",
+        "vorname": "Sandra",
+        "nachname": "Wagner",
+        "ausbildung": "Medizinische Fachangestellte",
+        "rolle": "Medizinische Fachangestellte",
+        "foto": "bilder/mfa8.png"
+      }
+    ]
+  },
+  "praxisraeume": [
+    {
+      "id": "raum-001",
+      "bezeichnung": "Wartebereich 1",
+      "bild": "bilder/praxisraum1.jpeg"
+    },
+    {
+      "id": "raum-002",
+      "bezeichnung": "Wartebereich 2",
+      "bild": "bilder/praxisraum2.jpeg"
+    },
+    {
+      "id": "raum-003",
+      "bezeichnung": "Behandlungszimmer 1",
+      "bild": "bilder/praxisraum3.jpeg"
+    },
+    {
+      "id": "raum-004",
+      "bezeichnung": "Empfang",
+      "bild": "bilder/praxisraum4.jpeg"
+    }
+  ],
+  "praxis": {
+    "arzt_name": "Dr. Bernd Berwanger",
+    "arzt_titel": "Facharzt für Kinder- und Jugendmedizin",
+    "name": "Kinderarztpraxis Dr. Berwanger",
+    "untertitel": "Ihr Kinderarzt in Neustadt an der Weinstraße",
+    "willkommen_titel": "Herzlich Willkommen in der Kinderarztpraxis Dr. Berwanger!",
+    "willkommen_fliesstext": "Wir begleiten Kinder und Jugendliche mit Herz, Erfahrung und Einfühlungsvermögen. Dabei stehen das Wohl Ihres Kindes und eine vertrauensvolle Betreuung im Mittelpunkt.",
+    "willkommen_gruss": "Wir freuen uns auf Ihren Besuch.",
+    "logo": "bilder/logo1.png"
+  },
+  "kontakt": {
+    "adresse": {
+      "strasse": "Hetzelgalerie 4, 2. OG",
+      "plz": "67433",
+      "ort": "Neustadt an der Weinstraße"
+    },
+    "telefon": "06321 86049",
+    "fax": "06321 487359",
+    "email": "Bernd.Berwanger@dr-berwanger.de",
+    "termin_email": "Termine@dr-berwanger.de",
+    "anfahrt_link_text": "Route in Google Maps öffnen",
+    "anfahrt_link_url": "https://maps.app.goo.gl/1aD5cyfP2AFrj3XK9",
+    "parkhinweis": "Parken in Tiefgarage Hetzelgalerie oder in den umliegenden Straßen"
+  },
+  "vertretung": {
+    "aerzte": [
+      {
+        "id": "graf",
+        "aktiv": true,
+        "name": "Dr. Benjamin Graf",
+        "fachrichtung": "Praxis für Kinder- und Jugendmedizin",
+        "adresse": "Gabelsbergerstraße 13, 67433 Neustadt an der Weinstraße",
+        "telefon": "06321 354349",
+        "website": "https://www.kinderarzt-dr-graf.de"
+      },
+      {
+        "id": "schlez",
+        "aktiv": true,
+        "name": "Dr. med. Marc Schlez",
+        "fachrichtung": "Kinderarzt · Kinderkardiologe",
+        "adresse": "Europastraße 4, 67433 Neustadt/Weinstraße",
+        "telefon": "06321 7474",
+        "website": "https://www.kinderkardiologie-neustadt.de"
+      },
+      {
+        "id": "mueller",
+        "aktiv": true,
+        "name": "Dr. med. Jens Holger Müller",
+        "fachrichtung": "Praxis für Kinder- und Jugendmedizin",
+        "adresse": "Kellereistraße 16, 67433 Neustadt/Wstr.",
+        "telefon": "06321 83990",
+        "website": "https://www.unserkinderarzt.de"
+      },
+      {
+        "id": "neuwinger",
+        "aktiv": true,
+        "name": "Dr. med. Frank Neuwinger",
+        "fachrichtung": "Facharzt für Kinder- und Jugendmedizin · Kinderpneumologie",
+        "adresse": "Robert-Stolz-Straße 33, Bavaria Ärztehaus, 67433 Neustadt a.d.W.",
+        "telefon": "06321 15655",
+        "website": "https://www.mein-kinderarzt.net"
+      }
+    ]
+  },
+  "leistungen": {
+    "impfungen": [
+      {
+        "id": "impf-001",
+        "titel": "Impfungen nach STIKO-Empfehlung",
+        "beschreibung": "Alle von der Ständigen Impfkommission empfohlenen Schutzimpfungen für Säuglinge, Kinder und Jugendliche – lückenloser Impfschutz von Anfang an."
+      },
+      {
+        "id": "impf-002",
+        "titel": "Reiseberatung & Reiseimpfungen",
+        "beschreibung": "Individuelle Reiseberatung mit destinationsabhängiger Impfempfehlung und Durchführung aller erforderlichen Reiseschutzimpfungen."
+      }
+    ],
+    "vorsorgeuntersuchungen": [
+      {
+        "id": "vorsorge-001",
+        "titel": "Vorsorgeuntersuchungen U2–U11",
+        "beschreibung": "Gesetzliche Früherkennungsuntersuchungen von der Geburt bis zum 10. Lebensjahr – Überprüfung von Wachstum, Entwicklung und Gesundheit in jeder Altersphase."
+      },
+      {
+        "id": "vorsorge-002",
+        "titel": "Jugendgesundheitsuntersuchungen J1 & J2",
+        "beschreibung": "J1 (12–14 Jahre) und J2 (16–17 Jahre) zur umfassenden körperlichen und psychosozialen Gesundheitsbeurteilung im Jugendalter."
+      },
+      {
+        "id": "vorsorge-003",
+        "titel": "Kindergartenuntersuchung",
+        "beschreibung": "Ärztliche Untersuchung zur Vorlage bei Kindergarten oder Kindertagesstätte – kompetente Einschätzung des Entwicklungsstands."
+      },
+      {
+        "id": "vorsorge-004",
+        "titel": "Einschulungsuntersuchung",
+        "beschreibung": "Ärztliche Untersuchung und Attest zur Schulreife – Beurteilung der körperlichen und geistigen Entwicklung vor Schulbeginn."
+      },
+      {
+        "id": "vorsorge-005",
+        "titel": "Jugendarbeitsschutzuntersuchung",
+        "beschreibung": "Pflichtuntersuchung für Jugendliche vor Aufnahme einer Berufstätigkeit gemäß Jugendarbeitsschutzgesetz (JArbSchG)."
+      }
+    ],
+    "diagnostik": [
+      {
+        "id": "diag-001",
+        "titel": "Sehtest PLUSOPTIX",
+        "beschreibung": "Computergestützte Sehtestung mittels PLUSOPTIX-Photoscreener – geeignet ab dem 7. Lebensmonat. Ermöglicht frühzeitige Erkennung von Fehlsichtigkeiten und Augenfehlstellungen, noch bevor Kinder selbst Auskunft geben können."
+      },
+      {
+        "id": "diag-002",
+        "titel": "Seh- und Hörtest",
+        "beschreibung": "Überprüfung von Sehvermögen und Hörfähigkeit – als fester Bestandteil der Vorsorgeuntersuchungen sowie bei konkretem Verdacht auf Beeinträchtigungen."
+      },
+      {
+        "id": "diag-003",
+        "titel": "Lungenfunktionsmessung",
+        "beschreibung": "Spirometrie zur Beurteilung der Lungenfunktion und Atemwegskapazität, inkl. Bronchospasmolyse-Test bei Verdacht auf Asthma oder obstruktive Atemwegserkrankungen."
+      },
+      {
+        "id": "diag-004",
+        "titel": "Ultraschall-Diagnostik",
+        "beschreibung": "Sonographie der Säuglingshüfte, des Abdomens, der Nieren und ableitenden Harnwege, des Schädels sowie der Halsweichteile."
+      },
+      {
+        "id": "diag-005",
+        "titel": "EKG",
+        "beschreibung": "Elektrokardiogramm zur Beurteilung der Herzfunktion – bei kardiologischer Fragestellung, nach Synkopen sowie im Rahmen der prä- und postoperativen Betreuung."
+      },
+      {
+        "id": "diag-006",
+        "titel": "Allergiediagnostik",
+        "beschreibung": "Epikutane Hauttestung, Prick-Test und RAST-Untersuchungen (spezifisches IgE im Blut) zur systematischen Abklärung von Nahrungsmittel- und Umweltallergien."
+      },
+      {
+        "id": "diag-007",
+        "titel": "Entwicklungsdiagnostik",
+        "beschreibung": "Standardisierte Entwicklungstests (ET 6-6, ETS 4-8, Motoriktest, Denver-Test) zur differenzierten Beurteilung der motorischen, sprachlichen und kognitiven Entwicklung."
+      },
+      {
+        "id": "diag-008",
+        "titel": "Laboruntersuchungen & Schnelltests",
+        "beschreibung": "Blutuntersuchungen, Urinanalyse, mikrobiologische Untersuchungen, Tuberkulose-Testung sowie Schnelltests für Streptokokken Gruppe A (Scharlach) und CRP (Infektionsparameter)."
+      }
+    ],
+    "allgemeine_leistungen": [
+      {
+        "id": "allg-001",
+        "titel": "Prä- und postoperative Betreuung",
+        "beschreibung": "Ärztliche Untersuchung und Begleitung vor und nach operativen Eingriffen – inkl. Labordiagnostik und EKG nach Bedarf."
+      },
+      {
+        "id": "allg-002",
+        "titel": "Kleine Chirurgie",
+        "beschreibung": "Ambulante Wundversorgung, Fremdkörper- und Zeckenentfernung, Versorgung von Schnittwunden sowie Entfernung von Nahtmaterial nach Eingriffen."
+      }
+    ]
+  },
+  "praxis_app": {
+    "aktiv": true,
+    "beschreibung": "Mit unserer Praxis-App können Sie jederzeit Termine anfragen, Dokumente einsehen und direkt mit uns kommunizieren – ganz bequem vom Smartphone.",
+    "qr_code_bild": "bilder/app/qr-code.png",
+    "app_store_link": "https://apps.apple.com/musterpaxis",
+    "play_store_link": "https://play.google.com/store/musterpaxis"
+  }
+}
