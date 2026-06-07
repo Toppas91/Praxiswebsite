@@ -4,15 +4,15 @@
   },
   "schliesstage": [
     {
-      "von": "2026-05-10",
-      "bis": "2026-06-06",
-      "grund": "Krankheit",
+      "von": "2026-06-03",
+      "bis": "2026-06-09",
+      "grund": "Urlaub",
       "vorlauf_tage": 14
     },
     {
-      "von": "2026-12-23",
-      "bis": "2027-01-05",
-      "grund": "Weihnachtsferien",
+      "von": "2026-07-20",
+      "bis": "2026-08-11",
+      "grund": "Urlaub",
       "vorlauf_tage": 10
     }
   ],
@@ -266,7 +266,7 @@
       },
       {
         "id": "schlez",
-        "aktiv": true,
+        "aktiv": false,
         "name": "Dr. med. Marc Schlez",
         "fachrichtung": "Kinderarzt · Kinderkardiologe",
         "adresse": "Europastraße 4, 67433 Neustadt/Weinstraße",
