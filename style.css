@@ -45,6 +45,7 @@ body {
   font-weight:  400;
   line-height:  1.75;
   min-height:   100dvh;
+    overflow-x: hidden;
 }
 
 img,
@@ -319,14 +320,15 @@ main.startseite {
 
 @media (max-width: 767px) {
   main { padding: 4rem 1.75rem 8rem; }
-  .inhalt-zentriert       { padding: 4rem 1.75rem 0; }
-  .inhalt-zentriert:last-child { padding-bottom: 8rem; }
+  .inhalt-zentriert       { padding: 2rem 1.75rem 0; }
+  .inhalt-zentriert:last-child { padding-bottom: 2rem; }
+ @media (max-width: 767px) {
   .startseiten-bild-wrapper {
-    width:         100%;
-   padding:       0 0.5rem;
-    margin-bottom: 1.5rem;
-    box-sizing:    border-box;
+    width:         120vw;
+    margin-left:   calc((100% - 120vw) / 2);
+    margin-bottom: 0.5rem;
   }
+}
 }
 
 /* ── 7. Startseite – Begrüßungsbereich ──────────────────────── */
@@ -726,10 +728,12 @@ footer {
 }
 
 /* ── Startseiten-Bild ───────────────────────────────────────── */
-.startseiten-bild-wrapper {
-  width:      90%;
-  margin:     0 auto 1.5rem;
-  text-align: center;
+@media (min-width: 768px) {
+  .startseiten-bild-wrapper {
+    width:      100%;
+    margin:     0 auto 1.5rem;
+    text-align: center;
+  }
 }
 
 .startseiten-bild {
