@@ -2,20 +2,6 @@
   "banner": {
     "vertretung_seite": "Vertretung.html"
   },
-  "schliesstage": [
-    {
-      "von": "2026-05-10",
-      "bis": "2026-06-09",
-      "grund": "Urlaub",
-      "vorlauf_tage": 14
-    },
-    {
-      "von": "2026-12-23",
-      "bis": "2027-01-05",
-      "grund": "Weihnachtsferien",
-      "vorlauf_tage": 10
-    }
-  ],
   "oeffnungszeiten": {
     "hinweis": "Termine bitte telefonisch vereinbaren.",
     "tage": [
@@ -237,7 +223,7 @@
     "willkommen_titel": "Herzlich Willkommen in der Kinderarztpraxis Dr. Berwanger!",
     "willkommen_fliesstext": "Wir begleiten Kinder und Jugendliche mit Herz, Erfahrung und Einfühlungsvermögen. Dabei stehen das Wohl Ihres Kindes und eine vertrauensvolle Betreuung im Mittelpunkt.",
     "willkommen_gruss": "Wir freuen uns auf Ihren Besuch.",
-    "logo": "bilder/logo4.png"
+    "logo": "bilder/logo5.png"
   },
   "kontakt": {
     "adresse": {
@@ -394,5 +380,33 @@
     "qr_code_bild": "bilder/app/qr-code.png",
     "app_store_link": "https://apps.apple.com/musterpaxis",
     "play_store_link": "https://play.google.com/store/musterpaxis"
-  }
+  },
+  "events": [
+    {
+      "typ": "schliessung",
+      "von": "2026-05-10",
+      "bis": "2026-06-09",
+      "grund": "Urlaub",
+      "vorlauf_tage": 14,
+      "vertreter": [
+        {
+          "id": "graf"
+        },
+        {
+          "id": "schlez"
+        },
+        {
+          "id": "mueller"
+        }
+      ]
+    },
+    {
+      "typ": "schliessung",
+      "von": "2026-12-23",
+      "bis": "2027-01-05",
+      "grund": "Weihnachtsferien",
+      "vorlauf_tage": 10,
+      "vertreter": []
+    }
+  ]
 }
