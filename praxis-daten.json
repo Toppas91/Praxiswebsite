@@ -385,18 +385,24 @@
     {
       "typ": "schliessung",
       "von": "2026-05-10",
-      "bis": "2026-06-09",
+      "bis": "2026-06-11",
       "grund": "Urlaub",
       "vorlauf_tage": 14,
       "vertreter": [
         {
-          "id": "graf"
+          "id": "schlez",
+          "von": "2026-05-10",
+          "bis": "2026-06-11"
         },
         {
-          "id": "schlez"
+          "id": "mueller",
+          "von": "2026-05-10",
+          "bis": "2026-05-20"
         },
         {
-          "id": "mueller"
+          "id": "neuwinger",
+          "von": "2026-06-07",
+          "bis": "2026-06-11"
         }
       ]
     },
@@ -407,6 +413,12 @@
       "grund": "Weihnachtsferien",
       "vorlauf_tage": 10,
       "vertreter": []
+    },
+    {
+      "typ": "freitext",
+      "von": "2026-06-08",
+      "bis": "2026-06-10",
+      "text": "Am 9.6 Praxis Nachmittags geschlossen"
     }
   ]
 }
