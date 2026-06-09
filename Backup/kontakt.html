@@ -229,6 +229,39 @@
       .erreichbarkeit-wert { white-space: normal; }
       .app-qr-layout    { flex-direction: column; align-items: flex-start; }
     }
+
+    /* ── Anfahrt ────────────────────────────────────────────────
+       Textblock + OpenStreetMap-Iframe über volle Abschnittsbreite.
+       Kein Border, kein Shadow – Struktur durch Abstand.
+    ──────────────────────────────────────────────────────────── */
+    .anfahrt-text {
+      margin-top: 2.25rem;
+    }
+
+    .anfahrt-text p + p {
+      margin-top: 0.9rem;
+    }
+
+    .karten-einbettung {
+      position:      relative;
+      width:         100%;
+      height:        380px;
+      margin-top:    2.25rem;
+      border-radius: 12px;
+      overflow:      hidden;
+    }
+
+    .karten-einbettung iframe {
+      width:   100%;
+      height:  100%;
+      border:  none;
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      .karten-einbettung { height: 260px; }
+    }
+
   </style>
 </head>
 
@@ -487,6 +520,37 @@
         </div>
 
       </div><!-- /.rezept-raster -->
+    </section>
+
+<!-- ════════════════════════════════════════
+         4. ANFAHRT
+    ════════════════════════════════════════ -->
+    <section
+      class="kontakt-block einblenden verzoegert-4"
+      id="anfahrtBereich"
+      aria-labelledby="anfahrtTitel"
+    >
+      <h2 id="anfahrtTitel">Anfahrt</h2>
+
+      <div class="anfahrt-text">
+        <p>Sie finden unsere Praxis im 2.&nbsp;Obergeschoss der
+        Hetzelgalerie&nbsp;4, 67433 Neustadt an der Weinstraße.</p>
+        <p>Sie können sowohl am alten Turmplatz als auch in den umliegenden
+        Straßen parken. Alternativ können Sie in der Tiefgarage der
+        Hetzelgalerie parken. Mit dem Fahrstuhl gelangen
+        Sie direkt zur Praxis im 2.&nbsp;OG.</p>
+      </div>
+
+      <div class="karten-einbettung">
+        <iframe
+          src="https://www.openstreetmap.org/export/embed.html?bbox=8.137588%2C49.348972%2C8.143588%2C49.354972&layer=mapnik&marker=49.351972%2C8.140588"
+          title="Standort Kinderarztpraxis Dr. Bernd Berwanger – Hetzelgalerie, Neustadt an der Weinstraße"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          aria-label="Kartenansicht: Praxis Dr. Berwanger, Hetzelgalerie"
+        ></iframe>
+      </div>
+
     </section>
 
   </main>

@@ -196,11 +196,18 @@
          unabhängig vom Vorlauf. Wird als Fallback für
          Direktaufrufe von Vertretung.html verwendet.
     ════════════════════════════════════════════════════════════ */
-    function findeAktiveSchliesszeit(schliesstage) {
-      if (!Array.isArray(schliesstage)) return null;
+     /* Hilfsfunktion: filtert nur Schließungs-Events aus dem gemeinsamen Array */
+    function findeSchliessungEvents(events) {
+      if (!Array.isArray(events)) return [];
+      return events.filter(e => e.typ === 'schliessung');
+    }
+ 
+    function findeAktiveSchliesszeit(events) {
+      const schliesstage = findeSchliessungEvents(events);
+      if (!schliesstage.length) return null;
       const heute = new Date();
       heute.setHours(0, 0, 0, 0);
-
+ 
       return [...schliesstage]
         .map(s => {
           const vonDatum    = parseDatum(s.von);
@@ -215,12 +222,13 @@
         .map(s => ({ ...s, phase: heute < s.vonDatum ? 'vorlauf' : 'aktiv' }))[0]
         ?? null;
     }
-
-    function findeNaechsteSchliesszeit(schliesstage) {
-      if (!Array.isArray(schliesstage)) return null;
+ 
+    function findeNaechsteSchliesszeit(events) {
+      const schliesstage = findeSchliessungEvents(events);
+      if (!schliesstage.length) return null;
       const heute = new Date();
       heute.setHours(0, 0, 0, 0);
-
+ 
       return [...schliesstage]
         .map(s => ({ ...s, vonDatum: parseDatum(s.von), bisDatum: parseDatum(s.bis) }))
         .filter(s => s.bisDatum >= heute)

@@ -277,24 +277,48 @@
          bisDatum    : Date-Objekt des letzten Schließtags
          phase       : 'vorlauf' | 'aktiv'
     ════════════════════════════════════════════════════════════ */
-    function findeAktiveSchliesszeit(schliesstage) {
-      if (!Array.isArray(schliesstage)) return null;
+     /* ════════════════════════════════════════════════════════════
+       EVENT-LOGIK
+       ────────────────────────────────────────────────────────────
+       Gibt alle heute aktiven Events als Array zurück.
+       Freitexte  : aktiv, wenn heute zwischen von/bis liegt.
+       Schließungen: aktiv, wenn heute im Vorlauf- oder Schließzeitraum liegt.
+       Sortierung : Freitexte zuerst, dann Schließungen chronologisch.
+    ════════════════════════════════════════════════════════════ */
+    function findeAktiveEvents(events) {
+      if (!Array.isArray(events)) return [];
       const heute = new Date();
       heute.setHours(0, 0, 0, 0);
-
-      return [...schliesstage]
-        .map(s => {
-          const vonDatum    = parseDatum(s.von);
-          const bisDatum    = parseDatum(s.bis);
-          const vorlaufTage = s.vorlauf_tage ?? 14;
-          const vorlaufStart = new Date(vonDatum);
-          vorlaufStart.setDate(vorlaufStart.getDate() - vorlaufTage);
-          return { ...s, vonDatum, bisDatum, vorlaufStart };
+ 
+      return events
+        .filter(ev => {
+          if (!ev.von || !ev.bis) return false;
+          const von = parseDatum(ev.von);
+          const bis = parseDatum(ev.bis);
+ 
+          if (ev.typ === 'freitext') {
+            return heute >= von && heute <= bis;
+          }
+          if (ev.typ === 'schliessung') {
+            const vorlaufTage  = ev.vorlauf_tage ?? 14;
+            const vorlaufStart = new Date(von);
+            vorlaufStart.setDate(vorlaufStart.getDate() - vorlaufTage);
+            return heute >= vorlaufStart && heute <= bis;
+          }
+          return false;
         })
-        .filter(s => heute >= s.vorlaufStart && heute <= s.bisDatum)
-        .sort((a, b) => a.vonDatum - b.vonDatum)
-        .map(s => ({ ...s, phase: heute < s.vonDatum ? 'vorlauf' : 'aktiv' }))[0]
-        ?? null;
+        .map(ev => {
+          const vonDatum = parseDatum(ev.von);
+          const bisDatum = parseDatum(ev.bis);
+          const phase    = (ev.typ === 'schliessung' && heute < vonDatum)
+            ? 'vorlauf' : 'aktiv';
+          return { ...ev, vonDatum, bisDatum, phase };
+        })
+        .sort((a, b) => {
+          if (a.typ === 'freitext' && b.typ !== 'freitext') return -1;
+          if (a.typ !== 'freitext' && b.typ === 'freitext') return  1;
+          return a.vonDatum - b.vonDatum;
+        });
     }
 
     /* ════════════════════════════════════════════════════════════
@@ -304,20 +328,80 @@
        Aktivphase   : "wegen … noch bis TT.MM.JJJJ geschlossen"
        Beide Phasen: Wiedereröffnungsdatum (bis + 1 Tag) am Ende.
     ════════════════════════════════════════════════════════════ */
-    function bannerTextErstellen(s) {
-      const bisStr    = formatDatum(s.bisDatum);
-      const wiederAuf = new Date(s.bisDatum);
-      wiederAuf.setDate(wiederAuf.getDate() + 1);
-      const wiederAufStr = formatDatum(wiederAuf);
-
-      if (s.phase === 'vorlauf') {
-        const vonStr = formatDatum(s.vonDatum);
-        return `Unsere Praxis ist vom ${vonStr} bis ${bisStr} ` +
-               `wegen ${s.grund} geschlossen. ` +
-               `Wir freuen uns, Sie ab dem ${wiederAufStr} wieder begrüßen zu dürfen.`;
-      }
-      return `Unsere Praxis ist wegen ${s.grund} noch bis ${bisStr} geschlossen. ` +
-             `Wir freuen uns, Sie ab dem ${wiederAufStr} wieder begrüßen zu dürfen.`;
+      /* ════════════════════════════════════════════════════════════
+       BANNER-INHALT AUFBAUEN
+       ────────────────────────────────────────────────────────────
+       Baut den HTML-Inhalt für alle aktiven Events:
+         • Freitexte erscheinen ganz oben
+         • Schließungen darunter mit eigenem Vertreter-Hinweis
+         • Bei mehreren Events trennt eine CSS-Linie die Blöcke
+         • Vertreter werden tagesgenau aus dem Event gefiltert
+    ════════════════════════════════════════════════════════════ */
+    function bannerInhaltErstellen(events, vertretungPool, vertretungSeite) {
+      const heute = new Date();
+      heute.setHours(0, 0, 0, 0);
+ 
+      const eventBloecke  = [];
+      let   hatSchliessung = false;
+ 
+      events.forEach(ev => {
+        const innerBloecke = [];
+ 
+        /* ── Freitext ──────────────────────────────────────── */
+        if (ev.typ === 'freitext') {
+          innerBloecke.push(`<p class="banner-text">${ev.text}</p>`);
+        }
+ 
+        /* ── Schließung ────────────────────────────────────── */
+        if (ev.typ === 'schliessung') {
+          hatSchliessung    = true;
+          const bisStr      = formatDatum(ev.bisDatum);
+          const wiederAuf   = new Date(ev.bisDatum);
+          wiederAuf.setDate(wiederAuf.getDate() + 1);
+          const wiederAufStr = formatDatum(wiederAuf);
+ 
+          const schliessText = ev.phase === 'vorlauf'
+            ? `Unsere Praxis ist vom ${formatDatum(ev.vonDatum)} bis ${bisStr} ` +
+              `wegen ${ev.grund} geschlossen. ` +
+              `Wir freuen uns, Sie ab dem ${wiederAufStr} wieder begrüßen zu dürfen.`
+            : `Unsere Praxis ist wegen ${ev.grund} noch bis ${bisStr} geschlossen. ` +
+              `Wir freuen uns, Sie ab dem ${wiederAufStr} wieder begrüßen zu dürfen.`;
+ 
+          innerBloecke.push(`<p class="banner-text">${schliessText}</p>`);
+ 
+          /* ── Tagesgenaue Vertreter ermitteln ─────────────── */
+          if (Array.isArray(ev.vertreter) && ev.vertreter.length &&
+              Array.isArray(vertretungPool)) {
+ 
+            const heuteVertreter = ev.vertreter
+              .filter(v => {
+                const vVon = v.von ? parseDatum(v.von) : null;
+                const vBis = v.bis ? parseDatum(v.bis) : null;
+                return (!vVon || heute >= vVon) && (!vBis || heute <= vBis);
+              })
+              .map(v => vertretungPool.find(a => a.id === v.id && a.aktiv !== false))
+              .filter(Boolean);
+ 
+            if (heuteVertreter.length) {
+              const namen = heuteVertreter.map(a => a.name).join(' · ');
+              innerBloecke.push(`<p class="banner-vertreter">Vertretung heute: ${namen}</p>`);
+            }
+          }
+        }
+ 
+        if (innerBloecke.length) {
+          eventBloecke.push(`<div class="banner-event">${innerBloecke.join('')}</div>`);
+        }
+      });
+ 
+      if (!eventBloecke.length) return { html: '', hatInhalt: false };
+ 
+      const eventsHtml = `<div class="banner-events">${eventBloecke.join('')}</div>`;
+      const btnHtml    = (hatSchliessung && vertretungSeite)
+        ? `<a href="${vertretungSeite}" class="banner-btn">Vertretung ansehen</a>`
+        : '';
+ 
+      return { html: eventsHtml + btnHtml, hatInhalt: true };
     }
 
     /* ── Hilfsfunktionen Sprechzeiten ───────────────────────── */
@@ -406,7 +490,7 @@
       })
       .then(daten => {
         befuelleLogo(daten.praxis);
-        befuelleBanner(daten.banner, daten.schliesstage);
+        befuelleBanner(daten.banner, daten.events, daten.vertretung?.aerzte);
         befuelleBegruessungsbereich(daten.praxis);
         befuelleSprechzeiten(daten.oeffnungszeiten);
         befuelleTerminEmail(daten.kontakt);
@@ -437,27 +521,25 @@
        Der "Vertretung ansehen"-Button erscheint, wenn
        banner.vertretung_seite gesetzt ist.
     ──────────────────────────────────────────────────────────── */
-    function befuelleBanner(banner, schliesstage) {
-      const aktiv = findeAktiveSchliesszeit(schliesstage);
-      if (!aktiv) return;
-
-      const div  = document.getElementById('newsBanner');
-      const text = bannerTextErstellen(aktiv);
-
-      const btnHtml = banner?.vertretung_seite
-        ? `<a href="${banner.vertretung_seite}" class="banner-btn">Vertretung ansehen</a>`
-        : '';
-
+    function befuelleBanner(banner, events, vertretungPool) {
+      const aktiveEvents = findeAktiveEvents(events);
+      if (!aktiveEvents.length) return;
+ 
+      const { html, hatInhalt } = bannerInhaltErstellen(
+        aktiveEvents, vertretungPool, banner?.vertretung_seite
+      );
+      if (!hatInhalt) return;
+ 
+      const div = document.getElementById('newsBanner');
       div.innerHTML =
         '<div class="banner">' +
           '<div class="banner-inner">' +
-            `<p class="banner-text">${text}</p>` +
-            btnHtml +
+            html +
           '</div>' +
         '</div>';
-
       div.style.display = '';
     }
+ 
 
     function befuelleBegruessungsbereich(praxis) {
       if (!praxis) return;

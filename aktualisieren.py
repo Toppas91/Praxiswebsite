@@ -1,18 +1,33 @@
 #!/usr/bin/env python3
 # coding: utf-8
 """
-aktualisieren.py  –  Praxis-Editor
-────────────────────────────────────
+aktualisieren.py  –  Praxis-Editor  (v2.1)
+────────────────────────────────────────────
 Erster Aufruf (Excel fehlt):
     Erstellt praxis-editor.xlsx aus praxis-daten.json.
     Bitte dann die Excel-Datei bearbeiten und das Script erneut starten.
 
 Normaler Aufruf (Excel vorhanden):
     Liest praxis-editor.xlsx und schreibt Änderungen in praxis-daten.json.
+    ► Schließzeiten (typ "schliessung") und Freitexte (typ "freitext")
+      werden beide vollständig aus dem Sheet "Schließzeiten" gelesen.
+    ► Das Sheet hat zwei Abschnitte: Schließzeiten (oben) + Meldungen (unten).
 
 Aufruf mit --neu:
     Erstellt praxis-editor.xlsx neu aus der aktuellen praxis-daten.json
-    (z. B. nach manuellem Hinzufügen eines Vertretungsarztes).
+    (z. B. nach manueller JSON-Änderung, neuen Ärzten oder nach der
+     einmaligen Migration von "schliesstage" → "events").
+
+SHEET-LAYOUT "Schließzeiten":
+    Zeile  1    : Titel
+    Zeile  2    : Hinweis
+    Zeile  3    : Gruppen-Überschriften (Schließzeit | Vertreter 1–4)
+    Zeile  4    : Spalten-Überschriften
+    Zeilen 5–19 : Schließzeiten-Daten (bis zu 15 Einträge)
+    Zeile  20   : Trenner
+    Zeile  21   : Abschnitts-Titel "AD-HOC-MELDUNGEN"
+    Zeile  22   : Spalten-Überschriften (Von · Bis · Meldungstext)
+    Zeilen 23–32: Freitext-Daten (bis zu 10 Einträge)
 """
 import json
 import sys
@@ -110,16 +125,93 @@ def lese_oeffnungszeiten(ws):
         })
     return tage
 
-def lese_schliesstage(ws):
+
+def _ist_neues_format(ws):
+    """True, wenn das Sheet im neuen Format (v2.x) vorliegt.
+    Erkennung: A3 = 'Schließzeit' (Gruppen-Überschrift) vs. 'Von' (Spalten-Überschrift)."""
+    a3 = str(ws.cell(row=3, column=1).value or "").strip()
+    return a3.lower() not in ("von", "")
+
+
+def lese_schliesstage(ws, aerzte_pool):
+    """
+    Liest Schließzeiten (Zeilen 5–19) aus dem Schließzeiten-Sheet.
+    Gibt Liste von Events mit typ="schliessung" zurück.
+    Erkennt altes Format (v1.x, Daten ab Zeile 4) automatisch.
+    """
+    name_zu_id   = {a["name"]: a["id"] for a in aerzte_pool}
+    neues_format = _ist_neues_format(ws)
+
+    if not neues_format:
+        print("  ℹ  Altes Excel-Format erkannt (keine Vertreter-/Freitext-Spalten).")
+        print("     Tipp: 'python aktualisieren.py --neu' erstellt das neue Format.")
+        start_row = 4
+    else:
+        start_row = 5
+
     ergebnis = []
-    for row in range(4, 20):
+    for row in range(start_row, start_row + 15):
         von     = als_datum(ws.cell(row=row, column=1).value)
         bis     = als_datum(ws.cell(row=row, column=2).value)
         grund   = str(ws.cell(row=row, column=3).value or "").strip()
         vorlauf = als_int(ws.cell(row=row, column=4).value, default=7)
-        if von and bis:
-            ergebnis.append({"von": von, "bis": bis, "grund": grund, "vorlauf_tage": vorlauf})
+        if not (von and bis):
+            continue
+
+        vertreter = []
+        if neues_format:
+            for v in range(4):
+                base_col = 5 + v * 3          # Spalten 5, 8, 11, 14
+                v_name   = str(ws.cell(row=row, column=base_col).value or "").strip()
+                v_von    = als_datum(ws.cell(row=row, column=base_col + 1).value)
+                v_bis    = als_datum(ws.cell(row=row, column=base_col + 2).value)
+                if not v_name:
+                    continue
+                v_id = name_zu_id.get(v_name)
+                if v_id is None:
+                    print(f"  ⚠  Zeile {row}: Vertreter '{v_name}' nicht in der "
+                          f"Vertretungsliste – übersprungen.")
+                    continue
+                entry = {"id": v_id}
+                if v_von: entry["von"] = v_von
+                if v_bis: entry["bis"] = v_bis
+                vertreter.append(entry)
+
+        ergebnis.append({
+            "typ":          "schliessung",
+            "von":          von,
+            "bis":          bis,
+            "grund":        grund,
+            "vorlauf_tage": vorlauf,
+            "vertreter":    vertreter,
+        })
     return ergebnis
+
+
+def lese_freitexte(ws):
+    """
+    Liest Ad-hoc-Meldungen (Zeilen 23–32) aus dem Schließzeiten-Sheet.
+    Gibt Liste von Events mit typ="freitext" zurück.
+    Leere Zeilen und Zeilen ohne Text werden übersprungen.
+    Gibt leere Liste zurück, wenn altes Format erkannt wird.
+    """
+    if not _ist_neues_format(ws):
+        return []
+
+    ergebnis = []
+    for row in range(23, 33):          # 10 Freitext-Slots, Zeilen 23–32
+        von  = als_datum(ws.cell(row=row, column=1).value)
+        bis  = als_datum(ws.cell(row=row, column=2).value)
+        text = str(ws.cell(row=row, column=3).value or "").strip()
+        if von and bis and text:
+            ergebnis.append({
+                "typ":  "freitext",
+                "von":  von,
+                "bis":  bis,
+                "text": text,
+            })
+    return ergebnis
+
 
 def lese_vertretung(ws, bestehende):
     id_map = {a["id"]: a for a in bestehende}
@@ -136,6 +228,7 @@ def lese_vertretung(ws, bestehende):
             neu.append(arzt)
     return neu or bestehende
 
+
 def git_push():
     """Führt git add → commit → push aus. Gibt True bei Erfolg zurück."""
     import subprocess
@@ -149,26 +242,22 @@ def git_push():
             **kw
         )
 
-    # Prüfen ob überhaupt ein git-Repo vorliegt
     check = git(["rev-parse", "--is-inside-work-tree"])
     if check.returncode != 0:
         print("⚠ Kein Git-Repository gefunden – Push übersprungen.")
         return False
 
-    # Gibt es überhaupt Änderungen?
     status = git(["status", "--porcelain", str(JSON_FILE)])
     if not status.stdout.strip():
         print("  Keine Änderungen in praxis-daten.json – kein Commit nötig.")
         return True
 
     zeitstempel = datetime.now().strftime("%d.%m.%Y %H:%M")
-
     print("Git: Änderungen werden hochgeladen ...")
     schritte = [
-        (["add", str(JSON_FILE)],            "add"),
-        (["commit", "-m",
-          f"Praxisdaten aktualisiert ({zeitstempel})"], "commit"),
-        (["push"],                            "push"),
+        (["add", str(JSON_FILE)],                              "add"),
+        (["commit", "-m", f"Praxisdaten aktualisiert ({zeitstempel})"], "commit"),
+        (["push"],                                             "push"),
     ]
 
     for args, name in schritte:
@@ -196,14 +285,30 @@ def aktualisiere():
     with open(JSON_FILE, encoding="utf-8") as f:
         daten = json.load(f)
 
-    daten["oeffnungszeiten"]["tage"] = lese_oeffnungszeiten(get_sheet(wb, "ffnungszeiten"))
-    daten["schliesstage"]            = lese_schliesstage(get_sheet(wb, "chlie"))
-    daten["vertretung"]["aerzte"]    = lese_vertretung(get_sheet(wb, "ertretung"), daten["vertretung"]["aerzte"])
+    # ── Öffnungszeiten & Vertretungspool (unverändert) ───────────
+    daten["oeffnungszeiten"]["tage"] = lese_oeffnungszeiten(
+        get_sheet(wb, "ffnungszeiten")
+    )
+    daten["vertretung"]["aerzte"] = lese_vertretung(
+        get_sheet(wb, "ertretung"), daten["vertretung"]["aerzte"]
+    )
+
+    # ── Events: beide Typen kommen jetzt aus demselben Sheet ────
+    #    Schließzeiten aus Zeilen 5–19, Freitexte aus Zeilen 23–32.
+    ws_schliess        = get_sheet(wb, "chlie")
+    schliessung_events = lese_schliesstage(ws_schliess, daten["vertretung"]["aerzte"])
+    freitext_events    = lese_freitexte(ws_schliess)
+    daten["events"]    = schliessung_events + freitext_events
+
+    # Legacy-Key entfernen (einmalige Migration)
+    daten.pop("schliesstage", None)
 
     with open(JSON_FILE, "w", encoding="utf-8") as f:
         json.dump(daten, f, ensure_ascii=False, indent=2)
 
-    print(f"✓ {JSON_FILE.name} wurde erfolgreich aktualisiert.")
+    print(f"✓ {JSON_FILE.name} erfolgreich aktualisiert.")
+    print(f"  Schließzeiten: {len(schliessung_events)}"
+          f"  |  Freitexte: {len(freitext_events)}")
     git_push()
     return True
 
@@ -259,18 +364,36 @@ def eingabe(ws, row, col, val, fmt=None, readonly=False):
         c.number_format = fmt
     return c
 
+
 def erstelle_excel(daten):
-    wb = Workbook()
+    # ── Bestehende xlsm mit VBA laden, falls vorhanden ──────────
+    #    openpyxl speichert das VBA-Binary in wb.vba_archive.
+    #    Sheets werden geleert und neu aufgebaut; der VBA-Modulcode
+    #    (AppleScriptTask-Makro) bleibt vollständig erhalten.
+    #    Einzige manuelle Nacharbeit: Schaltfläche im neuen Sheet
+    #    neu zeichnen und dem vorhandenen Makronamen zuweisen.
+    if EXCEL_FILE.exists() and EXCEL_FILE.suffix == ".xlsm":
+        wb = load_workbook(EXCEL_FILE, keep_vba=True)
+        for name in list(wb.sheetnames):
+            del wb[name]
+        print("  ℹ  Bestehendes xlsm geladen – VBA-Modul bleibt erhalten.")
+        print("     Schaltfläche im Sheet 'Öffnungszeiten' neu anlegen")
+        print("     und dem vorhandenen Makro zuweisen.")
+    else:
+        wb = Workbook()
 
     # ── Sheet 1: Öffnungszeiten ──────────────────────────────────
-    ws1 = wb.active
+    # wb.active ist None, wenn alle Sheets geloescht wurden (xlsm-Pfad).
+    # Deshalb immer explizit per create_sheet arbeiten.
+    if "Sheet" in wb.sheetnames:
+        del wb["Sheet"]
+    ws1 = wb.create_sheet("Oeffnungszeiten")
     ws1.title = "Öffnungszeiten"
 
     titel_zeile(ws1, "ÖFFNUNGSZEITEN", 9, "2E7D32")
     hinweis_zeile(ws1,
         "Zeiten im Format HH:MM  ·  Kein Nachmittag? → Zelle leer lassen", 9)
 
-    # Abschnittsköpfe (Zeile 3)
     ws1.merge_cells(start_row=3, start_column=2, end_row=3, end_column=5)
     c = ws1.cell(row=3, column=2, value="Gesundsprechstunde")
     c.font = _font(bold=True, color="1B5E20"); c.fill = _fill("C8E6C9")
@@ -285,14 +408,12 @@ def erstelle_excel(daten):
     c.fill = _fill("EEEEEE"); c.border = _border()
     ws1.row_dimensions[3].height = 20
 
-    # Spaltenköpfe (Zeile 4)
     for col, h in enumerate(["Wochentag",
             "von", "bis", "Nachmittag von", "Nachmittag bis",
             "von", "bis", "Nachmittag von", "Nachmittag bis"], 1):
         kopf(ws1, 4, col, h)
     ws1.row_dimensions[4].height = 20
 
-    # Datenzeilen (5–9)
     tage = daten["oeffnungszeiten"]["tage"]
     for i, tag in enumerate(tage):
         row = 5 + i
@@ -314,80 +435,217 @@ def erstelle_excel(daten):
         ws1.column_dimensions[col].width = 15
     ws1.freeze_panes = "B5"
 
-    # ── Sheet 2: Schließzeiten ───────────────────────────────────
+
+    # ── Sheet 2: Schließzeiten (v2.0 – 16 Spalten mit Vertreter) ─
     ws2 = wb.create_sheet("Schließzeiten")
-    titel_zeile(ws2, "SCHLIESS- & FERIENZEITEN", 4, "C62828")
+    NCOLS_S = 16
+
+    titel_zeile(ws2, "SCHLIESS- & FERIENZEITEN", NCOLS_S, "C62828")
     hinweis_zeile(ws2,
-        "Datum: TT.MM.JJJJ  ·  Vorlauf = Tage, ab denen der Hinweis-Banner erscheint  ·  Leere Zeilen werden ignoriert",
-        4)
+        "OBEN – Schließzeiten: Datum TT.MM.JJJJ · Vorlauf = Tage bis Banner erscheint · "
+        "Vertreter: Name aus Dropdown, Von/Bis leer = gesamte Schließzeit  ·  "
+        "UNTEN – Ad-hoc-Meldungen: Von/Bis + Freitext → erscheint sofort im Banner",
+        NCOLS_S)
+    ws2.row_dimensions[2].height = 18
 
-    for col, h in enumerate(["Von", "Bis", "Grund", "Vorlauf (Tage)"], 1):
-        kopf(ws2, 3, col, h)
-    ws2.row_dimensions[3].height = 20
+    # Zeile 3: Gruppen-Überschriften
+    ws2.merge_cells(start_row=3, start_column=1, end_row=3, end_column=4)
+    c = ws2.cell(row=3, column=1, value="Schließzeit")
+    c.font = _font(bold=True, color="B71C1C"); c.fill = _fill("FFCDD2")
+    c.alignment = C; c.border = _border()
 
-    schliesstage = daten.get("schliesstage", [])
+    vertreter_bg   = ["D6E4F7", "D4EDD4", "FEF3CD", "EDE0F5"]
+    vertreter_text = ["1565C0", "2E7D32", "856404", "6A1B9A"]
+    for v_idx, v_start in enumerate([5, 8, 11, 14]):
+        ws2.merge_cells(
+            start_row=3, start_column=v_start,
+            end_row=3,   end_column=v_start + 2
+        )
+        c = ws2.cell(row=3, column=v_start, value=f"Vertreter {v_idx + 1}")
+        c.font      = _font(bold=True, color=vertreter_text[v_idx])
+        c.fill      = _fill(vertreter_bg[v_idx])
+        c.alignment = C; c.border = _border()
+    ws2.row_dimensions[3].height = 18
+
+    # Zeile 4: Spalten-Überschriften
+    for col, h in enumerate(["Von", "Bis", "Grund", "Vorlauf\n(Tage)"], 1):
+        kopf(ws2, 4, col, h)
+    for v_idx in range(4):
+        base = 5 + v_idx * 3
+        kopf(ws2, 4, base,     "Name")
+        kopf(ws2, 4, base + 1, "Von\n(opt.)")
+        kopf(ws2, 4, base + 2, "Bis\n(opt.)")
+    ws2.row_dimensions[4].height = 28
+
+    # Dropdown-Validierung: Arzt-Namen aus dem Vertretungspool
+    aerzte_pool = daten["vertretung"]["aerzte"]
+    id_zu_name  = {a["id"]: a["name"] for a in aerzte_pool}
+    namen_csv   = ",".join(a["name"] for a in aerzte_pool)
+
+    dv_vertreter = DataValidation(
+        type="list",
+        formula1=f'"{namen_csv}"',
+        allow_blank=True,
+        showErrorMessage=True,
+    )
+    dv_vertreter.error      = "Bitte einen Namen aus dem Dropdown wählen oder Zelle leer lassen."
+    dv_vertreter.errorTitle = "Ungültige Eingabe"
+    ws2.add_data_validation(dv_vertreter)
+
+    # Bestehende Daten aus JSON laden (Backward-Compat: auch altes schliesstage-Format)
+    events = daten.get("events", [])
+    if not any(e.get("typ") == "schliessung" for e in events) and "schliesstage" in daten:
+        # Einmalige Migration: altes Format in events konvertieren
+        events = events + [
+            {"typ": "schliessung", "von": s["von"], "bis": s["bis"],
+             "grund": s.get("grund", ""), "vorlauf_tage": s.get("vorlauf_tage", 7),
+             "vertreter": []}
+            for s in daten["schliesstage"]
+        ]
+    schliessung_events = [e for e in events if e.get("typ") == "schliessung"]
+
+    # Datenzeilen 5–19
     for i in range(15):
-        row = 4 + i
-        if i < len(schliesstage):
-            st = schliesstage[i]
+        row = 5 + i
+
+        if i < len(schliessung_events):
+            ev = schliessung_events[i]
             try:
-                von_dt = datetime.strptime(st["von"], "%Y-%m-%d")
-                bis_dt = datetime.strptime(st["bis"], "%Y-%m-%d")
+                von_dt = datetime.strptime(ev["von"], "%Y-%m-%d")
+                bis_dt = datetime.strptime(ev["bis"], "%Y-%m-%d")
             except Exception:
                 von_dt, bis_dt = "", ""
-            vals = [von_dt, bis_dt, st.get("grund", ""), st.get("vorlauf_tage", 7)]
-            fmts = ["DD.MM.YYYY", "DD.MM.YYYY", "@", "0"]
+            basis_vals = [von_dt, bis_dt, ev.get("grund", ""), ev.get("vorlauf_tage", 7)]
+            basis_fmts = ["DD.MM.YYYY", "DD.MM.YYYY", "@", "0"]
+            vertreter_liste = ev.get("vertreter", [])
         else:
-            vals = ["", "", "", ""]
-            fmts = ["DD.MM.YYYY", "DD.MM.YYYY", "@", "0"]
-        for col, (val, fmt) in enumerate(zip(vals, fmts), 1):
+            basis_vals      = ["", "", "", ""]
+            basis_fmts      = ["DD.MM.YYYY", "DD.MM.YYYY", "@", "0"]
+            vertreter_liste = []
+
+        # Schließzeit-Spalten (A–D)
+        for col, (val, fmt) in enumerate(zip(basis_vals, basis_fmts), 1):
             eingabe(ws2, row, col, val, fmt=fmt)
+
+        # Vertreter-Spalten (E–P, je 3 Spalten pro Vertreter)
+        for v_idx in range(4):
+            base_col = 5 + v_idx * 3
+            if v_idx < len(vertreter_liste):
+                vr     = vertreter_liste[v_idx]
+                v_name = id_zu_name.get(vr["id"], vr["id"])
+                try:
+                    v_von = datetime.strptime(vr["von"], "%Y-%m-%d") if vr.get("von") else ""
+                    v_bis = datetime.strptime(vr["bis"], "%Y-%m-%d") if vr.get("bis") else ""
+                except Exception:
+                    v_von, v_bis = "", ""
+            else:
+                v_name, v_von, v_bis = "", "", ""
+
+            c_name = eingabe(ws2, row, base_col,     v_name, fmt="@")
+            dv_vertreter.add(c_name)
+            eingabe(ws2, row, base_col + 1, v_von, fmt="DD.MM.YYYY")
+            eingabe(ws2, row, base_col + 2, v_bis, fmt="DD.MM.YYYY")
+
         ws2.row_dimensions[row].height = 22
 
-    ws2.column_dimensions["A"].width = 16
-    ws2.column_dimensions["B"].width = 16
-    ws2.column_dimensions["C"].width = 34
-    ws2.column_dimensions["D"].width = 16
-    ws2.freeze_panes = "A4"
+    # Spaltenbreiten
+    breiten = {
+        "A": 16, "B": 16, "C": 34, "D": 14,
+        "E": 30, "F": 14, "G": 14,
+        "H": 30, "I": 14, "J": 14,
+        "K": 30, "L": 14, "M": 14,
+        "N": 30, "O": 14, "P": 14,
+    }
+    for col_letter, width in breiten.items():
+        ws2.column_dimensions[col_letter].width = width
+
+    # ── Abschnitt 2: Ad-hoc-Meldungen (Freitext), Zeilen 20–32 ──
+
+    # Zeile 20: visueller Trenner
+    ws2.merge_cells(start_row=20, start_column=1, end_row=20, end_column=NCOLS_S)
+    ws2.cell(row=20, column=1).fill = _fill("EFEFEF")
+    ws2.row_dimensions[20].height = 10
+
+    # Zeile 21: Abschnitts-Titel
+    ws2.merge_cells(start_row=21, start_column=1, end_row=21, end_column=NCOLS_S)
+    c = ws2.cell(row=21, column=1, value="AD-HOC-MELDUNGEN  ·  FREITEXT-BANNER")
+    c.font      = Font(name="Arial", bold=True, size=12, color="FFFFFF")
+    c.fill      = _fill("E65100")   # kräftiges Orange – unterscheidet sich visuell von Rot oben
+    c.alignment = C
+    ws2.row_dimensions[21].height = 26
+
+    # Zeile 22: Spalten-Überschriften
+    kopf(ws2, 22, 1, "Von")
+    kopf(ws2, 22, 2, "Bis")
+    ws2.merge_cells(start_row=22, start_column=3, end_row=22, end_column=NCOLS_S)
+    c = ws2.cell(row=22, column=3, value="Meldungstext (erscheint so im Banner)")
+    c.font = _font(bold=True); c.fill = _fill("EEEEEE")
+    c.alignment = CW; c.border = _border()
+    ws2.row_dimensions[22].height = 20
+
+    # Datenzeilen 23–32 (10 Slots)
+    freitext_events = [e for e in events if e.get("typ") == "freitext"]
+    for i in range(10):
+        row = 23 + i
+        if i < len(freitext_events):
+            fe = freitext_events[i]
+            try:
+                ft_von = datetime.strptime(fe["von"], "%Y-%m-%d")
+                ft_bis = datetime.strptime(fe["bis"], "%Y-%m-%d")
+            except Exception:
+                ft_von, ft_bis = "", ""
+            ft_text = fe.get("text", "")
+        else:
+            ft_von, ft_bis, ft_text = "", "", ""
+
+        eingabe(ws2, row, 1, ft_von, fmt="DD.MM.YYYY")
+        eingabe(ws2, row, 2, ft_bis, fmt="DD.MM.YYYY")
+
+        ws2.merge_cells(start_row=row, start_column=3, end_row=row, end_column=NCOLS_S)
+        c = ws2.cell(row=row, column=3, value=ft_text)
+        c.font      = _font(size=10)
+        c.fill      = _fill("FFFDE7")
+        c.alignment = Alignment(horizontal="left", vertical="center", wrap_text=True)
+        c.border    = _border()
+        ws2.row_dimensions[row].height = 36
+
+    ws2.freeze_panes = "A5"
+
 
     # ── Sheet 3: Vertretung ──────────────────────────────────────
     ws3 = wb.create_sheet("Vertretung")
     titel_zeile(ws3, "VERTRETUNGSÄRZTE", 6, "1565C0")
     hinweis_zeile(ws3,
-        'Aktiv → "JA": Arzt erscheint auf der Website  ·  "NEIN": ausgeblendet  ·  Alle anderen Felder nur zur Ansicht',
+        'Aktiv → "JA": Arzt erscheint auf der Website  ·  '
+        '"NEIN": ausgeblendet  ·  Alle anderen Felder nur zur Ansicht',
         6)
 
     for col, h in enumerate(["ID", "Aktiv", "Name", "Fachrichtung", "Adresse", "Telefon"], 1):
         kopf(ws3, 3, col, h)
     ws3.row_dimensions[3].height = 20
 
-    # Dropdown-Validierung für Aktiv-Spalte
     dv = DataValidation(type="list", formula1='"JA,NEIN"', allow_blank=False)
     dv.error      = 'Bitte "JA" oder "NEIN" wählen.'
     dv.errorTitle = "Ungültige Eingabe"
     ws3.add_data_validation(dv)
 
-    aerzte = daten["vertretung"]["aerzte"]
-    for i, arzt in enumerate(aerzte):
-        row = 4 + i
+    for i, arzt in enumerate(aerzte_pool):
+        row   = 4 + i
         aktiv = "JA" if arzt.get("aktiv", True) else "NEIN"
 
-        # Versteckte ID-Spalte
         c = ws3.cell(row=row, column=1, value=arzt["id"])
         c.font = _font(size=9, color="AAAAAA")
         c.fill = _fill("F0F0F0"); c.border = _border()
 
-        # Aktiv-Zelle mit Dropdown
         c = ws3.cell(row=row, column=2, value=aktiv)
         c.font      = _font(bold=True, color="1B5E20" if aktiv == "JA" else "B71C1C")
         c.fill      = _fill("E8F5E9") if aktiv == "JA" else _fill("FFEBEE")
         c.alignment = C; c.border = _border()
         dv.add(c)
 
-        # Read-only Infospalten
         for col, val in enumerate([
-            arzt["name"], arzt.get("fachrichtung",""),
-            arzt.get("adresse",""), arzt.get("telefon","")
+            arzt["name"], arzt.get("fachrichtung", ""),
+            arzt.get("adresse", ""), arzt.get("telefon", "")
         ], 3):
             eingabe(ws3, row, col, val, readonly=True).alignment = L
         ws3.row_dimensions[row].height = 22
