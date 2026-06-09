@@ -276,7 +276,7 @@
       .then(daten => {
         befuelleLogo(daten.praxis);
         befuelleFooterKontakt(daten.kontakt, daten.praxis);
-        befuelleVertretung(daten.vertretung, daten.schliesstage);
+        befuelleVertretung(daten.vertretung, daten.events);
       })
       .catch(err => {
         console.error('Fehler beim Laden der Praxisdaten:', err);
