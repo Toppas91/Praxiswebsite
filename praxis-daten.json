@@ -5,8 +5,8 @@
   "events": [
     {
       "typ": "schliessung",
-      "von": "2026-05-10",
-      "bis": "2026-06-11",
+      "von": "2026-07-10",
+      "bis": "2026-07-12",
       "grund": "Urlaub",
       "vorlauf_tage": 14,
       "vertreter": [
