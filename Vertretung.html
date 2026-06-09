@@ -314,16 +314,16 @@
             Direktaufrufe der URL ohne aktiven Banner)
          3. Kein Eintrag: neutraler Text ohne Zeitraum
     ──────────────────────────────────────────────────────────── */
-    function befuelleVertretung(vertretung, schliesstage) {
+       function befuelleVertretung(vertretung, events) {
       if (!vertretung) return;
-
-      /* Zeitraum bestimmen */
+ 
+      /* Relevante Schließzeit ermitteln */
       const schliesszeit =
-        findeAktiveSchliesszeit(schliesstage) ??
-        findeNaechsteSchliesszeit(schliesstage);
-
+        findeAktiveSchliesszeit(events) ??
+        findeNaechsteSchliesszeit(events);
+ 
       const introEl = document.getElementById('vertretungIntro');
-
+ 
       if (schliesszeit) {
         const vonStr = formatDatum(schliesszeit.vonDatum);
         const bisStr = formatDatum(schliesszeit.bisDatum);
@@ -338,42 +338,65 @@
           '<p>Liebe Patienteneltern,</p>' +
           '<p>während unserer Abwesenheit übernimmt folgende Vertretung:</p>';
       }
-
-      /* Alle aktiven Ärzte finden */
-      const aktiveAerzte = (vertretung.aerzte || []).filter(a => a.aktiv === true);
+ 
+      /* Tagesgenaue Vertreter-IDs ermitteln */
+      const heute = new Date();
+      heute.setHours(0, 0, 0, 0);
+      const pool = vertretung.aerzte || [];
+      let anzuzeigendeAerzte = [];
+ 
+      if (schliesszeit && Array.isArray(schliesszeit.vertreter) && schliesszeit.vertreter.length) {
+        const istAktiv = schliesszeit.phase === 'aktiv';
+ 
+        const relevanteIds = schliesszeit.vertreter
+          .filter(v => {
+            if (!istAktiv) return true;   // Vorlauf/Zukunft: alle zeigen
+            const vVon = v.von ? parseDatum(v.von) : null;
+            const vBis = v.bis ? parseDatum(v.bis) : null;
+            return (!vVon || heute >= vVon) && (!vBis || heute <= vBis);
+          })
+          .map(v => v.id);
+ 
+        anzuzeigendeAerzte = relevanteIds
+          .map(id => pool.find(a => a.id === id))
+          .filter(Boolean);
+      }
+ 
+      /* Fallback: alle Ärzte aus dem Pool */
+      if (!anzuzeigendeAerzte.length) {
+        anzuzeigendeAerzte = pool;
+      }
+ 
       const karteEl = document.getElementById('vertretungAerzte');
-
-      if (!aktiveAerzte.length) {
+ 
+      if (!anzuzeigendeAerzte.length) {
         karteEl.innerHTML =
           '<p style="opacity:0.6;">Aktuell ist kein Vertretungsarzt hinterlegt. ' +
           'Bitte kontaktieren Sie den ärztlichen Bereitschaftsdienst unter ' +
           '<a href="tel:116117" style="font-weight:600;">116 117</a>.</p>';
         return;
       }
-
-      /* Alle aktiven Ärzte als Karten ausgeben */
-      karteEl.innerHTML = aktiveAerzte.map(arzt => {
+ 
+      /* Vertreter-Karten rendern */
+      karteEl.innerHTML = anzuzeigendeAerzte.map(arzt => {
         const telHtml = arzt.telefon
           ? `<div class="vertr-kontakt-zeile">
                <span class="vertr-label">Telefon</span>
                <a href="tel:${arzt.telefon.replace(/[\s\/\-]/g, '')}" class="vertr-tel-link">${arzt.telefon}</a>
              </div>`
           : '';
-
         const emailHtml = arzt.email
           ? `<div class="vertr-kontakt-zeile">
                <span class="vertr-label">E-Mail</span>
                <a href="mailto:${arzt.email}">${arzt.email}</a>
              </div>`
           : '';
-
         const webHtml = arzt.website
           ? `<div class="vertr-kontakt-zeile">
                <span class="vertr-label">Website</span>
                <a href="${arzt.website}" target="_blank" rel="noopener noreferrer">${arzt.website.replace('https://', '')}</a>
              </div>`
           : '';
-
         return `<div class="vertr-karte">
           <span class="termin-badge">Vertretung</span>
           <p class="vertr-name">${arzt.name}</p>
