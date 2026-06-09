@@ -2,6 +2,27 @@
   "banner": {
     "vertretung_seite": "Vertretung.html"
   },
+ 
+"events": [
+    {
+      "typ":          "schliessung",
+      "von":          "2026-05-10",
+      "bis":          "2026-06-09",
+      "grund":        "Urlaub",
+      "vorlauf_tage": 14,
+      "vertreter": []
+    },
+    {
+      "typ":          "schliessung",
+      "von":          "2026-12-23",
+      "bis":          "2027-01-05",
+      "grund":        "Weihnachtsferien",
+      "vorlauf_tage": 10,
+      "vertreter": []
+    }
+  ],
+
+
   "oeffnungszeiten": {
     "hinweis": "Termine bitte telefonisch vereinbaren.",
     "tage": [
@@ -380,45 +401,5 @@
     "qr_code_bild": "bilder/app/qr-code.png",
     "app_store_link": "https://apps.apple.com/musterpaxis",
     "play_store_link": "https://play.google.com/store/musterpaxis"
-  },
-  "events": [
-    {
-      "typ": "schliessung",
-      "von": "2026-05-10",
-      "bis": "2026-06-11",
-      "grund": "Urlaub",
-      "vorlauf_tage": 14,
-      "vertreter": [
-        {
-          "id": "schlez",
-          "von": "2026-05-10",
-          "bis": "2026-06-11"
-        },
-        {
-          "id": "mueller",
-          "von": "2026-05-10",
-          "bis": "2026-05-20"
-        },
-        {
-          "id": "neuwinger",
-          "von": "2026-06-07",
-          "bis": "2026-06-11"
-        }
-      ]
-    },
-    {
-      "typ": "schliessung",
-      "von": "2026-12-23",
-      "bis": "2027-01-05",
-      "grund": "Weihnachtsferien",
-      "vorlauf_tage": 10,
-      "vertreter": []
-    },
-    {
-      "typ": "freitext",
-      "von": "2026-06-08",
-      "bis": "2026-06-10",
-      "text": "Am 9.6 Praxis Nachmittags geschlossen"
-    }
-  ]
+  }
 }
