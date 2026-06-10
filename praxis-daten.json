@@ -143,7 +143,7 @@
         "vorname": "Elena",
         "nachname": "Neuberger (Elternzeit)",
         "titel": "Dr. med.",
-        "fachrichtung": "Fachärztin für Kinder- und Jugendmedizin",
+        "fachrichtung": "Ärztin in Weiterbildung für Kinder- und Jugendmedizin",
         "schwerpunkte": [
           "Allergologie",
           "Neurodermitis",
@@ -157,7 +157,7 @@
         "vorname": "Anika",
         "nachname": "Weber",
         "titel": "Dr. med.",
-        "fachrichtung": "Facharzt für Kinder- und Jugendmedizin",
+        "fachrichtung": "Fachärztin für Kinder- und Jugendmedizin",
         "schwerpunkte": [
           "Schwerpunkt A",
           "Schwerpunkt B"
@@ -274,7 +274,7 @@
     "telefon": "06321 86049",
     "fax": "06321 487359",
     "email": "Bernd.Berwanger@dr-berwanger.de",
-    "termin_email": "Termine@dr-berwanger.de",
+    "termin_email": "termine@dr-berwanger.de",
     "anfahrt_link_text": "Route in Google Maps öffnen",
     "anfahrt_link_url": "https://maps.app.goo.gl/1aD5cyfP2AFrj3XK9",
     "parkhinweis": "Parken in Tiefgarage Hetzelgalerie oder in den umliegenden Straßen"
