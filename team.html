@@ -73,6 +73,24 @@
     object-fit: cover;
   }
 
+  /* Gruppenfoto + Namensliste Praxisteam */
+  .praxisteam-foto {
+    width:         100%;
+    height:        auto;
+    border-radius: 16px;
+    display:       block;
+    margin-bottom: 1.75rem;
+  }
+
+  .praxisteam-namen {
+    text-align:  center;
+    font-size:   0.975rem;
+    font-weight: 400;
+    line-height: 2;
+    opacity:     0.72;
+    margin:      0;
+  }
+
   /* Räume-Grid: 3 Spalten (überschreibt vierspaltig nicht nötig, da .team-grid verwendet) */
   #raeumeGrid {
     grid-template-columns: repeat(3, 1fr);
@@ -232,16 +250,15 @@
       <h2 id="titelPraxisteam">Unser Praxisteam</h2>
       <p class="sektion-sub">Freundlich, kompetent und immer mit einem offenen Ohr für Sie da.</p>
 
-      <div class="team-grid vierspaltig" id="praxisteamGrid">
-        <!-- Skeleton: 8 MFA-Karten (2 Reihen à 4) -->
-        <div aria-hidden="true"><div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:70%; margin-top:0.6rem;"></div><div class="lade-placeholder" style="width:55%; margin-top:0.35rem; height:0.8em;"></div></div>
-        <div aria-hidden="true"><div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:65%; margin-top:0.6rem;"></div><div class="lade-placeholder" style="width:60%; margin-top:0.35rem; height:0.8em;"></div></div>
-        <div aria-hidden="true"><div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:72%; margin-top:0.6rem;"></div><div class="lade-placeholder" style="width:50%; margin-top:0.35rem; height:0.8em;"></div></div>
-        <div aria-hidden="true"><div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:60%; margin-top:0.6rem;"></div><div class="lade-placeholder" style="width:58%; margin-top:0.35rem; height:0.8em;"></div></div>
-        <div aria-hidden="true"><div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:68%; margin-top:0.6rem;"></div><div class="lade-placeholder" style="width:52%; margin-top:0.35rem; height:0.8em;"></div></div>
-        <div aria-hidden="true"><div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:62%; margin-top:0.6rem;"></div><div class="lade-placeholder" style="width:57%; margin-top:0.35rem; height:0.8em;"></div></div>
-        <div aria-hidden="true"><div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:75%; margin-top:0.6rem;"></div><div class="lade-placeholder" style="width:48%; margin-top:0.35rem; height:0.8em;"></div></div>
-        <div aria-hidden="true"><div class="team-karte-bild" style="animation:puls 1.6s ease-in-out infinite;"></div><div class="lade-placeholder" style="width:66%; margin-top:0.6rem;"></div><div class="lade-placeholder" style="width:54%; margin-top:0.35rem; height:0.8em;"></div></div>
+      <div class="praxisteam-gruppe" id="praxisteamBereich">
+        <img
+          src="bilder/team_gruppe.jpeg"
+          alt="Unser Praxisteam"
+          class="praxisteam-foto"
+        />
+        <p class="praxisteam-namen" id="praxisteamNamen">
+          <span class="lade-placeholder" style="width:60%; display:inline-block;"></span>
+        </p>
       </div>
     </section>
 
@@ -507,9 +524,11 @@
     }
 
     function befuellePraxisteam(team) {
-      const grid = document.getElementById('praxisteamGrid');
-      if (!grid || !team.length) return;
-      grid.innerHTML = team.map(m => mfaKarteHtml(m)).join('');
+      const namenEl = document.getElementById('praxisteamNamen');
+      if (!namenEl || !team.length) return;
+      namenEl.textContent = team
+        .map(m => `${m.vorname} ${m.nachname}`)
+        .join(' · ');
     }
 
     function befuelleFooterKontakt(kontakt, praxis) {

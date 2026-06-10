@@ -18,18 +18,19 @@
   <link rel="stylesheet" href="style.css" />
 
   <style>
-    /* ── Terminvereinbarung: E-Mail & Telefon auf h3-Größe ──────
-       Analog zu kontakt.html – überschreibt die großen Werte aus style.css.
-       Unterstriche entfallen bei der E-Mail.
+    /* ── Terminvereinbarung: Links im Akkordeon ──────────────────
+       Überschreibt die großen Werte aus style.css für den
+       Akkordeon-Kontext. Unterstriche entfallen bei der E-Mail.
     ──────────────────────────────────────────────────────────── */
     .termin-tel-link {
       font-size:      clamp(1rem, 2.5vw, 1.3rem);
       letter-spacing: -0.01em;
       line-height:    1.35;
+      margin-bottom:  0.25rem;
     }
 
     .termin-email-link {
-      font-size:   clamp(1rem, 2.5vw, 1.3rem);
+      font-size:     clamp(1rem, 2.5vw, 1.3rem);
       border-bottom: none;
     }
 
@@ -126,35 +127,66 @@
       >
         <h2 id="terminTitel">Terminvereinbarung</h2>
 
-        <div class="termin-grid">
+        <div class="akkordeon" id="terminAkkordeon">
 
-          <!-- ── Nicht akut ─────────────────────────── -->
-          <div class="termin-karte">
-            <span class="termin-kategorie">Reguläre Termine</span>
-            <p>
-              Terminvereinbarung per
-              <a href="mailto:Termine@dr-berwanger.de" id="terminEmailInline" class="termin-inline-link">E-Mail</a>
-              oder über unsere
-              <a href="kontakt.html" class="termin-inline-link">Praxis-App</a>.
-            </p>
-            <a href="mailto:Termine@dr-berwanger.de" id="terminEmailDisplay" class="termin-email-link">
-              Termine@dr-berwanger.de
-            </a>
+          <!-- ── Vorsorge & Impfungen ──────────────────────── -->
+          <div class="akkordeon-item">
+            <button class="akkordeon-pill" aria-expanded="false">
+              Vorsorge &amp; Impfungen
+              <span class="akkordeon-pfeil" aria-hidden="true"></span>
+            </button>
+            <div class="akkordeon-inhalt">
+              <div class="akkordeon-inhalt-inner">
+                <p>Vorsorgen, Impfungen und alle geplanten Besuche vereinbaren
+                   Sie bequem per E-Mail:</p>
+                <a href="mailto:Termine@dr-berwanger.de"
+                   id="akkordeon-termin-email"
+                   class="termin-email-link">Termine@dr-berwanger.de</a>
+                <p class="akkordeon-app-zeile">Oder per Chat in der
+                  <a href="kontakt.html#praxis-app" class="termin-inline-link">Praxis-App</a>.
+                </p>
+              </div>
+            </div>
           </div>
 
-          <!-- ── Akutes Anliegen ────────────────────── -->
-          <div class="termin-karte termin-karte--akut">
-            <span class="termin-kategorie">Akute Erkrankungen</span>
-            <p>Zur besseren Planbarkeit bitten wir um eine telefonische Voranmeldung.</p>
+          <!-- ── Kleinere Anliegen ─────────────────────────── -->
+          <div class="akkordeon-item">
+            <button class="akkordeon-pill" aria-expanded="false">
+              Kleinere Anliegen
+              <span class="akkordeon-pfeil" aria-hidden="true"></span>
+            </button>
+            <div class="akkordeon-inhalt">
+              <div class="akkordeon-inhalt-inner">
+                <p>Kleinere <strong>nicht-infektiöse</strong> Anliegen wie
+                   Wunden oder kleinere Abklärungen können auch ohne Termin in
+                   die Gesundsprechstunde kommen. Bitte Wartezeit einplanen.</p>
+              </div>
+            </div>
+          </div>
 
-            <a href="tel:0632186049" class="termin-tel-link" aria-label="Praxis anrufen: 06321 86049">
-              06321&thinsp;86049
-            </a>
-
-            <div class="termin-warn-box" role="note">
-              Bitte erscheinen Sie bei <strong>ansteckenden Erkrankungen</strong>
-              wie Fieber, Erkältung, Magen-Darm&nbsp;etc. ausschließlich
-              in der <strong>KRANK-Sprechstunde</strong>.
+          <!-- ── Akute Erkrankung ──────────────────────────── -->
+          <div class="akkordeon-item">
+            <button class="akkordeon-pill" aria-expanded="false">
+              Akute Erkrankung
+              <span class="akkordeon-pfeil" aria-hidden="true"></span>
+            </button>
+            <div class="akkordeon-inhalt">
+              <div class="akkordeon-inhalt-inner">
+                <p>Kinder mit ansteckenden Erkrankungen wie Fieber, Erkältung,
+                   Magen-Darm&nbsp;etc. können sich in der
+                   KRANK-Sprechstunde vorstellen.</p>
+                <div class="akkordeon-sprechzeit-block">
+                  <p><strong>Vormittags:</strong> Telefonische Anmeldung wird erbeten.</p>
+                  <a href="tel:0632186049"
+                     id="akkordeon-telefon"
+                     class="termin-tel-link"
+                     aria-label="Praxis anrufen: 06321 86049">06321&thinsp;86049</a>
+                </div>
+                <div class="akkordeon-sprechzeit-block">
+                  <p><strong>Nachmittags:</strong> Die Nachmittags-Kranksprechstunde
+                     ist eine offene Sprechstunde – keine Anmeldung erforderlich.</p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -250,9 +282,6 @@
 
     /* ════════════════════════════════════════════════════════════
        DATUMS-HILFSFUNKTIONEN
-       ────────────────────────────────────────────────────────────
-       parseDatum  : "YYYY-MM-DD" → lokales Date-Objekt (UTC-sicher)
-       formatDatum : Date → "TT.MM.JJJJ"
     ════════════════════════════════════════════════════════════ */
     function parseDatum(str) {
       const [y, m, d] = str.split('-').map(Number);
@@ -266,36 +295,19 @@
     }
 
     /* ════════════════════════════════════════════════════════════
-       SCHLIESSZEIT-LOGIK
-       ────────────────────────────────────────────────────────────
-       Gibt die erste Schließzeit zurück, für die heute innerhalb
-       des Vorlaufzeitraums oder während der Schließung liegt.
-       Sonst null → kein Banner.
-
-       Rückgabe-Objekt enthält zusätzlich:
-         vonDatum    : Date-Objekt des Starttags
-         bisDatum    : Date-Objekt des letzten Schließtags
-         phase       : 'vorlauf' | 'aktiv'
-    ════════════════════════════════════════════════════════════ */
-     /* ════════════════════════════════════════════════════════════
        EVENT-LOGIK
-       ────────────────────────────────────────────────────────────
-       Gibt alle heute aktiven Events als Array zurück.
-       Freitexte  : aktiv, wenn heute zwischen von/bis liegt.
-       Schließungen: aktiv, wenn heute im Vorlauf- oder Schließzeitraum liegt.
-       Sortierung : Freitexte zuerst, dann Schließungen chronologisch.
     ════════════════════════════════════════════════════════════ */
     function findeAktiveEvents(events) {
       if (!Array.isArray(events)) return [];
       const heute = new Date();
       heute.setHours(0, 0, 0, 0);
- 
+
       return events
         .filter(ev => {
           if (!ev.von || !ev.bis) return false;
           const von = parseDatum(ev.von);
           const bis = parseDatum(ev.bis);
- 
+
           if (ev.typ === 'freitext') {
             return heute >= von && heute <= bis;
           }
@@ -322,66 +334,51 @@
     }
 
     /* ════════════════════════════════════════════════════════════
-       BANNERTEXT
-       ────────────────────────────────────────────────────────────
-       Vorlaufphase : "vom TT.MM.JJJJ bis TT.MM.JJJJ wegen …"
-       Aktivphase   : "wegen … noch bis TT.MM.JJJJ geschlossen"
-       Beide Phasen: Wiedereröffnungsdatum (bis + 1 Tag) am Ende.
-    ════════════════════════════════════════════════════════════ */
-      /* ════════════════════════════════════════════════════════════
        BANNER-INHALT AUFBAUEN
-       ────────────────────────────────────────────────────────────
-       Baut den HTML-Inhalt für alle aktiven Events:
-         • Freitexte erscheinen ganz oben
-         • Schließungen darunter mit eigenem Vertreter-Hinweis
-         • Bei mehreren Events trennt eine CSS-Linie die Blöcke
-         • Vertreter werden tagesgenau aus dem Event gefiltert
     ════════════════════════════════════════════════════════════ */
     function bannerInhaltErstellen(events, vertretungSeite) {
       const heute = new Date();
       heute.setHours(0, 0, 0, 0);
- 
+
       const eventBloecke  = [];
       let   hatSchliessung = false;
- 
+
       events.forEach(ev => {
         const innerBloecke = [];
- 
-        /* ── Freitext ──────────────────────────────────────── */
+
         if (ev.typ === 'freitext') {
           innerBloecke.push(`<p class="banner-text">${ev.text}</p>`);
         }
- 
-        /* ── Schließung ────────────────────────────────────── */
+
         if (ev.typ === 'schliessung') {
           hatSchliessung    = true;
           const bisStr      = formatDatum(ev.bisDatum);
           const wiederAuf   = new Date(ev.bisDatum);
           wiederAuf.setDate(wiederAuf.getDate() + 1);
           const wiederAufStr = formatDatum(wiederAuf);
- 
+
           const schliessText = ev.phase === 'vorlauf'
             ? `Unsere Praxis ist vom ${formatDatum(ev.vonDatum)} bis ${bisStr} ` +
               `wegen ${ev.grund} geschlossen. ` +
               `Wir freuen uns, Sie ab dem ${wiederAufStr} wieder begrüßen zu dürfen.`
             : `Unsere Praxis ist wegen ${ev.grund} noch bis ${bisStr} geschlossen. ` +
               `Wir freuen uns, Sie ab dem ${wiederAufStr} wieder begrüßen zu dürfen.`;
- 
+
           innerBloecke.push(`<p class="banner-text">${schliessText}</p>`);
         }
- 
+
         if (innerBloecke.length) {
           eventBloecke.push(`<div class="banner-event">${innerBloecke.join('')}</div>`);
         }
       });
- 
+
       if (!eventBloecke.length) return { html: '', hatInhalt: false };
- 
+
       const eventsHtml = `<div class="banner-events">${eventBloecke.join('')}</div>`;
       const btnHtml    = (hatSchliessung && vertretungSeite)
         ? `<a href="${vertretungSeite}" class="banner-btn">Vertretung ansehen</a>`
         : '';
- 
+
       return { html: eventsHtml + btnHtml, hatInhalt: true };
     }
 
@@ -474,7 +471,7 @@
         befuelleBanner(daten.banner, daten.events);
         befuelleBegruessungsbereich(daten.praxis);
         befuelleSprechzeiten(daten.oeffnungszeiten);
-        befuelleTerminEmail(daten.kontakt);
+        befuelleTerminKontakt(daten.kontakt);
         befuelleFooterKontakt(daten.kontakt, daten.praxis);
       })
       .catch(err => {
@@ -494,23 +491,15 @@
       logoEl.onerror = () => { logoEl.style.display = 'none'; };
     }
 
-    /* ── Banner ─────────────────────────────────────────────────
-       Prüft automatisch anhand der schliesstage, ob heute im
-       Vorlauf- oder Schließzeitraum liegt.
-       - Vorlauf  : "vom TT.MM.JJJJ bis TT.MM.JJJJ wegen …"
-       - Aktiv    : "wegen … noch bis TT.MM.JJJJ geschlossen"
-       Der "Vertretung ansehen"-Button erscheint, wenn
-       banner.vertretung_seite gesetzt ist.
-    ──────────────────────────────────────────────────────────── */
     function befuelleBanner(banner, events) {
       const aktiveEvents = findeAktiveEvents(events);
       if (!aktiveEvents.length) return;
- 
+
       const { html, hatInhalt } = bannerInhaltErstellen(
         aktiveEvents, banner?.vertretung_seite
       );
       if (!hatInhalt) return;
- 
+
       const div = document.getElementById('newsBanner');
       div.innerHTML =
         '<div class="banner">' +
@@ -520,7 +509,6 @@
         '</div>';
       div.style.display = '';
     }
- 
 
     function befuelleBegruessungsbereich(praxis) {
       if (!praxis) return;
@@ -535,14 +523,22 @@
         `<p class="willkommen-text">${praxis.willkommen_fliesstext}${gruss}</p>`;
     }
 
-    function befuelleTerminEmail(kontakt) {
-      if (!kontakt?.termin_email) return;
-      const mail = kontakt.termin_email;
-      const href = `mailto:${mail}`;
-      const inlineEl  = document.getElementById('terminEmailInline');
-      const displayEl = document.getElementById('terminEmailDisplay');
-      if (inlineEl)  inlineEl.href = href;
-      if (displayEl) { displayEl.href = href; displayEl.textContent = mail; }
+    function befuelleTerminKontakt(kontakt) {
+      if (!kontakt) return;
+      if (kontakt.termin_email) {
+        const el = document.getElementById('akkordeon-termin-email');
+        if (el) {
+          el.href        = `mailto:${kontakt.termin_email}`;
+          el.textContent = kontakt.termin_email;
+        }
+      }
+      if (kontakt.telefon) {
+        const el = document.getElementById('akkordeon-telefon');
+        if (el) {
+          el.href        = `tel:${kontakt.telefon.replace(/\s/g, '')}`;
+          el.textContent = kontakt.telefon;
+        }
+      }
     }
 
     function befuelleFooterKontakt(kontakt, praxis) {
@@ -556,6 +552,26 @@
         `<a href="tel:${kontakt.telefon.replace(/\s/g, '')}">${kontakt.telefon}</a>` +
         `<a href="mailto:${kontakt.email}" style="margin-top:0.15rem;">${kontakt.email}</a>`;
     }
+
+    /* ── Akkordeon-Steuerung ────────────────────────────────── */
+    (function () {
+      const items = document.querySelectorAll('#terminAkkordeon .akkordeon-item');
+      items.forEach(item => {
+        const pill = item.querySelector('.akkordeon-pill');
+        pill.addEventListener('click', () => {
+          const istOffen = item.classList.contains('akkordeon-item--offen');
+          items.forEach(i => {
+            i.classList.remove('akkordeon-item--offen');
+            i.querySelector('.akkordeon-pill').setAttribute('aria-expanded', 'false');
+          });
+          if (!istOffen) {
+            item.classList.add('akkordeon-item--offen');
+            pill.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+    }());
+
   </script>
 
 </body>

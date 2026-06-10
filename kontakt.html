@@ -71,8 +71,43 @@
       border-top:  1.5px solid rgba(42, 42, 42, 0.12);
     }
 
-    .app-sektion h3 {
+    /* App-Logo neben dem Titel */
+    .app-titel-wrapper {
+      display:       flex;
+      align-items:   center;
+      gap:           0.65rem;
       margin-bottom: 0.5rem;
+    }
+
+    .app-titel-wrapper h3 {
+      margin-bottom: 0;
+    }
+
+    .app-logo-icon {
+      width:         34px;
+      height:        34px;
+      border-radius: 8px;
+      flex-shrink:   0;
+      display:       block;
+      background:    rgba(42, 42, 42, 0.06);
+      object-fit:    cover;
+    }
+
+    /* Store-Badge-Bilder (ersetzen Plaintext-Labels) */
+    .store-badge {
+      height:  40px;
+      width:   auto;
+      display: block;
+    }
+
+    .store-btn.apple,
+    .store-btn.google {
+      padding:       0;
+      background:    transparent;
+      border-radius: 8px;
+      outline:       none;
+      overflow:      hidden;
+      line-height:   0;
     }
 
     .app-sektion-text {
@@ -339,8 +374,7 @@
         <div class="termin-karte">
           <span class="termin-kategorie">Reguläre Termine</span>
           <p>
-            Vorsorgen, Impfungen und alle geplanten Besuche vereinbaren Sie bequem per
-            <a href="mailto:Termine@dr-berwanger.de" id="terminEmailInline" class="termin-inline-link">E-Mail</a>.
+            Vorsorgen, Impfungen und alle geplanten Besuche vereinbaren Sie bequem per E-Mail.
           </p>
           <a href="mailto:Termine@dr-berwanger.de" id="terminEmailDisplay" class="termin-email-link">
             Termine@dr-berwanger.de
@@ -348,7 +382,12 @@
 
           <!-- Praxis-App-Bereich ──────────────────────────────── -->
           <div class="app-sektion" id="praxisApp">
+            <div class="app-titel-wrapper">
+              <img src="bilder/praxisappicon.webp"
+                 alt="Praxis-App Icon"
+                class="app-logo-icon" />
             <h3>Unsere Praxis-App</h3>
+        </div>
             <p class="app-sektion-text" id="appBeschreibung">
               Über die Praxis-App können Sie sicher und direkt mit uns in Kontakt treten –
               für Nachrichten und vertrauliche Mitteilungen, bequem vom Smartphone.
@@ -376,7 +415,11 @@
                   rel="noopener noreferrer"
                   aria-label="Praxis-App im Apple App Store herunterladen"
                 >
-                  App&nbsp;Store
+                  <img
+                    src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+                    alt="Download on the App Store"
+                    class="store-badge"
+                  />
                 </a>
                 <a
                   id="playStoreBtn"
@@ -386,7 +429,11 @@
                   rel="noopener noreferrer"
                   aria-label="Praxis-App bei Google Play herunterladen"
                 >
-                  Google&nbsp;Play
+                  <img
+                    src="https://play.google.com/intl/en_us/badges/static/images/badges/de_badge_web_generic.png"
+                    alt="Jetzt bei Google Play"
+                    class="store-badge"
+                  />
                 </a>
               </div>
             </div><!-- /.app-qr-layout -->
@@ -436,6 +483,12 @@
       aria-labelledby="sprechzeitenTitel"
     >
       <h2 id="sprechzeitenTitel">Sprechzeiten</h2>
+      <p style="font-size:0.975rem; opacity:0.78; line-height:1.75; margin-bottom:0; margin-top:0.5rem;">
+        Persönlich erreichen Sie mich unter
+        <a href="mailto:Bernd.Berwanger@dr-berwanger.de"
+           id="sprechzeitenEmailLink"
+           class="termin-inline-link">Bernd.Berwanger@dr-berwanger.de</a>.
+      </p>
 
       <!-- Erreichbarkeit ───────────────────────────────────────── -->
       <div class="erreichbarkeit" aria-label="Kontaktdaten">
@@ -774,24 +827,35 @@
     }
 
     function befuelleEmailLinks(kontakt) {
-      if (!kontakt?.termin_email) return;
+      if (!kontakt) return;
       const terminMail = kontakt.termin_email;
 
-      /* Terminvereinbarungs-Karte: Inline-Link + Display-Link */
-      const inlineEl  = document.getElementById('terminEmailInline');
-      const displayEl = document.getElementById('terminEmailDisplay');
-      if (inlineEl)  inlineEl.href = `mailto:${terminMail}`;
-      if (displayEl) { displayEl.href = `mailto:${terminMail}`; displayEl.textContent = terminMail; }
+      /* Terminvereinbarungs-Karte: Display-Link */
+      if (terminMail) {
+        const displayEl = document.getElementById('terminEmailDisplay');
+        if (displayEl) { displayEl.href = `mailto:${terminMail}`; displayEl.textContent = terminMail; }
 
-      /* Erreichbarkeits-Übersicht */
-      const erreichEl = document.getElementById('erreichbarkeitEmailLink');
-      if (erreichEl) { erreichEl.href = `mailto:${terminMail}`; erreichEl.textContent = terminMail; }
+        /* Erreichbarkeits-Übersicht */
+        const erreichEl = document.getElementById('erreichbarkeitEmailLink');
+        if (erreichEl) { erreichEl.href = `mailto:${terminMail}`; erreichEl.textContent = terminMail; }
 
-      /* Rezepte & Überweisungen */
-      const rezeptLink = document.getElementById('rezeptEmailLink');
-      const uebLink    = document.getElementById('uebEmailLink');
-      if (rezeptLink) rezeptLink.href = `mailto:${terminMail}?subject=Rezeptanforderung`;
-      if (uebLink)    uebLink.href    = `mailto:${terminMail}?subject=Überweisungsanfrage`;
+        /* Rezepte & Überweisungen */
+        const rezeptLink = document.getElementById('rezeptEmailLink');
+        const uebLink    = document.getElementById('uebEmailLink');
+        if (rezeptLink) rezeptLink.href = `mailto:${terminMail}?subject=Rezeptanforderung`;
+        if (uebLink)    uebLink.href    = `mailto:${terminMail}?subject=Überweisungsanfrage`;
+      }
+
+      /* Sprechzeiten-Sektion: persönliche E-Mail */
+      if (kontakt.email) {
+        const sprechzeitenEl = document.getElementById('sprechzeitenEmailLink');
+        if (sprechzeitenEl) {
+          sprechzeitenEl.href        = `mailto:${kontakt.email}`;
+          sprechzeitenEl.textContent = kontakt.email;
+        }
+      }
+
+
     }
 
     function befuelleFooterKontakt(kontakt, praxis) {
