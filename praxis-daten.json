@@ -8,7 +8,7 @@
       "von": "2026-06-01",
       "bis": "2026-07-15",
       "grund": "Urlaub",
-      "vorlauf_tage": 3,
+      "vorlauf_tage": 10,
       "vertreter": [
         {
           "id": "schlez",
@@ -22,7 +22,7 @@
         },
         {
           "id": "neuwinger",
-          "von": "2026-06-07",
+          "von": "2026-05-10",
           "bis": "2026-07-15"
         }
       ]
