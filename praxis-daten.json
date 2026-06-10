@@ -6,24 +6,24 @@
     {
       "typ": "schliessung",
       "von": "2026-06-01",
-      "bis": "2026-06-11",
+      "bis": "2026-07-15",
       "grund": "Urlaub",
-      "vorlauf_tage": 14,
+      "vorlauf_tage": 3,
       "vertreter": [
         {
           "id": "schlez",
           "von": "2026-05-10",
-          "bis": "2026-06-11"
+          "bis": "2026-07-15"
         },
         {
           "id": "mueller",
           "von": "2026-05-10",
-          "bis": "2026-05-20"
+          "bis": "2026-07-15"
         },
         {
           "id": "neuwinger",
           "von": "2026-06-07",
-          "bis": "2026-06-11"
+          "bis": "2026-07-15"
         }
       ]
     },
