@@ -859,6 +859,7 @@ footer {
   letter-spacing: -0.01em;
   line-height:    1.35;
   color:          var(--farbe-text);
+  margin-top:     0.8rem;   /* ← neu */
   margin-bottom:  0.25rem;
   transition:     opacity 0.2s;
 }
