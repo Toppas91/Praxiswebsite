@@ -141,7 +141,7 @@
       {
         "id": "arzt-002",
         "vorname": "Elena",
-        "nachname": "Neuberger",
+        "nachname": "Neuberger (Elternzeit)",
         "titel": "Dr. med.",
         "fachrichtung": "Fachärztin für Kinder- und Jugendmedizin",
         "schwerpunkte": [
@@ -284,7 +284,7 @@
       {
         "id": "graf",
         "aktiv": true,
-        "name": "Dr. Benjamin Graf",
+        "name": "Dr. med. Benjamin Graf",
         "fachrichtung": "Praxis für Kinder- und Jugendmedizin",
         "adresse": "Gabelsbergerstraße 13, 67433 Neustadt an der Weinstraße",
         "telefon": "06321 354349",
