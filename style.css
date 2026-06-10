@@ -851,15 +851,15 @@ footer {
   opacity:      0.75;
 }
 
-/* Große Telefonnummer */
+/* Telefonnummer in Termin-Kontexten */
 .termin-tel-link {
   display:        block;
-  font-size:      clamp(1.75rem, 3.8vw, 2.4rem);
+  font-size:      clamp(1rem, 2.5vw, 1.3rem);
   font-weight:    700;
-  letter-spacing: -0.03em;
-  line-height:    1;
+  letter-spacing: -0.01em;
+  line-height:    1.35;
   color:          var(--farbe-text);
-  margin-bottom:  1.25rem;
+  margin-bottom:  0.25rem;
   transition:     opacity 0.2s;
 }
 
@@ -895,6 +895,108 @@ footer {
   .termin-karte {
     padding:       1.75rem;
     border-radius: 12px;
+  }
+}
+
+
+/* ── 15b. Akkordeon im Pillenformat ──────────────────────── */
+
+.akkordeon {
+  display:        flex;
+  flex-direction: column;
+  gap:            0.6rem;
+}
+
+/* Pill-Button (geschlossen) */
+.akkordeon-pill {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  width:           100%;
+  padding:         1rem 1.75rem;
+  background:      var(--farbe-banner-bg);
+  border-radius:   100px;
+  border:          none;
+  cursor:          pointer;
+  font-family:     'Poppins', sans-serif;
+  font-size:       1rem;
+  font-weight:     600;
+  letter-spacing:  -0.01em;
+  color:           var(--farbe-text);
+  text-align:      left;
+  transition:      background 0.2s, border-radius 0.15s;
+}
+
+.akkordeon-pill:hover {
+  background: #f2d4bb;
+}
+
+/* Pill geöffnet: untere Ecken abflachen */
+.akkordeon-item--offen .akkordeon-pill {
+  border-radius: 22px 22px 0 0;
+}
+
+/* Pfeil-Indikator */
+.akkordeon-pfeil {
+  width:         0.55rem;
+  height:        0.55rem;
+  border-right:  2px solid var(--farbe-text);
+  border-bottom: 2px solid var(--farbe-text);
+  transform:     rotate(45deg) translateY(-2px);
+  flex-shrink:   0;
+  margin-left:   1rem;
+  transition:    transform 0.2s;
+}
+
+.akkordeon-item--offen .akkordeon-pfeil {
+  transform: rotate(-135deg) translateY(2px);
+}
+
+/* Inhaltsbereich */
+.akkordeon-inhalt {
+  background:    var(--farbe-banner-bg);
+  border-radius: 0 0 16px 16px;
+  max-height:    0;
+  overflow:      hidden;
+  transition:    max-height 0.35s ease;
+}
+
+.akkordeon-item--offen .akkordeon-inhalt {
+  max-height: 500px;
+}
+
+/* Innenabstand */
+.akkordeon-inhalt-inner {
+  padding: 0.5rem 1.75rem 2rem;
+}
+
+/* Fließtext */
+.akkordeon-inhalt-inner > p,
+.akkordeon-sprechzeit-block > p {
+  font-size:     0.975rem;
+  line-height:   1.72;
+  opacity:       0.78;
+  margin-bottom: 0.5rem;
+}
+
+/* Praxis-App-Zeile */
+.akkordeon-app-zeile {
+  margin-top: 1rem !important;
+}
+
+/* Sprechzeit-Unterblöcke */
+.akkordeon-sprechzeit-block {
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 767px) {
+  .akkordeon-pill {
+    padding:   0.875rem 1.35rem;
+    font-size: 0.95rem;
+  }
+
+  .akkordeon-inhalt-inner {
+    padding: 0.4rem 1.35rem 1.75rem;
   }
 }
 
