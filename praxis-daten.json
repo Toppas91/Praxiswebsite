@@ -174,48 +174,48 @@
     "praxisteam": [
       {
         "id": "mfa-001",
-        "vorname": "Maria",
-        "nachname": "Schmidt",
+        "vorname": "Anne",
+        "nachname": "Lehradt",
         "ausbildung": "Medizinische Fachangestellte",
         "rolle": "Praxismanagerin",
         "foto": "bilder/mfa1.png"
       },
       {
         "id": "mfa-002",
-        "vorname": "Jana",
-        "nachname": "Becker",
+        "vorname": "Julia",
+        "nachname": "Wenz",
         "ausbildung": "Medizinische Fachangestellte",
         "rolle": "Anmeldung & Vorsorge",
         "foto": "bilder/mfa2.png"
       },
       {
         "id": "mfa-003",
-        "vorname": "Anne",
-        "nachname": "Müller",
+        "vorname": "Katrin",
+        "nachname": "Berwanger",
         "ausbildung": "Medizinische Fachangestellte",
         "rolle": "Medizinische Fachangestellte",
         "foto": "bilder/mfa3.png"
       },
       {
         "id": "mfa-004",
-        "vorname": "Julia",
-        "nachname": "Schmidt",
+        "vorname": "Bernd",
+        "nachname": "Berwanger",
         "ausbildung": "Medizinische Fachangestellte",
         "rolle": "Medizinische Fachangestellte",
         "foto": "bilder/mfa4.png"
       },
       {
         "id": "mfa-005",
-        "vorname": "Maria",
-        "nachname": "Peters",
+        "vorname": "Elena",
+        "nachname": "Neuberger",
         "ausbildung": "Medizinische Fachangestellte",
         "rolle": "Medizinische Fachangestellte",
         "foto": "bilder/mfa5.png"
       },
       {
         "id": "mfa-006",
-        "vorname": "Sarah",
-        "nachname": "Funke",
+        "vorname": "Carina",
+        "nachname": "Klein",
         "ausbildung": "Medizinische Fachangestellte",
         "rolle": "Medizinische Fachangestellte",
         "foto": "bilder/mfa6.png"
@@ -223,15 +223,15 @@
       {
         "id": "mfa-007",
         "vorname": "Fabienne",
-        "nachname": "Streicher",
+        "nachname": "Hetzel",
         "ausbildung": "Medizinische Fachangestellte",
         "rolle": "Medizinische Fachangestellte",
         "foto": "bilder/mfa7.png"
       },
       {
         "id": "mfa-008",
-        "vorname": "Sandra",
-        "nachname": "Wagner",
+        "vorname": "Natascha",
+        "nachname": "Blinow",
         "ausbildung": "Medizinische Fachangestellte",
         "rolle": "Medizinische Fachangestellte",
         "foto": "bilder/mfa8.png"
